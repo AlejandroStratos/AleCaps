@@ -164,8 +164,8 @@
         </div>
 
         <div class="form-group">
-        <label for="alimantacion1">¿Recibe asistencia alimentaria?</label>
-        <select name="alimantacion1" id="alimantacion1" class="form-control">
+        <label for="alimentacion1">¿Recibe asistencia alimentaria?</label>
+        <select name="alimentacion1" id="alimentacion1" class="form-control">
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
@@ -373,8 +373,8 @@
 
         <style>
         .btn-custom {
-            background-color: #5451EF; 
-            color: #FFFFFF; 
+            background-color: #5451EF;
+            color: #FFFFFF;
             border-radius: 40px;
         }
         </style>
@@ -390,7 +390,7 @@
                 <form action="{{ route('encuesta.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="famId" value="{{ $famId }}">
-    
+
                     <!-- Agrega tus preguntas y selectores aquí -->
                     <div class="form-group">
                         <label for="accSalud1">Tenes baño?</label>
@@ -400,14 +400,14 @@
                         </select>
                     </div>
 
-                    <div class="form-group">               
+                    <div class="form-group">
                         <label for="accSalud2">Tenes patio?</label>
                         <select name="accSalud2" id="accSalud2" class="form-control">
                                 <option value="si">si</option>
                                 <option value="no">no</option>
                         </select>
 
-                    <div class="form-group">                           
+                    <div class="form-group">
                         <label for="accSalud3">Tenes patio?</label>
                         <select name="accSalud3" id="accSalud3" class="form-control">
                                 <option value="si">si</option>
@@ -415,7 +415,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group"> 
+                    <div class="form-group">
                         <label for="accSalud4">Tenes patio?</label>
                         <select name="accSalud4" id="accSalud4" class="form-control">
                                 <option value="si">si</option>
@@ -423,7 +423,7 @@
                         </select>
                     </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accSalud5">Tenes patio?</label>
         <select name="accSalud5" id="accSalud5" class="form-control">
                 <option value="si">si</option>
@@ -431,7 +431,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accSalud6">Tenes patio?</label>
         <select name="accSalud6" id="accSalud6" class="form-control">
                 <option value="si">si</option>
@@ -439,7 +439,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accSalud7">Tenes patio?</label>
         <select name="accSalud7" id="accSalud7" class="form-control">
                 <option value="si">si</option>
@@ -447,7 +447,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accSalud8">Tenes patio?</label>
         <select name="accSalud8" id="accSalud8" class="form-control">
                 <option value="si">si</option>
@@ -455,7 +455,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accSalud9">Tenes patio?</label>
         <select name="accSalud9" id="accSalud9" class="form-control">
                 <option value="si">si</option>
@@ -463,7 +463,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accMental1">Tenes patio?</label>
         <select name="accMental1" id="accMental1" class="form-control">
                 <option value="si">si</option>
@@ -471,7 +471,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accMental2">Tenes patio?</label>
         <select name="accMental2" id="accMental2" class="form-control">
                 <option value="si">si</option>
@@ -479,7 +479,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="prSoysa">Tenes patio?</label>
         <select name="prSoysa" id="prSoysa" class="form-control">
                 <option value="si">si</option>
@@ -487,7 +487,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="alimantacion1">Tenes patio?</label>
         <select name="alimantacion1" id="alimantacion1" class="form-control">
                 <option value="si">si</option>
@@ -495,7 +495,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="alimentacion2">Tenes patio?</label>
         <select name="alimentacion2" id="alimentacion2" class="form-control">
                 <option value="si">si</option>
@@ -503,7 +503,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="alimentacion3">Tenes patio?</label>
         <select name="alimentacion3" id="alimentacion3" class="form-control">
                 <option value="si">si</option>
@@ -511,7 +511,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="alimentacion4">Tenes patio?</label>
         <select name="alimentacion4" id="alimentacion4" class="form-control">
                 <option value="si">si</option>
@@ -519,7 +519,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="partSocial">Tenes patio?</label>
         <select name="partSocial" id="partSocial" class="form-control">
                 <option value="si">si</option>
@@ -527,7 +527,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="vivienda1">Tenes patio?</label>
         <select name="vivienda1" id="vivienda1" class="form-control">
                 <option value="si">si</option>
@@ -535,7 +535,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="vivienda2">Tenes patio?</label>
         <select name="vivienda2" id="vivienda2" class="form-control">
                 <option value="si">si</option>
@@ -543,7 +543,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="vivienda3">Tenes patio?</label>
         <select name="vivienda3" id="vivienda3" class="form-control">
                 <option value="si">si</option>
@@ -551,7 +551,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="vivienda4">Tenes patio?</label>
         <select name="vivienda4" id="vivienda4" class="form-control">
                 <option value="si">si</option>
@@ -559,7 +559,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="vivienda5">Tenes patio?</label>
         <select name="vivienda5" id="vivienda5" class="form-control">
                 <option value="si">si</option>
@@ -567,7 +567,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="vivienda6">Tenes patio?</label>
         <select name="vivienda6" id="vivienda6" class="form-control">
                 <option value="si">si</option>
@@ -575,7 +575,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="vivienda7">Tenes patio?</label>
         <select name="vivienda7" id="vivienda7" class="form-control">
                 <option value="si">si</option>
@@ -583,7 +583,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accBas1">Tenes patio?</label>
         <select name="accBas1" id="accBas1" class="form-control">
                 <option value="si">si</option>
@@ -591,7 +591,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accBas2">Tenes patio?</label>
         <select name="accBas2" id="accBas2" class="form-control">
                 <option value="si">si</option>
@@ -599,7 +599,7 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accBas3">Tenes patio?</label>
         <select name="accBas3" id="accBas3" class="form-control">
                 <option value="si">si</option>
@@ -607,21 +607,21 @@
         </select>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
         <label for="accBas4">Tenes patio?</label>
         <select name="accBas4" id="accBas4" class="form-control">
                 <option value="si">si</option>
                 <option value="no">no</option>
         </select>
         </div>
-    
+
                     <div class="form-group">
                         <label for="capId">CAP ID</label>
                         <select name="capId" id="capId" class="form-control">
                             <option value="1">1</option>
                         </select>
                     </div>
-    
+
                     <button type="submit" class="btn btn-custom btn-block">Guardar Encuesta</button>
                 </form>
             </div>
