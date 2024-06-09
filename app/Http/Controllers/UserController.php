@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\caps;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,8 +16,10 @@ class UserController extends Controller
     {
         $usuario = Db::table('users')
         ->select('email','userId','password','capId','rol')->paginate(5);
-        return view('crearusuario', ['usuarios'=>$usuario]);
+        $caps = caps::all();
+        return view('crearusuario', ['usuarios'=>$usuario],['caps'=>$caps]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -60,7 +63,19 @@ class UserController extends Controller
     {
         //
     }
+    public function asignar(Request $request)
+    {
+        if($request->capId === null )
+        {
+            return redirect()->route('usuario.store')->with('error','Error: debe seleccionar el caps a asginar');
+        }else{
+            $usuario= user::find($request->userId);
+            $usuario->capId=$request->capId;
+            $usuario->save();
+            return redirect()->route('usuario.store')->with('success', 'usuario '.$request->email.' fue asignado al caps:'.$request->capId.' correctamente');
 
+        }
+    }
     /**
      * Update the specified resource in storage.
      */
