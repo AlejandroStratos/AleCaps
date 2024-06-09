@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -12,7 +13,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $usuario = Db::table('users')
+        ->select('email','userId','password','capId','rol')->paginate(5);
+        return view('crearusuario', ['usuarios'=>$usuario]);
     }
 
     /**
@@ -20,7 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('crearusuario');
     }
 
     /**
@@ -28,7 +31,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $usuario = new User();
+
+        $usuario->email =$request->email;
+        $usuario->password=$request->password;
+        $usuario->rol=$request->rol;
+        $usuario->capId=$request->capId;
+
+        $usuario->save();
+        /* return response()->noContent() */
+        return redirect()->route('usuario.store')->with('success', 'Usuario creado correctamente');
+
     }
 
     /**
