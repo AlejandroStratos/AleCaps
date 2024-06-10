@@ -31,11 +31,13 @@
                 <span class="input-group-text" id="password" name="password">password</span>
             </div>
 
-            <div class="input-group mb-3">
-                <input type="text" for= "rol" name="rol" class="form-control"
-                    placeholder="Ingrese rol del usuario" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <span class="input-group-text" id="rol" name="rol">rol</span>
-            </div>
+            <div class="form-group">
+                <select name="rol" id="rol" class="form-control">
+                        <option value="">Seleccionar rol del usuario</option>
+                        <option value=>Administrador</option>
+                        <option value=>Encuestador</option>
+                </select>
+                </div>
 
             <div class="input-group mb-3">
                 <input type="text" for= "capId" name= "capId" class="form-control"
