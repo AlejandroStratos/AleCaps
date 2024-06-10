@@ -20,6 +20,24 @@
             @csrf
 
             <div class="input-group mb-3">
+                <input type="text" for= "nombreusuario" name="nombreusuario" class="form-control" placeholder="nombre de usuario"
+                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                {{--  <span class="input-group-text" id="nombreusuario" name="nombreusuario"></span>  --}}
+            </div>
+
+            <div class="input-group mb-3">
+                <input type="text" for= "nombre" name="nombre" class="form-control" placeholder="Ingrese nombre"
+                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                {{--  <span class="input-group-text" id="nombre" name="nombre"></span>  --}}
+            </div>
+
+            <div class="input-group mb-3">
+                <input type="text" for= "apellido" name="apellido" class="form-control" placeholder="Ingrese apellido"
+                    aria-label="Recipient's username" aria-describedby="basic-addon2">
+                {{--  <span class="input-group-text" id="apellido" name="apellido"></span>  --}}
+            </div>
+
+            <div class="input-group mb-3">
                 <input type="text" for= "email" name="email" class="form-control" placeholder="Ingrese correo del usuario"
                     aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <span class="input-group-text" id="email" name="email">@Ejemplo.com</span>
@@ -33,9 +51,9 @@
 
             <div class="form-group">
                 <select name="rol" id="rol" class="form-control">
-                        <option value="">Seleccionar rol del usuario</option>
-                        <option value=>Administrador</option>
-                        <option value=>Encuestador</option>
+                        <option value="">Seleccionar rol</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Encuestador">Encuestador</option>
                 </select>
                 </div>
 
@@ -54,6 +72,9 @@
                 <table class="table table-hover table-bordered table-light">
                     <thead>
                         <tr>
+                            <th>Nombre de usuario</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
                             <th>Email</th>
                             <th>Password</th>
                             <th>Rol</th>
@@ -65,6 +86,9 @@
                     <tbody>
                         @foreach($usuarios as $usuario)
                             <tr>
+                                <td>{{ $usuario->nombreusuario}}</td>
+                                <td>{{ $usuario->nombre}}</td>
+                                <td>{{ $usuario->apellido}}</td>
                                 <td>{{ $usuario->email }}</td>
                                 <td>{{ $usuario->password }}</td>
                                 <td>{{ $usuario->rol }}</td>

@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $usuario = Db::table('users')
-        ->select('email','userId','password','capId','rol')->paginate(5);
+        ->select('email','userId', 'nombre', 'apellido', 'nombreusuario','password','capId','rol')->paginate(5);
         return view('crearusuario', ['usuarios'=>$usuario]);
     }
 
@@ -33,7 +33,9 @@ class UserController extends Controller
     {
 
         $usuario = new User();
-
+        $usuario->nombreusuario=$request->nombreusuario;
+        $usuario->nombre=$request->nombre;
+        $usuario->apellido=$request->apellido;
         $usuario->email =$request->email;
         $usuario->password=$request->password;
         $usuario->rol=$request->rol;
