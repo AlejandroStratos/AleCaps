@@ -17,6 +17,8 @@
 
 
     <h1 class="text-center">NUEVA FAMILIA</h1>
+    <br>
+
 
     <div class="container text-center">
         @if ($errors->any())
@@ -41,6 +43,10 @@
         <button type="submit" class="btn btn-custom">Agregar integrantes</button>
 
         </form> 
+
+        <br>
+
+        <a href="{{ route('home') }}" class="btn btn-danger"><i class="bi bi-x"></i>Cancelar</a>
     </div>
 
 

@@ -30,6 +30,4 @@ Route::put('/familias/{famId}/integrantes', [InteranteController::class, 'update
 Route::get('/encuestas/{encuestaId}/editar', [EncuestaController::class, 'edit'])->name('encuesta.edit');
 Route::put('/encuestas/{encuestaId}', [EncuestaController::class, 'update'])->name('encuesta.update');
 
-
-
-Route::get('/encuestas/search', [EncuestaController::class, 'search'])->name('encuesta.search');
+Route::get('/buscar-encuestas', [EncuestaController::class, 'buscarPorDomicilio'])->name('buscarEncuestas');
