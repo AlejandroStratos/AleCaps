@@ -12,9 +12,17 @@
 @endsection
 
 @section('body')
-    <div class="container mt-5">
+    <div class="container mt-4">
+        <div class="row mb-3">
+            <div class="col-12">
+               
+                <a href="{{ route('home') }}" class="btn btn-secondary position-absolute start-0 top-0 m-3">
+                    <i class="bi bi-arrow-left-short"></i>Volver
+                </a>
+            </div>
 
-
+    <div class="col-12 mt-5">
+        
         <h1 class="text-center">Crear nuevo usuario</h1>
         <form action="{{ route('usuario.store') }}" method="POST">
             @csrf
@@ -45,9 +53,12 @@
             </div>
 
             <button type="submit" class="btn btn-custom btn-block">Guardar</button>
-           
-            <div class="container mt-5">
-                <h1 class="text-center">Listado de Usuarios</h1>
+        
+        </div>
+                
+              
+            <div class="col  mt-3">       
+                <h1 class="text-center">Listado de Usuarios</h1>   
 
                 <table class="table table-hover table-bordered table-light " style="border-radius: 10px; overflow: hidden;">
                     <thead>
@@ -62,7 +73,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if(session('success'))
+                        <div class="col-12 mt-1">
+                            @if(session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
                             </div>
@@ -72,6 +84,7 @@
                                 {{ session('error') }}
                             </div>
                         @endif
+                        </div>
                         
                     @foreach($usuarios as $usuario)
                             <tr>
@@ -126,9 +139,10 @@
                     <div class="col">
                         <div class="row justify-content-center">{{ $usuarios->onEachSide(1)->links('pagination::bootstrap-4') }}
                         <hr>
+                        </div>
                     </div>
-                </div>
 
-        </div>
+                </div>
+            </div>    
     </div>
 @endsection
