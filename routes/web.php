@@ -37,7 +37,10 @@ Route::get('/buscar-encuestas', [EncuestaController::class, 'buscarPorDomicilio'
 
 
 
+Route::get('/encuestas/search', [EncuestaController::class, 'search'])->name('encuesta.search');
+//rutas configuracion usuario----------------------------------------------------------------------
 Route::get('/usuario',[UserController::class, 'create'])->name('usuario.create');
 Route::get('/usuario',[UserController::class, 'index'])->name('usuario.index');
 Route::post('/usuario',[UserController::class, 'store'])->name('usuario.store');
+Route::post('usuario/reAsignar',[UserController::class, 'asignar'])->name('usuario.asignar');
 

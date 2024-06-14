@@ -12,9 +12,17 @@
 @endsection
 
 @section('body')
-    <div class="container mt-5">
+    <div class="container mt-4">
+        <div class="row mb-3">
+            <div class="col-12">
+               
+                <a href="{{ route('home') }}" class="btn btn-secondary position-absolute start-0 top-0 m-3">
+                    <i class="bi bi-arrow-left-short"></i>Volver
+                </a>
+            </div>
 
-
+    <div class="col-12 mt-5">
+        
         <h1 class="text-center">Crear nuevo usuario</h1>
         <form action="{{ route('usuario.store') }}" method="POST">
             @csrf
@@ -65,11 +73,14 @@
             </div>
 
             <button type="submit" class="btn btn-custom btn-block">Guardar</button>
+        
+        </div>
+                
+              
+            <div class="col  mt-3">       
+                <h1 class="text-center">Listado de Usuarios</h1>   
 
-            <div class="container mt-5">
-                <h1 class="text-center">Listado de Usuarios</h1>
-
-                <table class="table table-hover table-bordered table-light">
+                <table class="table table-hover table-bordered table-light " style="border-radius: 10px; overflow: hidden;">
                     <thead>
                         <tr>
                             <th>Nombre de usuario</th>
@@ -81,10 +92,24 @@
                             <th>Caps</th>
                             <th>Editar</th>
                             <th>Eliminar</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($usuarios as $usuario)
+                        <div class="col-12 mt-1">
+                            @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                    
+                         @elseif (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        </div>
+                        
+                    @foreach($usuarios as $usuario)
                             <tr>
                                 <td>{{ $usuario->nombreusuario}}</td>
                                 <td>{{ $usuario->nombre}}</td>
@@ -93,6 +118,8 @@
                                 <td>{{ $usuario->password }}</td>
                                 <td>{{ $usuario->rol }}</td>
                                 <td>{{ $usuario->capId }}</td>
+                            
+                                  
                                 <td style="text-align:center;"><a{{--   href="{{ Route('editar.edit', $usuario->userId) }}"  --}} class="btn btn-primary btn-sm active"
                                     role="button" aria-pressed="true"><i class="fas fa-edit" aria-hidden="true"></i></a>
                             </td>
@@ -105,6 +132,30 @@
                                             class="fas fa-window-close" aria-hidden="true"></i>
                                     </button>
                                 </form>
+                                <td>
+                                   
+                                    <form action="{{Route('usuario.asignar')}}" method="POST">
+                                        @csrf
+                                       <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="hidden" name="userId" value="{{$usuario->userId}}">
+                                                <input type="hidden" name="email"  value="{{$usuario->email}}">
+                                                <select name="capId" aria-label="Re asginar" class="form-control">
+                                                    <option value="" disabled selected>Re asginar a caps</option>
+                                                    @foreach ($caps as $cap)
+                                                        <option value="{{$cap->capId}}">{{$cap->capId}}</option>
+                                                    @endforeach
+                                                </select>
+                                           
+                                            </div>
+                                            <div class="col">
+                                                <button type="submit" class="btn btn-warning">Asignar</button>
+                                            </div>
+                                        </div>
+                                       </div>
+                                    </form>
+                                </td>
                             </td>
                             </tr>
                         @endforeach
@@ -114,9 +165,10 @@
                     <div class="col">
                         <div class="row justify-content-center">{{ $usuarios->onEachSide(1)->links('pagination::bootstrap-4') }}
                         <hr>
+                        </div>
                     </div>
-                </div>
 
-        </div>
+                </div>
+            </div>    
     </div>
 @endsection
