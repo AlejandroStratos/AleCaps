@@ -15,14 +15,14 @@
     <div class="container mt-4">
         <div class="row mb-3">
             <div class="col-12">
-               
+
                 <a href="{{ route('home') }}" class="btn btn-secondary position-absolute start-0 top-0 m-3">
                     <i class="bi bi-arrow-left-short"></i>Volver
                 </a>
             </div>
 
     <div class="col-12 mt-5">
-        
+
         <h1 class="text-center">Crear nuevo usuario</h1>
         <form action="{{ route('usuario.store') }}" method="POST">
             @csrf
@@ -73,12 +73,12 @@
             </div>
 
             <button type="submit" class="btn btn-custom btn-block">Guardar</button>
-        
+
         </div>
-                
-              
-            <div class="col  mt-3">       
-                <h1 class="text-center">Listado de Usuarios</h1>   
+
+
+            <div class="col  mt-3">
+                <h1 class="text-center">Listado de Usuarios</h1>
 
                 <table class="table table-hover table-bordered table-light " style="border-radius: 10px; overflow: hidden;">
                     <thead>
@@ -101,14 +101,14 @@
                             <div class="alert alert-success">
                                 {{ session('success') }}
                             </div>
-                    
+
                          @elseif (session('error'))
                             <div class="alert alert-danger">
                                 {{ session('error') }}
                             </div>
                         @endif
                         </div>
-                        
+
                     @foreach($usuarios as $usuario)
                             <tr>
                                 <td>{{ $usuario->nombreusuario}}</td>
@@ -118,8 +118,8 @@
                                 <td>{{ $usuario->password }}</td>
                                 <td>{{ $usuario->rol }}</td>
                                 <td>{{ $usuario->capId }}</td>
-                            
-                                  
+
+
                                 <td style="text-align:center;"><a{{--   href="{{ Route('editar.edit', $usuario->userId) }}"  --}} class="btn btn-primary btn-sm active"
                                     role="button" aria-pressed="true"><i class="fas fa-edit" aria-hidden="true"></i></a>
                             </td>
@@ -133,7 +133,7 @@
                                     </button>
                                 </form>
                                 <td>
-                                   
+
                                     <form action="{{Route('usuario.asignar')}}" method="POST">
                                         @csrf
                                        <div class="container">
@@ -147,7 +147,7 @@
                                                         <option value="{{$cap->capId}}">{{$cap->capId}}</option>
                                                     @endforeach
                                                 </select>
-                                           
+
                                             </div>
                                             <div class="col">
                                                 <button type="submit" class="btn btn-warning">Asignar</button>
@@ -169,6 +169,6 @@
                     </div>
 
                 </div>
-            </div>    
+            </div>
     </div>
 @endsection
