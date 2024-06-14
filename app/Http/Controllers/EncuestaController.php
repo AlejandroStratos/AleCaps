@@ -17,18 +17,19 @@ class EncuestaController extends Controller
         return view('verencuestas', compact('encuestas'));
     }
 
-    public function search(Request $request)
+    public function buscarPorDomicilio(Request $request)
     {
-        $search = $request->get('search');
 
-        // Realiza la búsqueda en la tabla 'encuestas' relacionada con 'familia' por su domicilio
-        $encuestas = encuestas::whereHas('familia', function ($query) use ($search) {
-            $query->where('domicilio', 'LIKE', '%' . $search . '%');
-        })->get();
+        $domicilio = $request->input('domicilio');
+        
+        // Buscar encuestas por domicilio
+        $encuestas = encuestas::join('familias', 'encuestas.famId', '=', 'familias.famId')
+            ->where('familias.domicilio', 'LIKE', '%' . $domicilio . '%')
+            ->select('encuestas.*', 'familias.domicilio')
+            ->get();
 
         return view('verencuestas', ['encuestas' => $encuestas]);
     }
-
 
 
     /**

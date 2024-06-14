@@ -126,6 +126,10 @@
         <button type="button" id="agregar-integrante" class="btn btn-custom">Agregar Integrante</button>
         <button type="submit" class="btn btn-custom">Guardar Integrantes</button>
         </form>
+
+        <br>
+        
+        <a href="{{ route('home') }}" class="btn btn-danger"><i class="bi bi-x"></i>Cancelar</a>
      </div>
     
     <script>
