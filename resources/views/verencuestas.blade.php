@@ -9,15 +9,21 @@
 <div class="container">
     <h1 class="text-center">Listado de Encuestas</h1>
 
-{{--     <!-- Formulario de búsqueda -->
-    <form action="{{ route('encuesta.search') }}" method="GET" class="mb-4">
-        <div class="form-group">
-            <label for="search">Buscar por Domicilio:</label>
-            <input type="text" name="search" id="search" class="form-control" placeholder="Ingrese el domicilio">
-        </div>
-        <button type="submit" class="btn btn-primary">Buscar</button>
-    </form> --}}
-    
+    <br>
+
+    <!-- Botón de volver a la izquierda y formulario de búsqueda a la derecha -->
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{{ route('home') }}" class="btn btn-secondary"><i class="bi bi-arrow-left-short"></i>Volver</a>
+        <form action="{{ route('buscarEncuestas') }}" method="GET" class="form-inline">
+            <input type="text" name="domicilio" class="form-control mr-2" placeholder="Buscar por domicilio" value="{{ request('domicilio') }}"> 
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
+
+    <br>
+
     @if(count($encuestas) > 0)
         <table class="table table-hover table-bordered table-light">
             <thead>
