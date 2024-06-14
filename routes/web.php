@@ -3,6 +3,7 @@
 use App\Http\Controllers\EncuestaController;
 use App\Http\Controllers\FamiliaController;
 use App\Http\Controllers\InteranteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,4 +31,13 @@ Route::put('/familias/{famId}/integrantes', [InteranteController::class, 'update
 Route::get('/encuestas/{encuestaId}/editar', [EncuestaController::class, 'edit'])->name('encuesta.edit');
 Route::put('/encuestas/{encuestaId}', [EncuestaController::class, 'update'])->name('encuesta.update');
 
+
 Route::get('/buscar-encuestas', [EncuestaController::class, 'buscarPorDomicilio'])->name('buscarEncuestas');
+
+
+
+
+Route::get('/usuario',[UserController::class, 'create'])->name('usuario.create');
+Route::get('/usuario',[UserController::class, 'index'])->name('usuario.index');
+Route::post('/usuario',[UserController::class, 'store'])->name('usuario.store');
+

@@ -19,6 +19,7 @@ class EncuestaController extends Controller
 
     public function buscarPorDomicilio(Request $request)
     {
+
         $domicilio = $request->input('domicilio');
         
         // Buscar encuestas por domicilio
@@ -29,6 +30,7 @@ class EncuestaController extends Controller
 
         return view('verencuestas', ['encuestas' => $encuestas]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -42,7 +44,7 @@ class EncuestaController extends Controller
 
     }
 
-  
+
     public function store(Request $request)
     {
 
@@ -91,7 +93,7 @@ class EncuestaController extends Controller
     public function show($encuestaId)
     {
         $encuesta = encuestas::find($encuestaId);
-    
+
         return view('encuestacompleta', ['encuesta' => $encuesta]);
 
     }
@@ -143,9 +145,9 @@ class EncuestaController extends Controller
         $encuesta->capId = $request->input('capId');
 
         // Actualiza los demás campos de la encuesta de manera similar
-    
+
         $encuesta->save();
-    
+
         return redirect()->route('home')->with('success', 'Encuesta editada correctamente');
     }
 
@@ -156,15 +158,15 @@ class EncuestaController extends Controller
     {
         // Encuentra la encuesta por su ID
         $encuesta = encuestas::find($encuestaId);
-    
+
         if ($encuesta) {
             // Elimina la encuesta, y Eloquent se encargará de eliminar las relaciones en cascada
             $encuesta->delete();
-    
+
             // Redirige a la página de listado de encuestas
             return redirect()->route('encuesta.index')->with('success', 'Encuesta eliminada exitosamente.');
         }
-    
+
         return redirect()->route('encuesta.index')->with('error', 'No se encontró la encuesta.');
     }
 }

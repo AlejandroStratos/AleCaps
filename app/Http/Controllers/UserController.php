@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class UserController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $usuario = Db::table('users')
+        ->select('email','userId', 'nombre', 'apellido', 'nombreusuario','password','capId','rol')->paginate(5);
+        return view('crearusuario', ['usuarios'=>$usuario]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('crearusuario');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+
+        $usuario = new User();
+        $usuario->nombreusuario=$request->nombreusuario;
+        $usuario->nombre=$request->nombre;
+        $usuario->apellido=$request->apellido;
+        $usuario->email =$request->email;
+        $usuario->password=$request->password;
+        $usuario->rol=$request->rol;
+        $usuario->capId=$request->capId;
+
+        $usuario->save();
+        /* return response()->noContent() */
+        return redirect()->route('usuario.store')->with('success', 'Usuario creado correctamente');
+
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(User $user)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(User $user)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, User $user)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(User $user)
+    {
+        //
+    }
+}

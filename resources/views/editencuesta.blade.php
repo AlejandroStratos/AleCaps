@@ -14,7 +14,9 @@
                 @csrf
                 @method('PUT')
                 <!-- Aquí debes agregar los campos y selectores con los valores actuales de la encuesta -->
+
                 <!-- Por ejemplo, para accSalud1 sería algo comoo -->
+
                 <div class="form-group">
                     <label for="accSalud1">Tenes baño?</label>
                     <select name="accSalud1" id="accSalud1" class="form-control">
@@ -247,7 +249,7 @@
                 </div>
 
 
-                
+
 
 
                 <!-- ... Agrega los demás campos con la lógica similar -->
