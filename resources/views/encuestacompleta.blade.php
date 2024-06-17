@@ -9,7 +9,7 @@
 <div class="container">
 <h1 class="text-center">Encuesta Completa</h1>
 <br>
-    
+
 @if($encuesta)
 
  <table class="table table-hover table-bordered table-light">
@@ -33,9 +33,21 @@
         <th>Ante algún problema de Salud ¿A dónde concurren?</th>
         <td>{{ $encuesta->accSalud3 }}</td>
     </tr>
+
+    <tr>
+        <th>Nombre del lugar:</th>
+        <td>{{ $encuesta->accSalud3_otro }}</td>
+    </tr>
+
+
     <tr>
         <th>¿Cómo los consiguen?</th>
         <td>{{ $encuesta->accSalud4 }}</td>
+    </tr>
+
+    <tr>
+        <th>¿De qué otra forma los consiguen?</th>
+        <td>{{ $encuesta->accSalud4_otro }}</td>
     </tr>
     <tr>
         <th>¿Cuál es el tiempo de espera de los turnos?</th>
@@ -57,6 +69,12 @@
         <th>¿Toma la medicación acorde a la indicación médica?</th>
         <td>{{ $encuesta->accSalud9 }}</td>
     </tr>
+
+    <tr>
+        <th>¿Cómo la toma?</th>
+        <td>{{ $encuesta->accSalud9_otro }}</td>
+    </tr>
+
     <tr>
         <th>¿Alguien en el grupo familiar recibe tratamiento en Salud Mental (Psicológico y/o Psiquiátrico)?</th>
         <td>{{ $encuesta->accMental1 }}</td>
@@ -69,6 +87,11 @@
         <th>De la siguiente lista de problemas sociales y de salud ¿cuáles son los 3 principales que identifica en el barrio?</th>
         <td>{{ $encuesta->prSoysa }}</td>
     </tr>
+    <tr>
+        <th>¿Cuáles?</th>
+        <td>{{ $encuesta->prSoysa_otro }}</td>
+    </tr>
+
     <tr>
         <th>¿Recibe asistencia alimentaria?</th>
         <td>{{ $encuesta->alimantacion1 }}</td>
@@ -97,6 +120,12 @@
         <th>Materiales que predominan en la vivienda</th>
         <td>{{ $encuesta->vivienda2 }}</td>
     </tr>
+
+    <tr>
+        <th>Especificar otros Materiales</th>
+        <td>{{ $encuesta->vivienda2_otro }}</td>
+    </tr>
+
     <tr>
         <th>Materiales predominantes en el piso</th>
         <td>{{ $encuesta->vivienda3 }}</td>
@@ -134,18 +163,13 @@
         <td>{{ $encuesta->accBas4 }}</td>
     </tr>
 
-     
-    <!-- Agrega aquí más campos de la encuesta -->
+
+
 </table>
-    
+
 <br>
 <br>
     <h2>Integrantes</h2>
-
-    @else
-    <p>Encuesta no encontrada.</p>
-    @endif
-
     <table class="table table-hover table-bordered table-light">
         <thead>
             <tr>
@@ -162,7 +186,6 @@
                 <th>Obra Social</th>
                 <th>Enfermedades Cronicas</th>
                 <th>Ultimo Control</th>
-                <!-- Agrega aquí los encabezados para los demás campos -->
             </tr>
         </thead>
         <tbody>
@@ -181,11 +204,18 @@
                     <td>{{ $integrante->obraSocial }}</td>
                     <td>{{ $integrante->enfermedadesCronicas }}</td>
                     <td>{{ $integrante->ultimoControl }}</td>
-                    <!-- Agrega aquí las celdas para los demás campos -->
                 </tr>
             @endforeach
         </tbody>
     </table>
+    @else
+    <p>Encuesta no encontrada.</p>
+    @endif
+
+
+
+
+
 
 </div>
 

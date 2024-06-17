@@ -10,8 +10,9 @@ class integrantes extends Model
     use HasFactory;
     protected $primaryKey = "intId";
 
-    
+
         protected $fillable = [
+            'famId',
             'apellido',
             'nombre',
             'fechaNac',
@@ -26,5 +27,14 @@ class integrantes extends Model
             'enfermedadesCronicas',
             'ultimoControl',
         ];
-    
+
+        
+
+        public function encuesta()
+    {
+        return $this->belongsTo(encuestas::class, 'famId'); // 'encuesta_id' es la clave foránea en la tabla de integrantes que referencia a encuestas
+    }
+
+  
+
 }

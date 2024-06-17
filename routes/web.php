@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {return view('home');})->name('home');
+
 Route::get('/nueva-encuesta/{famId}', [EncuestaController::class, 'create'])->name('encuesta.create');
 Route::post('/guardar-encuesta', [EncuestaController::class, 'store'])->name('encuesta.store');
 
@@ -31,5 +32,13 @@ Route::get('/encuestas/{encuestaId}/editar', [EncuestaController::class, 'edit']
 Route::put('/encuestas/{encuestaId}', [EncuestaController::class, 'update'])->name('encuesta.update');
 
 
-
 Route::get('/encuestas/search', [EncuestaController::class, 'search'])->name('encuesta.search');
+
+
+
+
+
+
+
+
+

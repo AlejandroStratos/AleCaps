@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\encuestas;
 use App\Models\familias;
+use App\Models\integrantes;
 use Illuminate\Http\Request;
 
 class EncuestaController extends Controller
@@ -20,16 +21,16 @@ class EncuestaController extends Controller
     public function search(Request $request)
     {
         $search = $request->get('search');
-    
+
         // Realiza la búsqueda en la tabla 'encuestas' relacionada con 'familia' por su domicilio
         $encuestas = encuestas::whereHas('familia', function ($query) use ($search) {
             $query->where('domicilio', 'LIKE', '%' . $search . '%');
         })->get();
-    
+
         return view('verencuestas', ['encuestas' => $encuestas]);
     }
-    
-    
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -43,7 +44,6 @@ class EncuestaController extends Controller
 
     }
 
-  
     public function store(Request $request)
     {
 
@@ -86,13 +86,15 @@ class EncuestaController extends Controller
         return redirect()->route('home')->with('success', 'Encuesta creada correctamente');
     }
 
+
+
     /**
      * Display the specified resource.
      */
     public function show($encuestaId)
     {
         $encuesta = encuestas::find($encuestaId);
-    
+
         return view('encuestacompleta', ['encuesta' => $encuesta]);
 
     }
@@ -116,15 +118,19 @@ class EncuestaController extends Controller
         $encuesta->accSalud1 = $request->input('accSalud1');
         $encuesta->accSalud2 = $request->input('accSalud2');
         $encuesta->accSalud3 = $request->input('accSalud3');
+        $encuesta->accSalud3_otro = $request->input('accSalud3_otro');
         $encuesta->accSalud4 = $request->input('accSalud4');
+        $encuesta->accSalud4_otro = $request->input('accSalud4_otro');
         $encuesta->accSalud5 = $request->input('accSalud5');
         $encuesta->accSalud6 = $request->input('accSalud6');
         $encuesta->accSalud7 = $request->input('accSalud7');
         $encuesta->accSalud8 = $request->input('accSalud8');
         $encuesta->accSalud9 = $request->input('accSalud9');
+        $encuesta->accSalud9_otro = $request->input('accSalud9_otro');
         $encuesta->accMental1 = $request->input('accMental1');
         $encuesta->accMental2 = $request->input('accMental2');
         $encuesta->prSoysa = $request->input('prSoysa');
+        $encuesta->prSoysa_otro = $request->input('prSoysa_otro');
         $encuesta->alimantacion1 = $request->input('alimantacion1');
         $encuesta->alimentacion2 = $request->input('alimentacion2');
         $encuesta->alimentacion3 = $request->input('alimentacion3');
@@ -132,6 +138,7 @@ class EncuestaController extends Controller
         $encuesta->partSocial = $request->input('partSocial');
         $encuesta->vivienda1 = $request->input('vivienda1');
         $encuesta->vivienda2 = $request->input('vivienda2');
+        $encuesta->vivienda2_otro = $request->input('vivienda2_otro');
         $encuesta->vivienda3 = $request->input('vivienda3');
         $encuesta->vivienda4 = $request->input('vivienda4');
         $encuesta->vivienda5 = $request->input('vivienda5');
@@ -144,9 +151,9 @@ class EncuestaController extends Controller
         $encuesta->capId = $request->input('capId');
 
         // Actualiza los demás campos de la encuesta de manera similar
-    
+
         $encuesta->save();
-    
+
         return redirect()->route('home')->with('success', 'Encuesta editada correctamente');
     }
 
@@ -157,15 +164,15 @@ class EncuestaController extends Controller
     {
         // Encuentra la encuesta por su ID
         $encuesta = encuestas::find($encuestaId);
-    
+
         if ($encuesta) {
             // Elimina la encuesta, y Eloquent se encargará de eliminar las relaciones en cascada
             $encuesta->delete();
-    
+
             // Redirige a la página de listado de encuestas
             return redirect()->route('encuesta.index')->with('success', 'Encuesta eliminada exitosamente.');
         }
-    
+
         return redirect()->route('encuesta.index')->with('error', 'No se encontró la encuesta.');
     }
 }
