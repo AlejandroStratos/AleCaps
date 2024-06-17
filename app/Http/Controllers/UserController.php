@@ -16,7 +16,9 @@ class UserController extends Controller
     {
         $usuario = Db::table('users')
 
-        ->select('email','userId','nombre','apellido','nombreusuario','password','capId','rol')->paginate(5);
+
+        ->select('email','userId','nombreusuario','nombre','apellido','password','capId','rol')->paginate(5);
+
         $caps = caps::all();
         return view('crearusuario', ['usuarios'=>$usuario],['caps'=>$caps]);
 

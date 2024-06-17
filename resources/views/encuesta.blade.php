@@ -164,8 +164,8 @@
         </div>
 
         <div class="form-group">
-        <label for="alimentacion1">¿Recibe asistencia alimentaria?</label>
-        <select name="alimentacion1" id="alimentacion1" class="form-control">
+        <label for="alimantacion1">¿Recibe asistencia alimentaria?</label>
+        <select name="alimantacion1" id="alimantacion1" class="form-control">
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
