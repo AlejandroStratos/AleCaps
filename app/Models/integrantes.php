@@ -13,6 +13,7 @@ class integrantes extends Model
 
         protected $fillable = [
             'famId',
+            'capId',
             'apellido',
             'nombre',
             'fechaNac',
@@ -26,15 +27,16 @@ class integrantes extends Model
             'obraSocial',
             'enfermedadesCronicas',
             'ultimoControl',
+
         ];
 
-        
+
 
         public function encuesta()
     {
         return $this->belongsTo(encuestas::class, 'famId'); // 'encuesta_id' es la clave foránea en la tabla de integrantes que referencia a encuestas
     }
 
-  
+
 
 }

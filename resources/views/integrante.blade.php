@@ -189,8 +189,8 @@
                 <input type="checkbox" name="integrantes[Cáncer][]" value="Cáncer"> Cáncer<br>
                 <input type="checkbox" name="integrantes[Infecciones de transmisión sexual][]" value="Infecciones de transmisión sexual"> Infecciones de transmisión sexual<br>
                 <input type="checkbox" name="integrantes[Discapacidad ¿tiene certificado único de discapacidad?][]" value="Discapacidad ¿tiene certificado único de discapacidad?"> Discapacidad ¿tiene certificado único de discapacidad?<br>
-
                 <br>
+
 
                 <br>
                 <label>Último control</label>
