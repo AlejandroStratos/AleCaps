@@ -153,7 +153,7 @@
                                     @csrf
                                     @method ('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('¿Desea eliminar el producto?')">Eliminar<i
+                                        onclick="return confirm('¿Desea eliminar el usuario?')">Eliminar<i
                                             class="fas fa-window-close" aria-hidden="true"></i>
                                     </button>
                                 </form>
