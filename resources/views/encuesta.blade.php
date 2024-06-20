@@ -346,6 +346,7 @@
                 <option value="leña">leña</option>
         </select>
         </div>
+        
 
                     <div class="form-group">
                         <label for="capId">CAP ID</label>
