@@ -17,6 +17,7 @@
 @endsection
 
 @section('body')
+
 <div class="container">
     
 
@@ -101,6 +102,7 @@
             {{ session('success') }}
         </div>
 
+
      @elseif (session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -131,6 +133,7 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach($usuarios as $usuario)
                         <tr>
                             <td>{{ $usuario->nombreusuario}}</td>
@@ -187,3 +190,4 @@
 </div>    
 
 @endsection
+
