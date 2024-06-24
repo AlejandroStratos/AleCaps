@@ -133,6 +133,14 @@
         <th>Para calefaccionarse utiliza…</th>
         <td>{{ $encuesta->accBas4 }}</td>
     </tr>
+    <tr>
+        <th>CAPS</th>
+        <td>{{ $encuesta->capId }}</td>
+    </tr>
+    <tr>
+        <th>Barrio</th>
+        <td>{{ $encuesta->familia && $encuesta->familia->barrio ? $encuesta->familia->barrio->nombreBarrio : 'No asignado' }}</td>
+    </tr>
 
      
     <!-- Agrega aquí más campos de la encuesta -->

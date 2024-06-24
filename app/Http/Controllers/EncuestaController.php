@@ -4,16 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\encuestas;
 use App\Models\familias;
+use App\Models\barrios;
 use Illuminate\Http\Request;
 
 class EncuestaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+     public function index()
     {
-        $encuestas = encuestas::with('familia')->get();
+        $encuestas = encuestas::with(['familia', 'barrio'])->get();
         return view('verencuestas', compact('encuestas'));
     }
 
@@ -26,15 +25,15 @@ class EncuestaController extends Controller
         $encuestas = encuestas::join('familias', 'encuestas.famId', '=', 'familias.famId')
             ->where('familias.domicilio', 'LIKE', '%' . $domicilio . '%')
             ->select('encuestas.*', 'familias.domicilio')
+            ->with('barrio')
             ->get();
 
         return view('verencuestas', ['encuestas' => $encuestas]);
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+ 
     public function create($famId)
     {
 
@@ -44,6 +43,13 @@ class EncuestaController extends Controller
 
     }
 
+//BARRIOS-------------------------------------------------------------------
+    public function getBarriosByCapId($capId)
+    {
+        $barrios = barrios::where('capId', $capId)->pluck('nombreBarrio', 'barrioId');
+        return response()->json($barrios);
+    }
+//--------------------------------------------------------------------------  
 
     public function store(Request $request)
     {
@@ -84,6 +90,11 @@ class EncuestaController extends Controller
         $encuesta->capId = $request->capId;
 
         $encuesta->save();
+
+        $familia = familias::find($request->input('famId'));
+        $familia->barrioId = $request->input('barrioId');
+        $familia->save();
+
         return redirect()->route('home')->with('success', 'Encuesta creada correctamente');
     }
 

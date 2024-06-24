@@ -350,9 +350,59 @@
                     <div class="form-group">
                         <label for="capId">CAP ID</label>
                         <select name="capId" id="capId" class="form-control">
-                            <option value="1">1</option>
+                                <option value="">Seleccionar</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+
                         </select>
                     </div>
+
+                    {{-- BARRIO--------------------------------------------------------------- --}}
+                    <div class="form-group">
+                        <label for="barrioId">Barrio</label>
+                        <select name="barrioId" id="barrioId" class="form-control">
+                            <option value="">Seleccionar</option>
+                            <!-- Los barrios se cargarán aquí mediante AJAX -->
+                        </select>
+                    </div>
+                    
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $('#capId').on('change', function() {
+                                var capId = $(this).val();
+                                if (capId) {
+                                    $.ajax({
+                                        url: '/barrios/' + capId,
+                                        type: 'GET',
+                                        dataType: 'json',
+                                        success: function(data) {
+                                            $('#barrioId').empty();
+                                            $('#barrioId').append('<option value="">Seleccionar</option>');
+                                            $.each(data, function(key, value) {
+                                                $('#barrioId').append('<option value="' + key + '">' + value + '</option>');
+                                            });
+                                        }
+                                    });
+                                } else {
+                                    $('#barrioId').empty();
+                                    $('#barrioId').append('<option value="">Seleccionar</option>');
+                                }
+                            });
+                        });
+                    </script>
+                    {{-- BARRIO--------------------------------------------------------------- --}}
 
                     <button type="submit" class="btn btn-custom btn-block">Guardar Encuesta</button>
                 </form>
