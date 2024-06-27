@@ -6,24 +6,27 @@
             background-color: #5451EF;
             color: #FFFFFF;
             border-radius: 40px;
-            display: block;
-            margin: 10px auto;
-            width: 100%;
-            max-width: 300px;
-        }
-
-        @media (min-width: 768px) {
-            .btn-custom {
-                max-width: 300px;
-            }
+            width: 100%; /* Asegurar que el botón ocupe todo el ancho disponible */
+            max-width: 300px; /* Limitar el ancho máximo del botón */
+            white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+            overflow: hidden; /* Ocultar cualquier texto que se desborde */
+            text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto se desborda */
         }
 
         .alert-container {
             max-width: 90%;
             margin: 0 auto;
         }
+
+        .centered-link {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px; /* Espacio entre los botones */
+        }
     </style>
 @endsection
+
+
 
 @section('body')
     <div class="container">
@@ -48,17 +51,24 @@
         @endif
 
         <div class="text-center">
-            <a href="{{ route('familia.create') }}" class="d-block mb-3">
-                <button type="button" class="btn btn-custom">CREAR NUEVA ENCUESTA</button>
-            </a>
+            <div class="centered-link">
+                <a href="{{ route('familia.create') }}">
+                    <button type="button" class="btn btn-custom">CREAR NUEVA ENCUESTA</button>
+                </a>
+            </div>
 
-            <a href="{{ route('encuesta.index') }}" class="d-block mb-3">
-                <button type="button" class="btn btn-custom">VER LISTADO DE ENCUESTAS</button>
-            </a>
+            <div class="centered-link">
+                <a href="{{ route('encuesta.index') }}">
+                    <button type="button" class="btn btn-custom">VER LISTADO DE ENCUESTAS</button>
+                </a>
+            </div>
 
-            <a href="{{ route('usuario.index') }}" class="d-block mb-3">
-                <button type="button" class="btn btn-custom">Ver USUARIOS</button>
-            </a>
+            <div class="centered-link">
+                <a href="{{ route('usuario.index') }}">
+                    <button type="button" class="btn btn-custom">Ver USUARIOS</button>
+                </a>
+            </div>
         </div>
     </div>
 @endsection
+
