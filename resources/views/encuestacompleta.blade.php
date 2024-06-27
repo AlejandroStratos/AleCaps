@@ -1,28 +1,38 @@
 @extends('master')
 
 @section('head')
-    <style>
+<style>
+    .table-responsive-custom {
+        display: block;
+    }
+
+    @media (max-width: 767px) {
         .table-responsive-custom {
             overflow-x: auto;
         }
 
-        @media (max-width: 767px) {
-            .table-responsive-custom th,
-            .table-responsive-custom td {
-                white-space: nowrap;
-            }
+        .table-responsive-custom th,
+        .table-responsive-custom td {
+            white-space: nowrap;
         }
+    }
 
-        .btn-group-custom {
-            display: flex;
-            flex-direction: row;
-            overflow-x: auto;
+    @media (min-width: 768px) {
+        .table-responsive-custom {
+            display: table;
         }
+    }
 
-        .btn-group-custom .btn {
-            flex-shrink: 0;
-        }
-    </style>
+    .btn-group-custom {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .btn-group-custom .btn {
+        flex-shrink: 0;
+    }
+</style>
 @endsection
 
 @section('body')

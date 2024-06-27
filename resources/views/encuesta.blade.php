@@ -26,7 +26,7 @@
                     <!-- Agrega tus preguntas y selectores aquí -->
                     <div class="form-group">
                         <label for="accSalud1">¿Cómo considera que es el acceso a la atención en salud suyo y/o de su familia?</label>
-                        <select name="accSalud1" id="accSalud1" class="form-control">
+                        <select name="accSalud1" id="accSalud1" class="form-control" required>
                             <option value="">Seleccionar</option>
                             <option value="Bueno">Bueno</option>
                             <option value="Regular">Regular</option>
@@ -36,7 +36,7 @@
 
                     <div class="form-group">
                         <label for="accSalud2">¿Usted y/o su familia realizan controles preventivos de salud??</label>
-                        <select name="accSalud2" id="accSalud2" class="form-control">
+                        <select name="accSalud2" id="accSalud2" class="form-control" required>
                                 <option value="">Seleccionar</option>
                                 <option value="Si">Si</option>
                                 <option value="No">No</option>
@@ -45,7 +45,7 @@
 
                     <div class="form-group">
                         <label for="accSalud3">Ante algún problema de Salud ¿A dónde concurren?</label>
-                        <select name="accSalud3" id="accSalud3" class="form-control">
+                        <select name="accSalud3" id="accSalud3" class="form-control" required>
                                 <option value="">Seleccionar</option>
                                 <option value="Hospital público › ¿Cuál?">Hospital público › ¿Cuál?"</option>
                                 <option value="Centro de salud > ¿ Cual?">Centro de salud > ¿ Cual?</option>
@@ -58,7 +58,7 @@
 
                     <div class="form-group">
                         <label for="accSalud4">¿Cómo los consiguen?</label>
-                        <select name="accSalud4" id="accSalud4" class="form-control">
+                        <select name="accSalud4" id="accSalud4" class="form-control" required>
                                 <option value="">Seleccionar</option>
                                 <option value="Telefónicamente">Telefónicamente</option>
                                 <option value="Personalmente">Personalmente</option>
@@ -71,7 +71,7 @@
 
                     <div class="form-group">
                         <label for="accSalud5">¿Cuál es el tiempo de espera de los turnos?</label>
-                        <select name="accSalud5" id="accSalud5" class="form-control">
+                        <select name="accSalud5" id="accSalud5" class="form-control" required>
                                 <option value="">Seleccionar</option>
                                 <option value="Más de 1 semana">Más de 1 semana</option>
                                 <option value="Un mes">Un mes</option>
@@ -84,7 +84,7 @@
 
                     <div class="form-group">
                         <label for="accSalud6">¿Tiene indicada medicación?</label>
-                        <select name="accSalud6" id="accSalud6" class="form-control">
+                        <select name="accSalud6" id="accSalud6" class="form-control" required>
                                 <option value="">Seleccionar</option>
                                 <option value="Si">Si</option>
                                 <option value="No">No</option>
@@ -95,7 +95,7 @@
 
                     <div class="form-group">
                         <label for="accSalud7">¿Tiene acceso a la medicación?</label>
-                        <select name="accSalud7" id="accSalud7" class="form-control">
+                        <select name="accSalud7" id="accSalud7" class="form-control" required>
                                 <option value="">Seleccionar</option>
                                 <option value="Si, regularmente">Si, regularmente</option>
                                 <option value="Si, pero no regularmente">Si, pero no regularmente</option>
@@ -106,7 +106,7 @@
 
                     <div class="form-group">
                         <label for="accSalud8">¿Cómo la consigue?</label>
-                        <select name="accSalud8" id="accSalud8" class="form-control">
+                        <select name="accSalud8" id="accSalud8" class="form-control" required>
                                 <option value="">Seleccionar</option>
                                 <option value="Hospital">Hospital</option>
                                 <option value="Centro de salud">Centro de salud</option>
@@ -118,7 +118,7 @@
 
         <div class="form-group">
         <label for="accSalud9">¿Toma la medicación acorde a la indicación médica?</label>
-        <select name="accSalud9" id="accSalud9" class="form-control">
+        <select name="accSalud9" id="accSalud9" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
                 <option value="No > ¿cómo la toma?">No > ¿cómo la toma?</option>
@@ -127,7 +127,7 @@
 
         <div class="form-group">
         <label for="accMental1">¿Alguien en el grupo familiar recibe tratamiento en Salud Mental (Psicológico y/o Psiquiátrico)?</label>
-        <select name="accMental1" id="accMental1" class="form-control">
+        <select name="accMental1" id="accMental1" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="si">si</option>
                 <option value="no">no</option>
@@ -136,7 +136,7 @@
 
         <div class="form-group">
         <label for="accMental2">¿Alguien en su familia lo necesitó y no lo obtuvo?</label>
-        <select name="accMental2" id="accMental2" class="form-control">
+        <select name="accMental2" id="accMental2" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
@@ -145,7 +145,7 @@
 
         <div class="form-group">
         <label for="prSoysa">De la siguiente lista de problemas sociales y de salud ¿cuáles son los 3 principales que identifica en el barrio?</label>
-        <select name="prSoysa" id="prSoysa" class="form-control">
+        <select name="prSoysa" id="prSoysa" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Personas en situación de calle">Personas en situación de calle</option>
                 <option value="Consumo problemático">Consumo problemático</option>
@@ -165,7 +165,7 @@
 
         <div class="form-group">
         <label for="alimantacion1">¿Recibe asistencia alimentaria?</label>
-        <select name="alimantacion1" id="alimantacion1" class="form-control">
+        <select name="alimantacion1" id="alimantacion1" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
@@ -174,7 +174,7 @@
 
         <div class="form-group">
         <label for="alimentacion2">¿De qué tipo? (se puede responder más de una)</label>
-        <select name="alimentacion2" id="alimentacion2" class="form-control">
+        <select name="alimentacion2" id="alimentacion2" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Comida elaborada/vianda">Comida elaborada/vianda</option>
                 <option value="Bolsón de alimentos">Bolsón de alimentos</option>
@@ -184,7 +184,7 @@
 
         <div class="form-group">
         <label for="alimentacion3">¿Tiene huerta en su casa?</label>
-        <select name="alimentacion3" id="alimentacion3" class="form-control">
+        <select name="alimentacion3" id="alimentacion3" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
@@ -193,7 +193,7 @@
 
         <div class="form-group">
         <label for="alimentacion4">¿Cría de animales para consumo?</label>
-        <select name="alimentacion4" id="alimentacion4" class="form-control">
+        <select name="alimentacion4" id="alimentacion4" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
@@ -202,7 +202,7 @@
 
         <div class="form-group">
         <label for="partSocial">¿Participa en alguna institución/organización?</label>
-        <select name="partSocial" id="partSocial" class="form-control">
+        <select name="partSocial" id="partSocial" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
@@ -211,7 +211,7 @@
 
         <div class="form-group">
         <label for="vivienda1">Carácter de la vivienda/lote</label>
-        <select name="vivienda1" id="vivienda1" class="form-control">
+        <select name="vivienda1" id="vivienda1" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Propia">Propia</option>
                 <option value="Préstamo">Préstamo</option>
@@ -223,7 +223,7 @@
 <form method="post" action="guardar_datos.php">
         <div class="form-group">
         <label for="vivienda2">Materiales que predominan en la vivienda</label>
-        <select name="vivienda2" id="vivienda2" class="form-control">
+        <select name="vivienda2" id="vivienda2" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Material, ladrillo">Material, ladrillo</option>
                 <option value="Madera">Madera</option>
@@ -254,7 +254,7 @@
 
         <div class="form-group">
         <label for="vivienda3">Materiales predominantes en el piso</label>
-        <select name="vivienda3" id="vivienda3" class="form-control">
+        <select name="vivienda3" id="vivienda3" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Cerámico (revestimiento)">Cerámico (revestimiento)</option>
                 <option value="Cemento">Cemento</option>
@@ -265,7 +265,7 @@
 
         <div class="form-group">
         <label for="vivienda4">El techo ¿tiene revestimiento interior o cielorraso?</label>
-        <select name="vivienda4" id="vivienda4" class="form-control">
+        <select name="vivienda4" id="vivienda4" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
@@ -275,7 +275,7 @@
 
         <div class="form-group">
         <label for="vivienda5">¿Cuántas habitaciones o piezas para dormir tiene este hogar?</label>
-        <select name="vivienda5" id="vivienda5" class="form-control">
+        <select name="vivienda5" id="vivienda5" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Ninguna">Ninguna</option>
                 <option value="Una">Una</option>
@@ -286,7 +286,7 @@
 
         <div class="form-group">
         <label for="vivienda6">El baño/letrina se encuentra:</label>
-        <select name="vivienda6" id="vivienda6" class="form-control">
+        <select name="vivienda6" id="vivienda6" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Dentro de la vivienda">Dentro de la vivienda</option>
                 <option value="Fuera de la vivienda, pero dentro del terreno">Fuera de la vivienda, pero dentro del terreno</option>
@@ -296,7 +296,7 @@
 
         <div class="form-group">
         <label for="vivienda7">El desagüe del inodoro es:</label>
-        <select name="vivienda7" id="vivienda7" class="form-control">
+        <select name="vivienda7" id="vivienda7" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="A cámara séptica y pozo ciego">A cámara séptica y pozo ciego</option>
                 <option value="Sólo a pozo ciego">Sólo a pozo ciego</option>
@@ -307,7 +307,7 @@
 
         <div class="form-group">
         <label for="accBas1">Tiene agua...</label>
-        <select name="accBas1" id="accBas1" class="form-control">
+        <select name="accBas1" id="accBas1" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="por cañería dentro de la vivienda">por cañería dentro de la vivienda</option>
                 <option value="fuera de la vivienda pero dentro del terreno">fuera de la vivienda pero dentro del terreno</option>
@@ -318,7 +318,7 @@
 
         <div class="form-group">
         <label for="accBas2">Para cocinar utiliza…</label>
-        <select name="accBas2" id="accBas2" class="form-control">
+        <select name="accBas2" id="accBas2" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="gas de red">gas de red</option>
                 <option value="gas envasado (tubo/garrafa)">gas envasado (tubo/garrafa)</option>
@@ -328,7 +328,7 @@
 
         <div class="form-group">
         <label for="accBas3">El agua que usa, proviene de...</label>
-        <select name="accBas3" id="accBas3" class="form-control">
+        <select name="accBas3" id="accBas3" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="red pública">red pública</option>
                 <option value="perforación con bomba a motor">perforación con bomba a motor</option>
@@ -338,7 +338,7 @@
 
         <div class="form-group">
         <label for="accBas4">Para calefaccionarse utiliza…</label>
-        <select name="accBas4" id="accBas4" class="form-control">
+        <select name="accBas4" id="accBas4" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="gas de red">gas de red</option>
                 <option value="gas envasado (tubo/garrafa)">gas envasado (tubo/garrafa)</option>
@@ -349,7 +349,7 @@
 
                     <div class="form-group">
                         <label for="capId">CAP ID</label>
-                        <select name="capId" id="capId" class="form-control">
+                        <select name="capId" id="capId" class="form-control" required>
                                 <option value="">Seleccionar</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -371,7 +371,7 @@
                     {{-- BARRIO--------------------------------------------------------------- --}}
                     <div class="form-group">
                         <label for="barrioId">Barrio</label>
-                        <select name="barrioId" id="barrioId" class="form-control">
+                        <select name="barrioId" id="barrioId" class="form-control" required>
                             <option value="">Seleccionar</option>
                             <!-- Los barrios se cargarán aquí mediante AJAX -->
                         </select>
