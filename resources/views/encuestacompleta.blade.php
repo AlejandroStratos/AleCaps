@@ -41,6 +41,10 @@
     <h1 class="text-center">Encuesta Completa</h1>
     <br>
 
+    <a href="{{ route('encuesta.index') }}" class="btn btn-secondary mb-2 mb-md-0"><i class="bi bi-arrow-left-short"></i> Volver</a>
+    <br>
+    <br>
+
     @if($encuesta)
         <div class="table-responsive table-responsive-custom">
             <table class="table table-hover table-bordered table-light">
