@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function Laravel\Prompts\error;
+
 class UserController extends Controller
 {
     /**
@@ -38,7 +40,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        try{
 
+        
         $usuario = new User();
         $usuario->nombreusuario=$request->nombreusuario;
         $usuario->nombre=$request->nombre;
@@ -51,7 +55,10 @@ class UserController extends Controller
         $usuario->save();
         /* return response()->noContent() */
         return redirect()->route('usuario.store')->with('success', 'Usuario creado correctamente');
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'Error: asegurese que el nombre del usuario sea unico');
+        }
+        
     }
 
     /**
