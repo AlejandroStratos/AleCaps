@@ -54,6 +54,8 @@ class BarriosSeeder extends Seeder
             ['nombreBarrio' => 'Villa SizBarrio', 'capId' => 9],
             ['nombreBarrio' => 'La Tosquera', 'capId' => 9],
             ['nombreBarrio' => 'Barrio Municipal Plan Abuelos', 'capId' => 9],
+            ['nombreBarrio' => 'Cachari', 'capId' => 11],
+            ['nombreBarrio' => 'Chillar', 'capId' => 12],             
             ['nombreBarrio' => 'Villa Giammatolo', 'capId' => 13],
             ['nombreBarrio' => 'San Martin de Porres', 'capId' => 13],
             ['nombreBarrio' => 'Catamarca', 'capId' => 13],
