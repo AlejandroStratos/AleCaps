@@ -277,6 +277,7 @@
                             </select>
                         </div>
 
+
                         <div class="form-group">
                             <label for="vivienda5">¿Cuántas habitaciones o piezas para dormir tiene este hogar?</label>
                             <select name="vivienda5" id="vivienda5" class="form-control">
@@ -307,6 +308,7 @@
                                 <option value="Sólo a pozo ciego">Sólo a pozo ciego</option>
                                 <option value="A hoyo, excavación en la tierra, etc.">A hoyo, excavación en la tierra, etc.
                                 </option>
+
 
                             </select>
                         </div>

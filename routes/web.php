@@ -13,6 +13,7 @@ Route::post('/guardar-encuesta', [EncuestaController::class, 'store'])->name('en
 
 Route::get('/nuevo-integrante/{famId}', [InteranteController::class, 'create'])->name('integrante.create');
 Route::post('/guardar-integrante', [InteranteController::class, 'store'])->name('integrante.store');
+Route::delete('/encuestas/{id}', [InteranteController::class, 'destroy'])->name('integrante.destroy');
 
 Route::get('/nueva-familia', [FamiliaController::class, 'create'])->name('familia.create');
 Route::post('/guardar-familia', [FamiliaController::class, 'store'])->name('familia.store');

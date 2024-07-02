@@ -158,7 +158,7 @@ class EncuestaController extends Controller
     {
         // Encuentra la encuesta por su ID
         $encuesta = encuestas::find($encuestaId);
-
+        
         if ($encuesta) {
             // Elimina la encuesta, y Eloquent se encargará de eliminar las relaciones en cascada
             $encuesta->delete();
