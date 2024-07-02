@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('familias', function (Blueprint $table) {
             $table->integerIncrements('famId');
             $table->string('domicilio');
+            $table->unsignedInteger('barrioId'); 
+            $table->foreign('barrioId')->references('barrioId')->on('barrios');
             $table->timestamps();
         });
     }

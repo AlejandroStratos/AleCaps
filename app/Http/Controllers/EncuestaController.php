@@ -4,16 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\encuestas;
 use App\Models\familias;
+use App\Models\barrios;
 use Illuminate\Http\Request;
 
 class EncuestaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+     public function index()
     {
-        $encuestas = encuestas::with('familia')->get();
+        $encuestas = encuestas::with(['familia', 'barrio'])->get();
         return view('verencuestas', compact('encuestas'));
     }
 
@@ -26,15 +25,15 @@ class EncuestaController extends Controller
         $encuestas = encuestas::join('familias', 'encuestas.famId', '=', 'familias.famId')
             ->where('familias.domicilio', 'LIKE', '%' . $domicilio . '%')
             ->select('encuestas.*', 'familias.domicilio')
+            ->with('barrio')
             ->get();
 
         return view('verencuestas', ['encuestas' => $encuestas]);
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+ 
     public function create($famId)
     {
 
@@ -44,9 +43,21 @@ class EncuestaController extends Controller
 
     }
 
+//BARRIOS-------------------------------------------------------------------
+    public function getBarriosByCapId($capId)
+    {
+        $barrios = barrios::where('capId', $capId)->pluck('nombreBarrio', 'barrioId');
+        return response()->json($barrios);
+    }
+//--------------------------------------------------------------------------  
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'prSoysa' => 'required|array|size:3',
+            'alimentacion2' => 'required|array|min:1',
+        ]);
 
         $famId = $request->input('famId');
 
@@ -62,9 +73,9 @@ class EncuestaController extends Controller
         $encuesta->accSalud9 = $request->accSalud9;
         $encuesta->accMental1 = $request->accMental1;
         $encuesta->accMental2 = $request->accMental2;
-        $encuesta->prSoysa = $request->prSoysa;
+        $encuesta->prSoysa = implode(', ', $request->prSoysa); // Guardar como string separado por comas
         $encuesta->alimantacion1 = $request->alimantacion1;
-        $encuesta->alimentacion2 = $request->alimentacion2;
+        $encuesta->alimentacion2 = implode(', ', $request->alimentacion2); // Guardar como string separado por comas
         $encuesta->alimentacion3 = $request->alimentacion3;
         $encuesta->alimentacion4 = $request->alimentacion4;
         $encuesta->partSocial = $request->partSocial;
@@ -84,6 +95,11 @@ class EncuestaController extends Controller
         $encuesta->capId = $request->capId;
 
         $encuesta->save();
+
+        $familia = familias::find($request->input('famId'));
+        $familia->barrioId = $request->input('barrioId');
+        $familia->save();
+
         return redirect()->route('home')->with('success', 'Encuesta creada correctamente');
     }
 

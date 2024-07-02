@@ -19,4 +19,10 @@ public function integrantes()
 {
     return $this->hasMany(integrantes::class, 'famId');
 }
+
+public function barrio()
+{
+    return $this->belongsTo(barrios::class, 'barrioId');
+}
+
 }
