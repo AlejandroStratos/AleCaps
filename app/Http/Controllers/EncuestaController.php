@@ -54,6 +54,11 @@ class EncuestaController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate([
+            'prSoysa' => 'required|array|size:3',
+            'alimentacion2' => 'required|array|min:1',
+        ]);
+
         $famId = $request->input('famId');
 
         $encuesta = new encuestas();
@@ -68,9 +73,9 @@ class EncuestaController extends Controller
         $encuesta->accSalud9 = $request->accSalud9;
         $encuesta->accMental1 = $request->accMental1;
         $encuesta->accMental2 = $request->accMental2;
-        $encuesta->prSoysa = $request->prSoysa;
+        $encuesta->prSoysa = implode(', ', $request->prSoysa); // Guardar como string separado por comas
         $encuesta->alimantacion1 = $request->alimantacion1;
-        $encuesta->alimentacion2 = $request->alimentacion2;
+        $encuesta->alimentacion2 = implode(', ', $request->alimentacion2); // Guardar como string separado por comas
         $encuesta->alimentacion3 = $request->alimentacion3;
         $encuesta->alimentacion4 = $request->alimentacion4;
         $encuesta->partSocial = $request->partSocial;

@@ -9,6 +9,18 @@
             color: #FFFFFF;
             border-radius: 40px;
         }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-container input[type="checkbox"] {
+            transform: scale(1.5); /* Aumenta el tamaño del checkbox */
+            margin-right: 10px;
+        }
+        .checkbox-container label {
+            font-size: 18px; /* Aumenta el tamaño del texto */
+        }
         </style>
 
 @endsection
@@ -143,25 +155,74 @@
         </select>
         </div>
 
-        <div class="form-group">
-        <label for="prSoysa">De la siguiente lista de problemas sociales y de salud ¿cuáles son los 3 principales que identifica en el barrio?</label>
-        <select name="prSoysa" id="prSoysa" class="form-control" required>
-                <option value="">Seleccionar</option>
-                <option value="Personas en situación de calle">Personas en situación de calle</option>
-                <option value="Consumo problemático">Consumo problemático</option>
-                <option value="No finalizar la escuela secundaria">No finalizar la escuela secundaria</option>
-                <option value="Situaciones de violencias">Situaciones de violencias</option>
-                <option value="Inseguridad">Inseguridad</option>
-                <option value="Desacupación">Desacupación</option>
-                <option value="Problemas en el acceso a la salud">Problemas en el acceso a la salud</option>
-                <option value="Suicidios/ Autolesión">Suicidios/ Autolesión</option>
-                <option value="Embarazos no deseados">Embarazos no deseados</option>
-                <option value="Desaparición de personas">Desaparición de personas</option>
-                <option value="Venta de sustancias">Venta de sustancias</option>
-                <option value="Otros">Otros</option>
 
-        </select>
-        </div>
+        <div class="form-group">
+                <label for="prSoysa">De la siguiente lista de problemas sociales y de salud ¿cuáles son los 3 principales que identifica en el barrio?</label>
+                <div>
+                        <div class="checkbox-container">    
+                                <label><input type="checkbox" name="prSoysa[]" value="Personas en situación de calle"> Personas en situación de calle</label><br>
+                        </div>
+                        <div class="checkbox-container">
+                                <label><input type="checkbox" name="prSoysa[]" value="Consumo problemático"> Consumo problemático</label><br>
+                        </div>
+                        <div class="checkbox-container">
+                                <label><input type="checkbox" name="prSoysa[]" value="No finalizar la escuela secundaria"> No finalizar la escuela secundaria</label><br>
+                        </div>
+                        <div class="checkbox-container">
+                                <label><input type="checkbox" name="prSoysa[]" value="Situaciones de violencias"> Situaciones de violencias</label><br>
+                        </div>
+                        <div class="checkbox-container">        
+                                <label><input type="checkbox" name="prSoysa[]" value="Inseguridad"> Inseguridad</label><br>
+                        </div>
+                        <div class="checkbox-container">
+                                <label><input type="checkbox" name="prSoysa[]" value="Desacupación"> Desacupación</label><br>
+                        </div>
+                        <div class="checkbox-container">
+                                <label><input type="checkbox" name="prSoysa[]" value="Problemas en el acceso a la salud"> Problemas en el acceso a la salud</label><br>
+                        </div>
+                        <div class="checkbox-container">
+                                <label><input type="checkbox" name="prSoysa[]" value="Suicidios/ Autolesión"> Suicidios/ Autolesión</label><br>
+                        </div>
+                        <div class="checkbox-container">
+                                <label><input type="checkbox" name="prSoysa[]" value="Embarazos no deseados"> Embarazos no deseados</label><br>
+                        </div>
+                        <div class="checkbox-container">
+                                <label><input type="checkbox" name="prSoysa[]" value="Desaparición de personas"> Desaparición de personas</label><br>
+                        </div>
+                        <div class="checkbox-container">
+                                <label><input type="checkbox" name="prSoysa[]" value="Venta de sustancias"> Venta de sustancias</label><br>
+                        </div>
+                        <div class="checkbox-container">
+                                <label><input type="checkbox" name="prSoysa[]" value="Otros"> Otros</label><br>
+                        </div>
+                </div>
+            </div>
+
+{{--             -------------SCRIPT PARA QUE TENGA SI O SI MARCADAS 3 OPCIONES------------------------------ --}}
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const form = document.querySelector('form');
+                    const checkboxes = document.querySelectorAll('input[name="prSoysa[]"]');
+                    const minChecked = 3;
+            
+                    form.addEventListener('submit', function (e) {
+                        let checkedCount = 0;
+                        checkboxes.forEach(checkbox => {
+                            if (checkbox.checked) {
+                                checkedCount++;
+                            }
+                        });
+            
+                        if (checkedCount !== minChecked) {
+                            e.preventDefault();
+                            alert(`Debes seleccionar exactamente ${minChecked} opciones en la pregunta "Problemas sociales y salud".`);
+                        }
+                    });
+                });
+            </script>
+
+{{--             -------------SCRIPT PARA QUE TENGA SI O SI MARCADAS 3 OPCIONES------------------------------ --}}
+            
 
         <div class="form-group">
         <label for="alimantacion1">¿Recibe asistencia alimentaria?</label>
@@ -173,14 +234,46 @@
         </div>
 
         <div class="form-group">
-        <label for="alimentacion2">¿De qué tipo? (se puede responder más de una)</label>
-        <select name="alimentacion2" id="alimentacion2" class="form-control" required>
-                <option value="">Seleccionar</option>
-                <option value="Comida elaborada/vianda">Comida elaborada/vianda</option>
-                <option value="Bolsón de alimentos">Bolsón de alimentos</option>
-                <option value="Dinero">Dinero</option>
-        </select>
+                <label for="alimentacion2">¿De qué tipo? (se puede responder más de una)</label>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="comida_elaborada" name="alimentacion2[]" value="Comida elaborada/vianda">
+                    <label for="comida_elaborada">Comida elaborada/vianda</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="bolson_alimentos" name="alimentacion2[]" value="Bolsón de alimentos">
+                    <label for="bolson_alimentos">Bolsón de alimentos</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="dinero" name="alimentacion2[]" value="Dinero">
+                    <label for="dinero">Dinero</label>
+                </div>
         </div>
+
+{{--             -------------SCRIPT PARA QUE TENGA SI O SI MARCADA 1 OPCION------------------------------ --}}
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const checkboxes = document.querySelectorAll('input[name="alimentacion2[]"]');
+            const minChecked = 1; // Mínimo de opciones a seleccionar
+            
+            form.addEventListener('submit', function (e) {
+                let checkedCount = 0;
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        checkedCount++;
+                    }
+                });
+        
+                if (checkedCount < minChecked) {
+                    e.preventDefault();
+                    alert(`Debes seleccionar al menos ${minChecked} opción en la pregunta "¿De qué tipo?".`);
+                }
+            });
+        });
+</script>
+        
+
+{{--             -------------SCRIPT PARA QUE TENGA SI O SI MARCADA 1 OPCION------------------------------ --}}
 
         <div class="form-group">
         <label for="alimentacion3">¿Tiene huerta en su casa?</label>
