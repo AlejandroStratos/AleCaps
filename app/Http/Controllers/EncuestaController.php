@@ -51,57 +51,78 @@ class EncuestaController extends Controller
     }
 //--------------------------------------------------------------------------  
 
-    public function store(Request $request)
-    {
+public function store(Request $request)
+{
+    // Validación de los datos
+    $request->validate([
+        'prSoysa' => 'required|array|size:3',
+        'alimentacion2' => 'required|array|min:1',
+    ]);
 
-        $request->validate([
-            'prSoysa' => 'required|array|size:3',
-            'alimentacion2' => 'required|array|min:1',
-        ]);
+    try {
+        // Inicializar variables de validación
+        $validatedData = $request->all();
+
+        // Concatenar opciones adicionales a los campos principales
+        if ($request->filled('accSalud3_otro')) {
+            $validatedData['accSalud3'] = $request->accSalud3_otro;
+        }
+        if ($request->filled('accSalud4_otro')) {
+            $validatedData['accSalud4'] = $request->accSalud4_otro;
+        }
+        if ($request->filled('accSalud9_otro')) {
+            $validatedData['accSalud9'] = $request->accSalud9_otro;
+        }
+        if ($request->filled('vivienda2_otro')) {
+            $validatedData['vivienda2'] = $request->vivienda2_otro;
+        }
 
         $famId = $request->input('famId');
 
         $encuesta = new encuestas();
-        $encuesta->accSalud1 = $request->accSalud1;
-        $encuesta->accSalud2 = $request->accSalud2;
-        $encuesta->accSalud3 = $request->accSalud3;
-        $encuesta->accSalud4 = $request->accSalud4;
-        $encuesta->accSalud5 = $request->accSalud5;
-        $encuesta->accSalud6 = $request->accSalud6;
-        $encuesta->accSalud7 = $request->accSalud7;
-        $encuesta->accSalud8 = $request->accSalud8;
-        $encuesta->accSalud9 = $request->accSalud9;
-        $encuesta->accMental1 = $request->accMental1;
-        $encuesta->accMental2 = $request->accMental2;
+        $encuesta->accSalud1 = $validatedData['accSalud1'];
+        $encuesta->accSalud2 = $validatedData['accSalud2'];
+        $encuesta->accSalud3 = $validatedData['accSalud3'];
+        $encuesta->accSalud4 = $validatedData['accSalud4'];
+        $encuesta->accSalud5 = $validatedData['accSalud5'];
+        $encuesta->accSalud6 = $validatedData['accSalud6'];
+        $encuesta->accSalud7 = $validatedData['accSalud7'];
+        $encuesta->accSalud8 = $validatedData['accSalud8'];
+        $encuesta->accSalud9 = $validatedData['accSalud9'];
+        $encuesta->accMental1 = $validatedData['accMental1'];
+        $encuesta->accMental2 = $validatedData['accMental2'];
         $encuesta->prSoysa = implode(', ', $request->prSoysa); // Guardar como string separado por comas
-        $encuesta->alimantacion1 = $request->alimantacion1;
+        $encuesta->alimantacion1 = $validatedData['alimantacion1'];
         $encuesta->alimentacion2 = implode(', ', $request->alimentacion2); // Guardar como string separado por comas
-        $encuesta->alimentacion3 = $request->alimentacion3;
-        $encuesta->alimentacion4 = $request->alimentacion4;
-        $encuesta->partSocial = $request->partSocial;
-        $encuesta->vivienda1 = $request->vivienda1;
-        $encuesta->vivienda2 = $request->vivienda2;
-        $encuesta->vivienda3 = $request->vivienda3;
-        $encuesta->vivienda4 = $request->vivienda4;
-        $encuesta->vivienda5 = $request->vivienda5;
-        $encuesta->vivienda6 = $request->vivienda6;
-        $encuesta->vivienda7 = $request->vivienda7;
-        $encuesta->accBas1 = $request->accBas1;
-        $encuesta->accBas2 = $request->accBas2;
-        $encuesta->accBas3 = $request->accBas3;
-        $encuesta->accBas4 = $request->accBas4;
-
+        $encuesta->alimentacion3 = $validatedData['alimentacion3'];
+        $encuesta->alimentacion4 = $validatedData['alimentacion4'];
+        $encuesta->partSocial = $validatedData['partSocial'];
+        $encuesta->vivienda1 = $validatedData['vivienda1'];
+        $encuesta->vivienda2 = $validatedData['vivienda2'];
+        $encuesta->vivienda3 = $validatedData['vivienda3'];
+        $encuesta->vivienda4 = $validatedData['vivienda4'];
+        $encuesta->vivienda5 = $validatedData['vivienda5'];
+        $encuesta->vivienda6 = $validatedData['vivienda6'];
+        $encuesta->vivienda7 = $validatedData['vivienda7'];
+        $encuesta->accBas1 = $validatedData['accBas1'];
+        $encuesta->accBas2 = $validatedData['accBas2'];
+        $encuesta->accBas3 = $validatedData['accBas3'];
+        $encuesta->accBas4 = $validatedData['accBas4'];
         $encuesta->famId = $famId;
-        $encuesta->capId = $request->capId;
-
+        $encuesta->capId = $request->input('capId');
+        
         $encuesta->save();
 
-        $familia = familias::find($request->input('famId'));
+        $familia = familias::find($famId);
         $familia->barrioId = $request->input('barrioId');
         $familia->save();
 
         return redirect()->route('home')->with('success', 'Encuesta creada correctamente');
+    } catch (\Exception $e) {
+        // Manejo de errores
+        return redirect()->back()->with('error', 'Ocurrió un error al crear la encuesta: ' . $e->getMessage());
     }
+}
 
     /**
      * Display the specified resource.

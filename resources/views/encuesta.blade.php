@@ -57,14 +57,38 @@
                         <label for="accSalud3">Ante algún problema de Salud ¿A dónde concurren?</label>
                         <select name="accSalud3" id="accSalud3" class="form-control" required>
                                 <option value="">Seleccionar</option>
-                                <option value="Hospital público › ¿Cuál?">Hospital público › ¿Cuál?"</option>
+                                <option value="Hospital publico › ¿Cual?">Hospital público › ¿Cuál?"</option>
                                 <option value="Centro de salud > ¿ Cual?">Centro de salud > ¿ Cual?</option>
                                 <option value="Clínica/consultorio privado">Clínica/consultorio privado</option>
                                 <option value="Posta/operativo de salud">Posta/operativo de salud</option>
                                 <option value="Medicina alternativa (curandero)">Medicina alternativa (curandero)</option>
                                 <option value="Otros">Otros</option>
                             </select>
-                        </div>
+                    </div>
+
+                    <div id="accSalud3-textbox" class="form-group" style="display: none;">
+                        <label for="accSalud3_otro">Nombre del lugar:</label>
+                        <input type="text" name="accSalud3_otro" id="accSalud3_otro" class="form-control">
+                    </div>
+
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var accSalud3Select = document.getElementById('accSalud3');
+                            var accSalud3Textbox = document.getElementById('accSalud3-textbox');
+
+                            accSalud3Select.addEventListener('change', function() {
+                                var selectedOption = this.value;
+                                if (selectedOption === 'Hospital publico › ¿Cual?'
+                                    || selectedOption === 'Centro de salud > ¿ Cual?'
+                                    || selectedOption === 'Otros') {
+                                    accSalud3Textbox.style.display = 'block';
+                                } else {
+                                    accSalud3Textbox.style.display = 'none';
+                                }
+                            });
+                        });
+                    </script>
 
                     <div class="form-group">
                         <label for="accSalud4">¿Cómo los consiguen?</label>
@@ -78,7 +102,30 @@
                                 <option value="Salita">Salita</option>
                                 <option value="Otro, Cual?">Otro, Cual?</option>
                             </select>
+                    </div>
+
+
+                    
+                        <div id="accSalud4-textbox" class="form-group" style="display: none;">
+                            <label for="accSalud4_otro">¿De qué otra forma los consiguen?</label>
+                            <input type="text" name="accSalud4_otro" id="accSalud4_otro" class="form-control">
                         </div>
+    
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var accSalud4Select = document.getElementById('accSalud4');
+                                var accSalud4Textbox = document.getElementById('accSalud4-textbox');
+    
+                                accSalud4Select.addEventListener('change', function() {
+                                    var selectedOption = this.value;
+                                    if (selectedOption === 'Otro, Cual?') {
+                                        accSalud4Textbox.style.display = 'block';
+                                    } else {
+                                        accSalud4Textbox.style.display = 'none';
+                                    }
+                                });
+                            });
+                        </script>    
 
                     <div class="form-group">
                         <label for="accSalud5">¿Cuál es el tiempo de espera de los turnos?</label>
@@ -87,9 +134,6 @@
                                 <option value="Más de 1 semana">Más de 1 semana</option>
                                 <option value="Un mes">Un mes</option>
                                 <option value="Más de 3 meses">Más de 3 meses</option>
-                                <option value="no">no</option>
-                                <option value="no">no</option>
-                                <option value="no">no</option>
                             </select>
                         </div>
 
@@ -136,6 +180,27 @@
                 <option value="No > ¿cómo la toma?">No > ¿cómo la toma?</option>
         </select>
         </div>
+
+        <div id="accSalud9-textbox" class="form-group" style="display: none;">
+            <label for="accSalud9_otro">¿Cómo la toma?</label>
+            <input type="text" name="accSalud9_otro" id="accSalud9_otro" class="form-control">
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var accSalud9Select = document.getElementById('accSalud9');
+                var accSalud9Textbox = document.getElementById('accSalud9-textbox');
+
+                accSalud9Select.addEventListener('change', function() {
+                    var selectedOption = this.value;
+                    if (selectedOption === 'No > ¿cómo la toma?') {
+                        accSalud9Textbox.style.display = 'block';
+                    } else {
+                        accSalud9Textbox.style.display = 'none';
+                    }
+                });
+            });
+        </script>
 
         <div class="form-group">
         <label for="accMental1">¿Alguien en el grupo familiar recibe tratamiento en Salud Mental (Psicológico y/o Psiquiátrico)?</label>
@@ -313,7 +378,7 @@
         </select>
         </div>
 
-<form method="post" action="guardar_datos.php">
+
         <div class="form-group">
         <label for="vivienda2">Materiales que predominan en la vivienda</label>
         <select name="vivienda2" id="vivienda2" class="form-control" required>
@@ -326,24 +391,26 @@
         </select>
         </div>
 
-                            <div class="form-group" id="otrosField" style="display:none;">
-                                <label for="otroscampos">Especificar otros materiales</label>
-                                <input type="text" name="otroscampos" id="otroscampos" class="form-control">
-                            </div>
-                        </form>
-
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                        <script>
-                            $(document).ready(function() {
-                                $('#vivienda2').on('change', function() {
-                                    if (this.value === 'Otros') {
-                                        $('#otrosField').show();
-                                    } else {
-                                        $('#otrosField').hide();
-                                    }
-                                });
-                            });
-                        </script>
+        <div id="vivienda2-textbox" class="form-group" style="display: none;">
+            <label for="vivienda2_otro">Especificar:</label>
+            <input type="text" name="vivienda2_otro" id="vivienda2_otro" class="form-control">
+        </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var vivienda2Select = document.getElementById('vivienda2');
+                var vivienda2Textbox = document.getElementById('vivienda2-textbox');
+        
+                vivienda2Select.addEventListener('change', function() {
+                    var selectedOption = this.value;
+                    if (selectedOption === 'Otros') {
+                        vivienda2Textbox.style.display = 'block';
+                    } else {
+                        vivienda2Textbox.style.display = 'none';
+                    }
+                });
+            });
+        </script>
 
         <div class="form-group">
         <label for="vivienda3">Materiales predominantes en el piso</label>
