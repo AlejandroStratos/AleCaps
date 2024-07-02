@@ -120,4 +120,7 @@ class UserController extends Controller
         $usuario->delete();
         return redirect('/usuario')->with('success', 'El usuario se eliminó correctamente');
    
+
+    }
+    
 }
