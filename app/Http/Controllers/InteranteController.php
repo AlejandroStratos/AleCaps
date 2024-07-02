@@ -65,7 +65,7 @@ class InteranteController extends Controller
                 if($request->funcion ==='agregar'){
                     $integrantes = integrantes::where('famId','=',$famId)
                     ->paginate(5);
-                    log::info($integrantes);
+                   
                     return redirect()->route('integrante.create',['famId'=> $famId])->with(['integrantes'=>$integrantes]);
                    
                 }else{
