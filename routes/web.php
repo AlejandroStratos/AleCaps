@@ -44,4 +44,7 @@ Route::get('/usuario',[UserController::class, 'create'])->name('usuario.create')
 Route::get('/usuario',[UserController::class, 'index'])->name('usuario.index');
 Route::post('/usuario',[UserController::class, 'store'])->name('usuario.store');
 Route::post('usuario/reAsignar',[UserController::class, 'asignar'])->name('usuario.asignar');
+Route::delete('usuario/{id}', [UserController::class, 'destroy'])->name('usuario.destroy');
 
+Route::get('usuario/editar/{id}', [UserController::class, 'edit'])->name('usuario.edit');
+Route::put('usuario/editar/{id}', [UserController::class, 'update'])->name('usuario.update');

@@ -51,7 +51,6 @@ class UserController extends Controller
         $usuario->password=$request->password;
         $usuario->rol=$request->rol;
         $usuario->capId=$request->capId;
-
         $usuario->save();
         /* return response()->noContent() */
         return redirect()->route('usuario.store')->with('success', 'Usuario creado correctamente');
@@ -72,9 +71,13 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit($userId)
     {
-        //
+        $editarusuarios = User::find($userId);
+        $caps = Caps::all();
+
+        return view('editarusuario', ['editarusuarios'=>$editarusuarios, 'caps'=>$caps]);
+       /*  return json_encode($editarusuarios); */
     }
     public function asignar(Request $request)
     {
@@ -92,16 +95,29 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $userId)
     {
-        //
+        $usuario = User::find($userId);
+        $usuario -> nombreusuario = $request->input('nombreusuario');
+        $usuario->nombre =$request ->input('nombre');
+        $usuario->apellido = $request ->input('apellido');
+        $usuario->email = $request ->input('email');
+        $usuario->password = $request ->input('password');
+        $usuario->rol = $request ->input('rol');
+        $usuario->capId=$request->input('capId');
+        /* $usuario->userId->input('userId'); */
+        $usuario->save();
+        return redirect()->Route('usuario.index')->with('success','hecho');//
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+
+    public function destroy(string $usuarioId)
     {
-        //
-    }
+        $usuario = User::find($usuarioId);
+        $usuario->delete();
+        return redirect('/usuario')->with('success', 'El usuario se eliminó correctamente');
+   
 }
