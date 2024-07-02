@@ -32,50 +32,50 @@
             <div class="col-md-12 col-lg-12 ">
                 <div class="card mt-4">
                     <div class="card-header">
-                        <h1 class="text-center">Crear nuevo usuario</h1>
+                        <h1 class="text-center">Editar usuario</h1>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('usuario.store') }}" method="POST">
+                        <form action="{{ Route('usuario.update', $editarusuarios->userId) }}" method = "POST">
                             @csrf
-
+                            @method('PUT')
                             <div class="input-group mb-3">
                                 <input type="text" for= "nombreusuario" name="nombreusuario" class="form-control"
                                     placeholder="nombre de usuario" aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2">
+                                    aria-describedby="basic-addon2" value = "{{ $editarusuarios->nombreusuario }}">
                                 {{--  <span class="input-group-text" id="nombreusuario" name="nombreusuario"></span>  --}}
                             </div>
 
                             <div class="input-group mb-3">
                                 <input type="text" for= "nombre" name="nombre" class="form-control"
                                     placeholder="Ingrese nombre" aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2">
+                                    aria-describedby="basic-addon2" value = "{{ $editarusuarios->nombre }}">
                                 {{--  <span class="input-group-text" id="nombre" name="nombre"></span>  --}}
                             </div>
 
                             <div class="input-group mb-3">
                                 <input type="text" for= "apellido" name="apellido" class="form-control"
                                     placeholder="Ingrese apellido" aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2">
+                                    aria-describedby="basic-addon2" value = "{{ $editarusuarios->apellido }}">
                                 {{--  <span class="input-group-text" id="apellido" name="apellido"></span>  --}}
                             </div>
 
                             <div class="input-group mb-3">
                                 <input type="text" for= "email" name="email" class="form-control"
                                     placeholder="Ingrese correo del usuario" aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2">
+                                    aria-describedby="basic-addon2" value = "{{ $editarusuarios->email }}">
                                 <span class="input-group-text" id="email" name="email">@Ejemplo.com</span>
                             </div>
 
                             <div class="input-group mb-3">
                                 <input type="text" for= "password" name="password" class="form-control"
                                     placeholder="contraseña" aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2">
+                                    aria-describedby="basic-addon2" value = "{{ $editarusuarios->password }}">
                                 <span class="input-group-text" id="password" name="password">password</span>
                             </div>
 
                             <div class="form-group">
                                 <select name="rol" id="rol" class="form-control">
-                                    <option value="">Seleccionar rol</option>
+                                    <option value="">{{ $editarusuarios->rol }}</option>
                                     <option value="Administrador">Administrador</option>
                                     <option value="Encuestador">Encuestador</option>
                                 </select>
@@ -84,7 +84,7 @@
                             <div class="input-group mb-3">
                                 <input type="text" for= "capId" name= "capId" class="form-control"
                                     placeholder="Ingrese numero de caps del usuario" aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2">
+                                    aria-describedby="basic-addon2" value = "{{ $editarusuarios->capId }}">
                                 <span class="input-group-text" id="capId" name= "capId">numero de caps</span>
                             </div>
 
@@ -97,7 +97,7 @@
         </div>
 
         <!-- mensaje -->
-        <div class="col-12 mt-1">
+        {{--  <div class="col-12 mt-1">
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -166,7 +166,7 @@
                                     </button>
 
                             </td>  --}}
-                                            <td>
+                                           {{--   <td>
                                                 <!-- select para reagsignar un caps(traidos de la base de datos en json) a un usuario -->
                                                 <form action="{{ Route('usuario.asignar') }}" method="POST">
                                                     @csrf
@@ -199,6 +199,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>  --}}
 @endsection
-
