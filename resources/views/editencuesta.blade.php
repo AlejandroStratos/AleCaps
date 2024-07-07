@@ -245,6 +245,19 @@
                     <label for="capId">CAP ID</label>
                     <select name="capId" id="capId" class="form-control">
                         <option value="1" {{ $encuesta->capId === '1' ? 'selected' : '' }}>1</option>
+                        <option value="2" {{ $encuesta->capId === '2' ? 'selected' : '' }}>2</option>
+                        <option value="3" {{ $encuesta->capId === '3' ? 'selected' : '' }}>3</option>
+                        <option value="4" {{ $encuesta->capId === '4' ? 'selected' : '' }}>4</option>
+                        <option value="5" {{ $encuesta->capId === '5' ? 'selected' : '' }}>5</option>
+                        <option value="6" {{ $encuesta->capId === '6' ? 'selected' : '' }}>6</option>
+                        <option value="7" {{ $encuesta->capId === '7' ? 'selected' : '' }}>7</option>
+                        <option value="8" {{ $encuesta->capId === '8' ? 'selected' : '' }}>8</option>
+                        <option value="9" {{ $encuesta->capId === '9' ? 'selected' : '' }}>9</option>
+                        <option value="10" {{ $encuesta->capId === '10' ? 'selected' : '' }}>10</option>
+                        <option value="11" {{ $encuesta->capId === '11' ? 'selected' : '' }}>11</option>
+                        <option value="12" {{ $encuesta->capId === '12' ? 'selected' : '' }}>12</option>
+                        <option value="13" {{ $encuesta->capId === '13' ? 'selected' : '' }}>13</option>
+
                     </select>
                 </div>
 

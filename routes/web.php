@@ -35,8 +35,9 @@ Route::put('/encuestas/{encuestaId}', [EncuestaController::class, 'update'])->na
 
 Route::get('/buscar-encuestas', [EncuestaController::class, 'buscarPorDomicilio'])->name('buscarEncuestas');
 
-
-
+//BARRIOS-------------------------------------------------------------------------------------------------
+Route::get('/barrios/{capId}', [App\Http\Controllers\EncuestaController::class, 'getBarriosByCapId']);
+//--------------------------------------------------------------------------------------------------------
 
 Route::get('/encuestas/search', [EncuestaController::class, 'search'])->name('encuesta.search');
 //rutas configuracion usuario----------------------------------------------------------------------
