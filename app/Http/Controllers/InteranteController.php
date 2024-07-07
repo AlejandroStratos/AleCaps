@@ -15,6 +15,12 @@ class InteranteController extends Controller
     {
         //
     }
+    public function edit($famId)
+    {
+        $familias = familias::find($famId);
+        $integrantes = integrantes::all();
+        return view('editintegrantes', ['integrantes'=>$integrantes, 'familia'=>$familias]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -32,13 +38,13 @@ class InteranteController extends Controller
         $enfermedades = $request->input('enfermedadesCronicas');
         $famId = $request->input('famId');
         $campos = $request->all();
-    
-        
-            
-   
+
+
+
+
         try {
-            
-           
+
+
                 $nuevoIntegrante = new integrantes();
                 $nuevoIntegrante->famId = $famId;
                 $nuevoIntegrante->apellido = $request->apellido;
@@ -58,30 +64,30 @@ class InteranteController extends Controller
                 }else{
                     $nuevoIntegrante->enfermedadesCronicas="Sin enfermedades cronicas";
                 };
-                
+
                 $nuevoIntegrante->ultimoControl = $request->ultimoControl;
                 $nuevoIntegrante->save();
 
                 if($request->funcion ==='agregar'){
                     $integrantes = integrantes::where('famId','=',$famId)
                     ->paginate(5);
-                   
+
                     return redirect()->route('integrante.create',['famId'=> $famId])->with(['integrantes'=>$integrantes]);
-                   
+
                 }else{
                     return redirect()->route('encuesta.create', ['famId' => $famId])->with('success', 'Integrantes agregados correctamente');
                 }
 
-            
+
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error al guardar los integrantes: ' . $e->getMessage());
         }
-    }    
+    }
 
 
 
-    
+
 
 
 public function update(Request $request, $famId)
@@ -123,7 +129,7 @@ public function update(Request $request, $famId)
      */
     public function destroy(string $id)
     {
-        
+
             $integrante = integrantes::find($id);
             $integrante->delete();
             return redirect()->back()->with('success', 'el usuario '.$integrante->nombre.' '.$integrante->apellido.' ha sido eliminado');
