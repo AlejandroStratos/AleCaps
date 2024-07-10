@@ -7,6 +7,7 @@ use App\Http\Controllers\FamiliaController;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\barrios;
 
 class encuestas extends Model
 {
@@ -61,5 +62,12 @@ class encuestas extends Model
     {
         return $this->hasMany(integrantes::class, 'famId', 'famId');
     }
+
+
+    public function barrio()
+    {
+        return $this->belongsTo(barrios::class, 'barrioId', 'barrioId');
+    }
+
 }
 

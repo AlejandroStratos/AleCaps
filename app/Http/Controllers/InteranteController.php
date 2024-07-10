@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\familias;
 use App\Models\integrantes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InteranteController extends Controller
 {
@@ -21,51 +21,70 @@ class InteranteController extends Controller
      */
     public function create($famId)
     {
-        return view('integrante', ['famId' => $famId]);
+        $integrantes = integrantes::where('famId','=',$famId)
+        ->paginate(5);
+        return view('integrante', ['famId' => $famId,'integrantes'=>$integrantes]);
     }
 
     public function store(Request $request)
-{
-    $integrantesData = $request->input('integrantes');
-    $famId = $request->input('famId');
-    // Procesa los datos de los integrantes y guárdalos en la base de datos
-    foreach ($integrantesData['apellido'] as $key => $apellido) {
-        $nuevoIntegrante = new integrantes();
-        $nuevoIntegrante->famId = $famId;
-        $nuevoIntegrante->apellido = $apellido;
-        $nuevoIntegrante->nombre = $integrantesData['nombre'][$key];
-        $nuevoIntegrante->fechaNac = $integrantesData['fechaNac'][$key];
-        $nuevoIntegrante->estadoDni = $integrantesData['estadoDni'][$key];
-        $nuevoIntegrante->genero = $integrantesData['genero'][$key];
-        $nuevoIntegrante->nacionalidad = $integrantesData['nacionalidad'][$key];
-        $nuevoIntegrante->vinculo = $integrantesData['vinculo'][$key];
-        $nuevoIntegrante->nivelEduc = $integrantesData['nivelEduc'][$key];
-        $nuevoIntegrante->ocupacion = $integrantesData['ocupacion'][$key];
-        $nuevoIntegrante->progSocial = $integrantesData['progSocial'][$key];
-        $nuevoIntegrante->obraSocial = $integrantesData['obraSocial'][$key];
-        
-        // Verificar y asignar enfermedadesCronicas
-    
 
-        if (isset($integrantesData['enfermedadesCronicas'][$key]) && is_array($integrantesData['enfermedadesCronicas'][$key])) {
-            $nuevoIntegrante->enfermedadesCronicas = implode(',', $integrantesData['enfermedadesCronicas'][$key]);
-        } else {
-            $nuevoIntegrante->enfermedadesCronicas = ''; // Asigna un valor predeterminado aquí
-        }
+    {
+        $enfermedades = $request->input('enfermedadesCronicas');
+        $famId = $request->input('famId');
+        $campos = $request->all();
 
-        $nuevoIntegrante->ultimoControl = $integrantesData['ultimoControl'][$key];
+
+
 
         try {
-            $nuevoIntegrante->save();
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error al guardar el integrante: ' . $e->getMessage());
-        }
 
-        $nuevoIntegrante->ultimoControl = $integrantesData['ultimoControl'][$key];
+
+                $nuevoIntegrante = new integrantes();
+                $nuevoIntegrante->famId = $famId;
+                $nuevoIntegrante->apellido = $request->apellido;
+                $nuevoIntegrante->nombre = $request->nombre;
+                $nuevoIntegrante->fechaNac = $request->fechaNac;
+                $nuevoIntegrante->estadoDni = $request->estadoDni;
+                $nuevoIntegrante->genero = $request->genero;
+                $nuevoIntegrante->nacionalidad = $request->nacionalidad;
+                $nuevoIntegrante->vinculo = $request->vinculo;
+                $nuevoIntegrante->nivelEduc = $request->nivelEduc;
+                $nuevoIntegrante->ocupacion = $request->ocupacion;
+                $nuevoIntegrante->progSocial = $request->progSocial;
+                $nuevoIntegrante->obraSocial = $request->obraSocial;
+                //verifica que se enviaron enfermedades,sino guarda sin problemas de salud
+                if(isset($enfermedades)){
+                    $nuevoIntegrante->enfermedadesCronicas = implode(',', $enfermedades);
+                }else{
+                    $nuevoIntegrante->enfermedadesCronicas="Sin enfermedades cronicas";
+                };
+
+                $nuevoIntegrante->ultimoControl = $request->ultimoControl;
+                $nuevoIntegrante->save();
+
+                if($request->funcion ==='agregar'){
+                    $integrantes = integrantes::where('famId','=',$famId)
+                    ->paginate(5);
+
+                    return redirect()->route('integrante.create',['famId'=> $famId])->with(['integrantes'=>$integrantes]);
+
+                }else{
+                    return redirect()->route('encuesta.create', ['famId' => $famId])->with('success', 'Integrantes agregados correctamente');
+                }
+
+
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error al guardar los integrantes: ' . $e->getMessage());
+
+        }
     }
 
-    return redirect()->route('encuesta.create', ['famId' => $famId])->with('success', 'Integrantes agregados correctamente');
-}
+
+
+
+
+
 
 
 public function update(Request $request, $famId)
@@ -106,7 +125,13 @@ public function update(Request $request, $famId)
      */
     public function destroy(string $id)
     {
-        // Implementar si es necesario
+
+
+            $integrante = integrantes::find($id);
+            $integrante->delete();
+            return redirect()->back()->with('success', 'el usuario '.$integrante->nombre.' '.$integrante->apellido.' ha sido eliminado');
+
+
     }
 }
 
