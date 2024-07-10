@@ -79,44 +79,56 @@ class InteranteController extends Controller
         }
     }    
 
+// Método edit: Recibe famId y lista los integrantes de esa familia.
+public function edit($famId)
+{
+    $familia = familias::find($famId);
+    if (!$familia) {
+        return redirect()->route('home')->with('error', 'Familia no encontrada.');
+    }
 
+    $integrantes = $familia->integrantes;
 
-    
+    // Convertir las enfermedades crónicas en arrays
+    foreach ($integrantes as $integrante) {
+        $integrante->enfermedadesCronicas = explode(',', $integrante->enfermedadesCronicas);
+    }
 
+    return view('editintegrantes', [
+        'integrantes' => $integrantes,
+        'famId' => $famId,
+    ]);
+}
 
+// Método update: Recibe famId y actualiza los integrantes de la familia.
 public function update(Request $request, $famId)
 {
-    // Obtener la familia y sus integrantes
     $familia = familias::find($famId);
     if (!$familia) {
         return redirect()->back()->with('error', 'Familia no encontrada');
     }
 
-    // Lógica para actualizar los integrantes
     foreach ($familia->integrantes as $integrante) {
         $integrante->update([
-            'apellido' => $request->input('integrantes')['apellido'][$integrante->intId],
-            'nombre' => $request->input('integrantes')['nombre'][$integrante->intId],
-            'fechaNac' => $request->input('integrantes')['fechaNac'][$integrante->intId],
-            'estadoDni' => $request->input('integrantes')['estadoDni'][$integrante->intId],
-            'genero' => $request->input('integrantes')['genero'][$integrante->intId],
-            'nacionalidad' => $request->input('integrantes')['nacionalidad'][$integrante->intId],
-            'vinculo' => $request->input('integrantes')['vinculo'][$integrante->intId],
-            'nivelEduc' => $request->input('integrantes')['nivelEduc'][$integrante->intId],
-            'ocupacion' => $request->input('integrantes')['ocupacion'][$integrante->intId],
-            'progSocial' => $request->input('integrantes')['progSocial'][$integrante->intId],
-            'obraSocial' => $request->input('integrantes')['obraSocial'][$integrante->intId],
-            'enfermedadesCronicas' => isset($request->input('integrantes')['enfermedadesCronicas'][$integrante->intId]) ? implode(',', $request->input('integrantes')['enfermedadesCronicas'][$integrante->intId]) : '',
-
-            //'enfermedadesCronicas' => implode(',', $request->input('integrantes')['enfermedadesCronicas'][$integrante->intId]),
-            'ultimoControl' => $request->input('integrantes')['ultimoControl'][$integrante->intId],
-            // Ajusta los otros campos que deseas actualizar
+            'apellido' => $request->input('integrantes')[$integrante->intId]['apellido'],
+            'nombre' => $request->input('integrantes')[$integrante->intId]['nombre'],
+            'fechaNac' => $request->input('integrantes')[$integrante->intId]['fechaNac'],
+            'estadoDni' => $request->input('integrantes')[$integrante->intId]['estadoDni'],
+            'genero' => $request->input('integrantes')[$integrante->intId]['genero'],
+            'nacionalidad' => $request->input('integrantes')[$integrante->intId]['nacionalidad'],
+            'vinculo' => $request->input('integrantes')[$integrante->intId]['vinculo'],
+            'nivelEduc' => $request->input('integrantes')[$integrante->intId]['nivelEduc'],
+            'ocupacion' => $request->input('integrantes')[$integrante->intId]['ocupacion'],
+            'progSocial' => $request->input('integrantes')[$integrante->intId]['progSocial'],
+            'obraSocial' => $request->input('integrantes')[$integrante->intId]['obraSocial'],
+            'enfermedadesCronicas' => isset($request->input('integrantes')[$integrante->intId]['enfermedadesCronicas']) ? implode(',', $request->input('integrantes')[$integrante->intId]['enfermedadesCronicas']) : '',
+            'ultimoControl' => $request->input('integrantes')[$integrante->intId]['ultimoControl'],
         ]);
     }
 
     return redirect()->route('home')->with('success', 'Integrante/s de la familia actualizado/s correctamente');
+}
 
-    }
 
     /**
      * Remove the specified resource from storage.
