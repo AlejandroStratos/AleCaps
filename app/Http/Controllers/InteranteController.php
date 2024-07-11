@@ -89,6 +89,8 @@ public function edit($famId)
 
     $integrantes = $familia->integrantes;
 
+    $encuesta = $familia->encuesta;
+
     // Convertir las enfermedades crónicas en arrays
     foreach ($integrantes as $integrante) {
         $integrante->enfermedadesCronicas = explode(',', $integrante->enfermedadesCronicas);
@@ -97,6 +99,7 @@ public function edit($famId)
     return view('editintegrantes', [
         'integrantes' => $integrantes,
         'famId' => $famId,
+        'encuestaId' => $encuesta->encuestaId
     ]);
 }
 

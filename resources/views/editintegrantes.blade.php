@@ -265,8 +265,11 @@
                       <hr>
                   @endforeach
               </div>
-              <div class="card-footer">
+              <div class="card-footer text-center">
                   <button type="submit" class="btn btn-custom">Actualizar Integrantes</button>
+
+                  {{-- BOTON EDITAR ENCUESTA --}}
+                  <a href="{{ route('encuesta.edit', $encuestaId) }}" class="btn btn-secondary">Editar encuesta</a>
               </div>
           </form>
       </div>
