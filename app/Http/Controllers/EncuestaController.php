@@ -221,17 +221,12 @@ public function store(Request $request)
      */
     public function destroy($encuestaId)
     {
-        // Encuentra la encuesta por su ID
-        $encuesta = encuestas::find($encuestaId);
-        
-        if ($encuesta) {
-            // Elimina la encuesta, y Eloquent se encargará de eliminar las relaciones en cascada
-            $encuesta->delete();
+        $encuesta = encuestas::findOrFail($encuestaId);
+        $encuesta->delete();
 
-            // Redirige a la página de listado de encuestas
-            return redirect()->route('encuesta.index')->with('success', 'Encuesta eliminada exitosamente.');
-        }
-
-        return redirect()->route('encuesta.index')->with('error', 'No se encontró la encuesta.');
+        return redirect()->route('encuesta.index')->with('success', 'Encuesta eliminada con éxito');
     }
+
+
+    
 }

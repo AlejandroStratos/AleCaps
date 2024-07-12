@@ -19,7 +19,9 @@ Route::get('/nueva-familia', [FamiliaController::class, 'create'])->name('famili
 Route::post('/guardar-familia', [FamiliaController::class, 'store'])->name('familia.store');
 
 Route::get('/ver-encuestas', [EncuestaController::class, 'index'])->name('encuesta.index');
-Route::delete('/encuestas/{encuestaId}', [EncuestaController::class, 'destroy'])->name('encuesta.destroy');
+Route::delete('/encuesta/{encuestaId}', [EncuestaController::class, 'destroy'])->name('encuesta.destroy');
+
+
 
 Route::get('/encuestas/{encuestaId}', [EncuestaController::class, 'show'])->name('encuesta.show');
 
