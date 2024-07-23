@@ -6,6 +6,7 @@ use App\Models\encuestas;
 use App\Models\familias;
 use App\Models\barrios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EncuestaController extends Controller
 {
@@ -135,9 +136,15 @@ public function store(Request $request)
     public function show($encuestaId)
     {
         $encuesta = encuestas::find($encuestaId);
+        $edad = DB::table('integrantes')->selectRaw('*,TIMESTAMPDIFF(YEAR,fechaNac, CURDATE()) as edad')->join('familias', 'familias.famId', 'integrantes.famId')
+            ->where('familias.famId', '=', $encuesta->famId)
+            ->get();
+        DB::table('integrantes')
+            ->join('familias', 'familias.famId', '=', 'integrantes.famId')
+            ->where('familias.famId', '=', $encuesta->famId)
+            ->update(['edad' => DB::raw('TIMESTAMPDIFF(YEAR, fechaNac, CURDATE())')]);
 
-        return view('encuestacompleta', ['encuesta' => $encuesta]);
-
+        return view('encuestacompleta', ['encuesta' => $encuesta, 'edad' => $edad]);
     }
 
     /**

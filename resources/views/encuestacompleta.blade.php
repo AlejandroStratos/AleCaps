@@ -225,11 +225,12 @@
                         <th>Obra Social</th>
                         <th>Enfermedades Cronicas</th>
                         <th>Ultimo Control</th>
+                        <th>Edad</th>
                         <!-- Agrega aquí los encabezados para los demás campos -->
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($encuesta->integrantes as $integrante)
+                    @foreach($edad as $integrante)
                         <tr>
                             <td>{{ $integrante->apellido }}</td>
                             <td>{{ $integrante->nombre }}</td>
@@ -244,6 +245,7 @@
                             <td>{{ $integrante->obraSocial }}</td>
                             <td>{{ $integrante->enfermedadesCronicas }}</td>
                             <td>{{ $integrante->ultimoControl }}</td>
+                            <td>{{ $integrante->edad }}</td>
                             <!-- Agrega aquí las celdas para los demás campos -->
                         </tr>
                     @endforeach
