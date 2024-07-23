@@ -16,12 +16,15 @@ return new class extends Migration
             $table->string('accSalud1');
             $table->string('accSalud2');
             $table->string('accSalud3');
+            $table->string('accSalud3_otro')->nullable();
             $table->string('accSalud4');
+            $table->string('accSalud4_otro')->nullable();
             $table->string('accSalud5');
             $table->string('accSalud6');
             $table->string('accSalud7');
             $table->string('accSalud8');
             $table->string('accSalud9');
+            $table->string('accSalud9_otro')->nullable();
             $table->string('accMental1');
             $table->string('accMental2');
             $table->string('prSoysa');
@@ -32,6 +35,7 @@ return new class extends Migration
             $table->string('partSocial');
             $table->string('vivienda1');
             $table->string('vivienda2');
+            $table->string('vivienda2_otro')->nullable();
             $table->string('vivienda3');
             $table->string('vivienda4');
             $table->string('vivienda5');

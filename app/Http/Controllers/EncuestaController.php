@@ -6,6 +6,7 @@ use App\Models\encuestas;
 use App\Models\familias;
 use App\Models\barrios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EncuestaController extends Controller
 {
@@ -65,16 +66,16 @@ public function store(Request $request)
 
         // Concatenar opciones adicionales a los campos principales
         if ($request->filled('accSalud3_otro')) {
-            $validatedData['accSalud3'] = $request->accSalud3_otro;
+            $validatedData['accSalud3_otro'] = $request->accSalud3_otro;
         }
         if ($request->filled('accSalud4_otro')) {
-            $validatedData['accSalud4'] = $request->accSalud4_otro;
+            $validatedData['accSalud4_otro'] = $request->accSalud4_otro;
         }
         if ($request->filled('accSalud9_otro')) {
-            $validatedData['accSalud9'] = $request->accSalud9_otro;
+            $validatedData['accSalud9_otro'] = $request->accSalud9_otro;
         }
         if ($request->filled('vivienda2_otro')) {
-            $validatedData['vivienda2'] = $request->vivienda2_otro;
+            $validatedData['vivienda2_otro'] = $request->vivienda2_otro;
         }
 
         $famId = $request->input('famId');
@@ -83,12 +84,15 @@ public function store(Request $request)
         $encuesta->accSalud1 = $validatedData['accSalud1'];
         $encuesta->accSalud2 = $validatedData['accSalud2'];
         $encuesta->accSalud3 = $validatedData['accSalud3'];
+        $encuesta->accSalud3_otro = $validatedData['accSalud3_otro'] ?? null;
         $encuesta->accSalud4 = $validatedData['accSalud4'];
+        $encuesta->accSalud4_otro = $validatedData['accSalud4_otro'] ?? null;
         $encuesta->accSalud5 = $validatedData['accSalud5'];
         $encuesta->accSalud6 = $validatedData['accSalud6'];
         $encuesta->accSalud7 = $validatedData['accSalud7'];
         $encuesta->accSalud8 = $validatedData['accSalud8'];
         $encuesta->accSalud9 = $validatedData['accSalud9'];
+        $encuesta->accSalud9_otro = $validatedData['accSalud9_otro'] ?? null;
         $encuesta->accMental1 = $validatedData['accMental1'];
         $encuesta->accMental2 = $validatedData['accMental2'];
         $encuesta->prSoysa = implode(', ', $request->prSoysa); // Guardar como string separado por comas
@@ -99,6 +103,7 @@ public function store(Request $request)
         $encuesta->partSocial = $validatedData['partSocial'];
         $encuesta->vivienda1 = $validatedData['vivienda1'];
         $encuesta->vivienda2 = $validatedData['vivienda2'];
+        $encuesta->vivienda2_otro = $validatedData['vivienda2_otro'] ?? null;
         $encuesta->vivienda3 = $validatedData['vivienda3'];
         $encuesta->vivienda4 = $validatedData['vivienda4'];
         $encuesta->vivienda5 = $validatedData['vivienda5'];
@@ -124,15 +129,22 @@ public function store(Request $request)
     }
 }
 
+
     /**
      * Display the specified resource.
      */
     public function show($encuestaId)
     {
         $encuesta = encuestas::find($encuestaId);
+        $edad = DB::table('integrantes')->selectRaw('*,TIMESTAMPDIFF(YEAR,fechaNac, CURDATE()) as edad')->join('familias', 'familias.famId', 'integrantes.famId')
+            ->where('familias.famId', '=', $encuesta->famId)
+            ->get();
+        DB::table('integrantes')
+            ->join('familias', 'familias.famId', '=', 'integrantes.famId')
+            ->where('familias.famId', '=', $encuesta->famId)
+            ->update(['edad' => DB::raw('TIMESTAMPDIFF(YEAR, fechaNac, CURDATE())')]);
 
-        return view('encuestacompleta', ['encuesta' => $encuesta]);
-
+        return view('encuestacompleta', ['encuesta' => $encuesta, 'edad' => $edad]);
     }
 
     /**
@@ -141,7 +153,19 @@ public function store(Request $request)
     public function edit($encuestaId)
     {
         $encuesta = encuestas::find($encuestaId);
-        return view('editencuesta', ['encuesta' => $encuesta]);
+
+
+        // Convertir las prSoysa en arrays
+        $encuesta->prSoysa = $encuesta->prSoysa ? array_map('trim', explode(',', $encuesta->prSoysa)) : [];
+
+        $encuesta->alimentacion2 = $encuesta->alimentacion2 ? array_map('trim', explode(',', $encuesta->alimentacion2)) : [];
+
+
+
+        $barrios = [];
+
+    return view('editencuesta', compact('encuesta', 'barrios'));
+
     }
 
     /**
@@ -154,22 +178,33 @@ public function store(Request $request)
         $encuesta->accSalud1 = $request->input('accSalud1');
         $encuesta->accSalud2 = $request->input('accSalud2');
         $encuesta->accSalud3 = $request->input('accSalud3');
+        $encuesta->accSalud3_otro = $request->input('accSalud3_otro');
         $encuesta->accSalud4 = $request->input('accSalud4');
+        $encuesta->accSalud4_otro = $request->input('accSalud4_otro');
         $encuesta->accSalud5 = $request->input('accSalud5');
         $encuesta->accSalud6 = $request->input('accSalud6');
         $encuesta->accSalud7 = $request->input('accSalud7');
         $encuesta->accSalud8 = $request->input('accSalud8');
         $encuesta->accSalud9 = $request->input('accSalud9');
+        $encuesta->accSalud9_otro = $request->input('accSalud9_otro');
         $encuesta->accMental1 = $request->input('accMental1');
         $encuesta->accMental2 = $request->input('accMental2');
-        $encuesta->prSoysa = $request->input('prSoysa');
+
+        $prSoysaArray = $request->input('prSoysa', []);
+        $encuesta->prSoysa = implode(',', array_map('trim', $prSoysaArray));
+
         $encuesta->alimantacion1 = $request->input('alimantacion1');
-        $encuesta->alimentacion2 = $request->input('alimentacion2');
+
+        $alimentacionArray = $request->input('alimentacion2', []);
+        $encuesta->alimentacion2 = implode(',', array_map('trim', $alimentacionArray));
+
+
         $encuesta->alimentacion3 = $request->input('alimentacion3');
         $encuesta->alimentacion4 = $request->input('alimentacion4');
         $encuesta->partSocial = $request->input('partSocial');
         $encuesta->vivienda1 = $request->input('vivienda1');
         $encuesta->vivienda2 = $request->input('vivienda2');
+        $encuesta->vivienda2_otro = $request->input('vivienda2_otro');
         $encuesta->vivienda3 = $request->input('vivienda3');
         $encuesta->vivienda4 = $request->input('vivienda4');
         $encuesta->vivienda5 = $request->input('vivienda5');
@@ -193,17 +228,12 @@ public function store(Request $request)
      */
     public function destroy($encuestaId)
     {
-        // Encuentra la encuesta por su ID
-        $encuesta = encuestas::find($encuestaId);
-        
-        if ($encuesta) {
-            // Elimina la encuesta, y Eloquent se encargará de eliminar las relaciones en cascada
-            $encuesta->delete();
+        $encuesta = encuestas::findOrFail($encuestaId);
+        $encuesta->delete();
 
-            // Redirige a la página de listado de encuestas
-            return redirect()->route('encuesta.index')->with('success', 'Encuesta eliminada exitosamente.');
-        }
-
-        return redirect()->route('encuesta.index')->with('error', 'No se encontró la encuesta.');
+        return redirect()->route('encuesta.index')->with('success', 'Encuesta eliminada con éxito');
     }
+
+
+    
 }

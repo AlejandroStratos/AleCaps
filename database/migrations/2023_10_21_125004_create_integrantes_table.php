@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('obraSocial');
             $table->string('enfermedadesCronicas');
             $table->date('ultimoControl');
+            $table->integer('edad')->nullable();
             $table->unsignedInteger('famId');
             $table->foreign('famId')->references('famId')->on('familias')->cascadeOnDelete();
             $table->timestamps(); 
