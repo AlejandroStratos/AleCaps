@@ -57,7 +57,9 @@
                         <label for="accSalud3">Ante algún problema de Salud ¿A dónde concurren?</label>
                         <select name="accSalud3" id="accSalud3" class="form-control" required>
                                 <option value="">Seleccionar</option>
+
                                 <option value="Hospital publico › ¿Cual?">Hospital público › ¿Cuál?"</option>
+
                                 <option value="Centro de salud > ¿ Cual?">Centro de salud > ¿ Cual?</option>
                                 <option value="Clínica/consultorio privado">Clínica/consultorio privado</option>
                                 <option value="Posta/operativo de salud">Posta/operativo de salud</option>
@@ -72,6 +74,8 @@
                     </div>
 
 
+
+
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             var accSalud3Select = document.getElementById('accSalud3');
@@ -79,7 +83,9 @@
 
                             accSalud3Select.addEventListener('change', function() {
                                 var selectedOption = this.value;
+
                                 if (selectedOption === 'Hospital publico › ¿Cual?'
+>>>>>>> master
                                     || selectedOption === 'Centro de salud > ¿ Cual?'
                                     || selectedOption === 'Otros') {
                                     accSalud3Textbox.style.display = 'block';
@@ -89,6 +95,8 @@
                             });
                         });
                     </script>
+
+
 
                     <div class="form-group">
                         <label for="accSalud4">¿Cómo los consiguen?</label>
@@ -100,22 +108,23 @@
                                 <option value="Por medio de la promotora de salud">Por medio de la promotora de salud
                                 </option>
                                 <option value="Salita">Salita</option>
+
                                 <option value="Otro, Cual?">Otro, Cual?</option>
                             </select>
                     </div>
 
 
-                    
+
                         <div id="accSalud4-textbox" class="form-group" style="display: none;">
                             <label for="accSalud4_otro">¿De qué otra forma los consiguen?</label>
                             <input type="text" name="accSalud4_otro" id="accSalud4_otro" class="form-control">
                         </div>
-    
+
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 var accSalud4Select = document.getElementById('accSalud4');
                                 var accSalud4Textbox = document.getElementById('accSalud4-textbox');
-    
+
                                 accSalud4Select.addEventListener('change', function() {
                                     var selectedOption = this.value;
                                     if (selectedOption === 'Otro, Cual?') {
@@ -125,7 +134,8 @@
                                     }
                                 });
                             });
-                        </script>    
+                        </script>
+
 
                     <div class="form-group">
                         <label for="accSalud5">¿Cuál es el tiempo de espera de los turnos?</label>
@@ -134,8 +144,10 @@
                                 <option value="Más de 1 semana">Más de 1 semana</option>
                                 <option value="Un mes">Un mes</option>
                                 <option value="Más de 3 meses">Más de 3 meses</option>
+
                             </select>
                         </div>
+
 
 
                     <div class="form-group">
@@ -177,9 +189,11 @@
         <select name="accSalud9" id="accSalud9" class="form-control" required>
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
-                <option value="No > ¿cómo la toma?">No > ¿cómo la toma?</option>
+                <option value="No">No</option>
         </select>
         </div>
+
+
 
         <div id="accSalud9-textbox" class="form-group" style="display: none;">
             <label for="accSalud9_otro">¿Cómo la toma?</label>
@@ -193,7 +207,9 @@
 
                 accSalud9Select.addEventListener('change', function() {
                     var selectedOption = this.value;
+
                     if (selectedOption === 'No > ¿cómo la toma?') {
+
                         accSalud9Textbox.style.display = 'block';
                     } else {
                         accSalud9Textbox.style.display = 'none';
@@ -202,12 +218,14 @@
             });
         </script>
 
+
+
         <div class="form-group">
         <label for="accMental1">¿Alguien en el grupo familiar recibe tratamiento en Salud Mental (Psicológico y/o Psiquiátrico)?</label>
         <select name="accMental1" id="accMental1" class="form-control" required>
                 <option value="">Seleccionar</option>
-                <option value="si">si</option>
-                <option value="no">no</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
         </select>
         </div>
 
@@ -224,7 +242,7 @@
         <div class="form-group">
                 <label for="prSoysa">De la siguiente lista de problemas sociales y de salud ¿cuáles son los 3 principales que identifica en el barrio?</label>
                 <div>
-                        <div class="checkbox-container">    
+                        <div class="checkbox-container">
                                 <label><input type="checkbox" name="prSoysa[]" value="Personas en situación de calle"> Personas en situación de calle</label><br>
                         </div>
                         <div class="checkbox-container">
@@ -236,7 +254,7 @@
                         <div class="checkbox-container">
                                 <label><input type="checkbox" name="prSoysa[]" value="Situaciones de violencias"> Situaciones de violencias</label><br>
                         </div>
-                        <div class="checkbox-container">        
+                        <div class="checkbox-container">
                                 <label><input type="checkbox" name="prSoysa[]" value="Inseguridad"> Inseguridad</label><br>
                         </div>
                         <div class="checkbox-container">
@@ -269,7 +287,7 @@
                     const form = document.querySelector('form');
                     const checkboxes = document.querySelectorAll('input[name="prSoysa[]"]');
                     const minChecked = 3;
-            
+
                     form.addEventListener('submit', function (e) {
                         let checkedCount = 0;
                         checkboxes.forEach(checkbox => {
@@ -277,7 +295,7 @@
                                 checkedCount++;
                             }
                         });
-            
+
                         if (checkedCount !== minChecked) {
                             e.preventDefault();
                             alert(`Debes seleccionar exactamente ${minChecked} opciones en la pregunta "Problemas sociales y salud".`);
@@ -287,11 +305,36 @@
             </script>
 
 {{--             -------------SCRIPT PARA QUE TENGA SI O SI MARCADAS 3 OPCIONES------------------------------ --}}
-            
+
+
+        <div id="prSoysa-textbox" class="form-group" style="display: none;">
+            <label for="prSoysa_otro">¿Cuáles?</label>
+            <input type="text" name="prSoysa_otro" id="prSoysa_otro" class="form-control">
+        </div>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var prSoysaSelect = document.getElementById('prSoysa');
+                var prSoysaTextbox = document.getElementById('prSoysa-textbox');
+
+                prSoysaSelect.addEventListener('change', function() {
+                    var selectedOption = this.value;
+                    if (selectedOption === 'Otros') {
+                        prSoysaTextbox.style.display = 'block';
+                    } else {
+                        prSoysaTextbox.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+
 
         <div class="form-group">
         <label for="alimantacion1">¿Recibe asistencia alimentaria?</label>
+
         <select name="alimantacion1" id="alimantacion1" class="form-control" required>
+
                 <option value="">Seleccionar</option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
@@ -320,7 +363,7 @@
             const form = document.querySelector('form');
             const checkboxes = document.querySelectorAll('input[name="alimentacion2[]"]');
             const minChecked = 1; // Mínimo de opciones a seleccionar
-            
+
             form.addEventListener('submit', function (e) {
                 let checkedCount = 0;
                 checkboxes.forEach(checkbox => {
@@ -328,7 +371,7 @@
                         checkedCount++;
                     }
                 });
-        
+
                 if (checkedCount < minChecked) {
                     e.preventDefault();
                     alert(`Debes seleccionar al menos ${minChecked} opción en la pregunta "¿De qué tipo?".`);
@@ -336,7 +379,7 @@
             });
         });
 </script>
-        
+
 
 {{--             -------------SCRIPT PARA QUE TENGA SI O SI MARCADA 1 OPCION------------------------------ --}}
 
@@ -392,15 +435,19 @@
         </div>
 
         <div id="vivienda2-textbox" class="form-group" style="display: none;">
+
             <label for="vivienda2_otro">Especificar:</label>
             <input type="text" name="vivienda2_otro" id="vivienda2_otro" class="form-control">
         </div>
-        
+
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var vivienda2Select = document.getElementById('vivienda2');
                 var vivienda2Textbox = document.getElementById('vivienda2-textbox');
-        
+
+
+
                 vivienda2Select.addEventListener('change', function() {
                     var selectedOption = this.value;
                     if (selectedOption === 'Otros') {
@@ -411,6 +458,8 @@
                 });
             });
         </script>
+
+
 
         <div class="form-group">
         <label for="vivienda3">Materiales predominantes en el piso</label>
@@ -509,6 +558,7 @@
 
                     <div class="form-group">
                         <label for="capId">CAP ID</label>
+
                         <select name="capId" id="capId" class="form-control" required>
                                 <option value="">Seleccionar</option>
                                 <option value="1">1</option>
@@ -534,7 +584,7 @@
                             <!-- Los barrios se cargarán aquí mediante AJAX -->
                         </select>
                     </div>
-                    
+
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                     <script>
                         $(document).ready(function() {
@@ -562,11 +612,13 @@
                     </script>
                     {{-- BARRIO--------------------------------------------------------------- --}}
 
+
                     <button type="submit" class="btn btn-custom btn-block">Guardar Encuesta</button>
                 </form>
             </div>
         </div>
     </div>
+
 
 
 @endsection

@@ -38,6 +38,7 @@
 @section('body')
 
 <div class="container">
+
     <h1 class="text-center">Encuesta Completa</h1>
     <br>
 
@@ -204,7 +205,7 @@
                 <!-- Agrega aquí más campos de la encuesta -->
             </table>
         </div>
-        
+
         <br><br>
         <h2>Integrantes</h2>
 
@@ -225,7 +226,11 @@
                         <th>Obra Social</th>
                         <th>Enfermedades Cronicas</th>
                         <th>Ultimo Control</th>
+
+                        <th>Número de Certificado Único de Discapacidad</th>
+
                         <th>Edad</th>
+
                         <!-- Agrega aquí los encabezados para los demás campos -->
                     </tr>
                 </thead>
@@ -245,8 +250,12 @@
                             <td>{{ $integrante->obraSocial }}</td>
                             <td>{{ $integrante->enfermedadesCronicas }}</td>
                             <td>{{ $integrante->ultimoControl }}</td>
+
+                            <td>{{ $integrante->numCertificado }}</td>
+
                             <td>{{ $integrante->edad }}</td>
                             <!-- Agrega aquí las celdas para los demás campos -->
+
                         </tr>
                     @endforeach
                 </tbody>

@@ -13,7 +13,7 @@ class InteranteController extends Controller
      */
     public function index()
     {
-        //
+        // Implementar si es necesario
     }
 
     /**
@@ -26,19 +26,14 @@ class InteranteController extends Controller
         return view('integrante', ['famId' => $famId,'integrantes'=>$integrantes]);
     }
 
-
     public function store(Request $request)
+
     {
         $enfermedades = $request->input('enfermedadesCronicas');
         $famId = $request->input('famId');
         $campos = $request->all();
-    
-        
-            
-   
+
         try {
-            
-           
                 $nuevoIntegrante = new integrantes();
                 $nuevoIntegrante->famId = $famId;
                 $nuevoIntegrante->apellido = $request->apellido;
@@ -52,32 +47,37 @@ class InteranteController extends Controller
                 $nuevoIntegrante->ocupacion = $request->ocupacion;
                 $nuevoIntegrante->progSocial = $request->progSocial;
                 $nuevoIntegrante->obraSocial = $request->obraSocial;
-                //verifica que se enviaron enfermedades,sino guarda sin problemas de salud
+                //verifica que se enviaron enfermedades,sino guarda sin enfermedades crónicas
                 if(isset($enfermedades)){
                     $nuevoIntegrante->enfermedadesCronicas = implode(',', $enfermedades);
                 }else{
-                    $nuevoIntegrante->enfermedadesCronicas="Sin enfermedades cronicas";
+                    $nuevoIntegrante->enfermedadesCronicas="Sin enfermedades crónicas";
                 };
-                
+                $nuevoIntegrante->numCertificado = $request->input('certificado');
+                //$nuevoIntegrante->numCertificado = $request->numCertificado;
                 $nuevoIntegrante->ultimoControl = $request->ultimoControl;
                 $nuevoIntegrante->save();
 
                 if($request->funcion ==='agregar'){
                     $integrantes = integrantes::where('famId','=',$famId)
                     ->paginate(5);
-                   
+
                     return redirect()->route('integrante.create',['famId'=> $famId])->with(['integrantes'=>$integrantes]);
-                   
+
                 }else{
                     return redirect()->route('encuesta.create', ['famId' => $famId])->with('success', 'Integrantes agregados correctamente');
                 }
 
-            
+
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error al guardar los integrantes: ' . $e->getMessage());
+
         }
-    }    
+    }
+
+
+
 
 // Método edit: Recibe famId y lista los integrantes de esa familia.
 public function edit($famId)
@@ -89,7 +89,9 @@ public function edit($famId)
 
     $integrantes = $familia->integrantes;
 
+
     $encuesta = $familia->encuesta;
+
 
     // Convertir las enfermedades crónicas en arrays
     foreach ($integrantes as $integrante) {
@@ -106,6 +108,7 @@ public function edit($famId)
 // Método update: Recibe famId y actualiza los integrantes de la familia.
 public function update(Request $request, $famId)
 {
+
     $familia = familias::find($famId);
     if (!$familia) {
         return redirect()->back()->with('error', 'Familia no encontrada');
@@ -113,35 +116,39 @@ public function update(Request $request, $famId)
 
     foreach ($familia->integrantes as $integrante) {
         $integrante->update([
-            'apellido' => $request->input('integrantes')[$integrante->intId]['apellido'],
-            'nombre' => $request->input('integrantes')[$integrante->intId]['nombre'],
-            'fechaNac' => $request->input('integrantes')[$integrante->intId]['fechaNac'],
-            'estadoDni' => $request->input('integrantes')[$integrante->intId]['estadoDni'],
-            'genero' => $request->input('integrantes')[$integrante->intId]['genero'],
-            'nacionalidad' => $request->input('integrantes')[$integrante->intId]['nacionalidad'],
-            'vinculo' => $request->input('integrantes')[$integrante->intId]['vinculo'],
-            'nivelEduc' => $request->input('integrantes')[$integrante->intId]['nivelEduc'],
-            'ocupacion' => $request->input('integrantes')[$integrante->intId]['ocupacion'],
-            'progSocial' => $request->input('integrantes')[$integrante->intId]['progSocial'],
-            'obraSocial' => $request->input('integrantes')[$integrante->intId]['obraSocial'],
-            'enfermedadesCronicas' => isset($request->input('integrantes')[$integrante->intId]['enfermedadesCronicas']) ? implode(',', $request->input('integrantes')[$integrante->intId]['enfermedadesCronicas']) : '',
-            'ultimoControl' => $request->input('integrantes')[$integrante->intId]['ultimoControl'],
+
+            'apellido' => $request->input('integrantes')['apellido'][$integrante->intId],
+            'nombre' => $request->input('integrantes')['nombre'][$integrante->intId],
+            'fechaNac' => $request->input('integrantes')['fechaNac'][$integrante->intId],
+            'estadoDni' => $request->input('integrantes')['estadoDni'][$integrante->intId],
+            'genero' => $request->input('integrantes')['genero'][$integrante->intId],
+            'nacionalidad' => $request->input('integrantes')['nacionalidad'][$integrante->intId],
+            'vinculo' => $request->input('integrantes')['vinculo'][$integrante->intId],
+            'nivelEduc' => $request->input('integrantes')['nivelEduc'][$integrante->intId],
+            'ocupacion' => $request->input('integrantes')['ocupacion'][$integrante->intId],
+            'progSocial' => $request->input('integrantes')['progSocial'][$integrante->intId],
+            'obraSocial' => $request->input('integrantes')['obraSocial'][$integrante->intId],
+            'enfermedadesCronicas' => isset($request->input('integrantes')['enfermedadesCronicas'][$integrante->intId]) ? implode(',', $request->input('integrantes')['enfermedadesCronicas'][$integrante->intId]) : '',
+            'discapacidad' => isset($request->input('integrantes')['discapacidad'][$integrante->intId]) ? true : false,
+            'numCertificado' => $request->input('integrantes')['numCertificado'][$integrante->intId],
+            //'enfermedadesCronicas' => implode(',', $request->input('integrantes')['enfermedadesCronicas'][$integrante->intId]),
+            'ultimoControl' => $request->input('integrantes')['ultimoControl'][$integrante->intId],
         ]);
     }
 
-    return redirect()->route('home')->with('success', 'Integrante/s de la familia actualizado/s correctamente');
-}
+    return redirect()->route('encuesta.create', ['famId' => $famId])->with('success', 'Integrantes actualizados correctamente');
 
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
-        
+
+
             $integrante = integrantes::find($id);
             $integrante->delete();
             return redirect()->back()->with('success', 'el usuario '.$integrante->nombre.' '.$integrante->apellido.' ha sido eliminado');
 
+
     }
 }
+

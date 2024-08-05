@@ -1,3 +1,4 @@
+
 @extends('master') <!-- Extiende la vista maestra -->
 
 @section('head')
@@ -6,8 +7,8 @@
 
         <style>
         .btn-custom {
-            background-color: #5451EF; 
-            color: #FFFFFF; 
+            background-color: #5451EF;
+            color: #FFFFFF;
             border-radius: 40px;
         }
         </style>
@@ -16,8 +17,9 @@
 
 @section('body')
 
+
 <div class="container">
-        
+
        <div class="row mt-4 mb-5">
         <!-- boton de volver al home-->
         <div class="col-12">
@@ -45,7 +47,7 @@
             <form action="{{ route('integrante.store') }}" method="POST" class="form-floating">
                 @csrf
                 <input type="hidden" name="famId" value="{{ $famId }}">
-    
+
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-4">
@@ -70,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-    
+
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <!-- Select Estado DNI -->
@@ -119,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-    
+
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <!-- Select Programa Social -->
@@ -215,7 +217,7 @@
                                 </div>
                         </div>
                     </div>
-    
+
                     <div class="row mb-3">
                         <div class="col">
                             <!-- Checkboxes Enfermedades Crónicas -->
@@ -262,14 +264,26 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="enfermedadesCronicas[]" value="con discapacidad"> Discapacidad ¿tiene certificado único de discapacidad?<br>
+                                            <input class="form-check-input" type="checkbox" id="discapacidad" name="enfermedadesCronicas[]" value="con discapacidad"> Discapacidad ¿tiene certificado único de discapacidad?<br>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-    
+                    <div id="certificadoSection" style="display: none;">
+                        <div class="form-group">
+                            <label for="certificado">Número de Certificado Único de Discapacidad</label>
+                            <input type="text" class="form-control" id="certificado" name="certificado">
+                        </div>
+                    </div>
+                    <!--<div id="certificadoSection" style="display: none;">
+                        <div class="form-group">
+                            <label for="certificado">Número de Certificado Único de Discapacidad</label>
+                            <input type="text" class="form-control" id="certificado" name="certificado">
+                        </div>
+                    </div>-->
+
                     <!-- Botones de enviar -->
                     <div class="row mb-3">
                         <div class="col-md-6 mb-3">
@@ -279,9 +293,27 @@
                             <button type="submit" class="btn btn-custom btn-block" name="funcion" value="" >Guardar Integrantes</button>
                         </div>
                     </div>
+
                 </div>
             </form>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const discapacidadCheckbox = document.getElementById('discapacidad');
+                const certificadoSection = document.getElementById('certificadoSection');
+
+                // Añadimos un evento para mostrar/ocultar el campo del certificado
+                discapacidadCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        certificadoSection.style.display = 'block';
+                    } else {
+                        certificadoSection.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+
+
         @if (@isset($integrantes))
             <div class="card">
                 <div class="card-header">
@@ -307,6 +339,8 @@
                                                 <th>Obra Social</th>
                                                 <th>Enfermedades Cronicas</th>
                                                 <th>Ultimo Control</th>
+                                                <th>Número de Certificado Único de Discapacidad</th>
+
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -326,6 +360,7 @@
                                                 <td>{{$integrante->obraSocial}}</td>
                                                 <td>{{ $integrante->enfermedadesCronicas}}</td>
                                                 <td>{{$integrante->ultimoControl}}</td>
+                                                <th>{{$integrante->numCertificado}}</th>
                                                 <td><form action="{{ route('integrante.destroy', $integrante->intId) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -337,21 +372,23 @@
                                     </table>
                             </div>
                         </div>
-                
-                
+
+
                         </div>
                         @endisset
                     </div>
             </div>
-       
-                
+
+
         @endif
     </div>
-    
-    
 
 
 
-        
+
+
+
+
+
 
 

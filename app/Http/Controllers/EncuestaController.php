@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\encuestas;
 use App\Models\familias;
+
 use App\Models\barrios;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,8 +22,9 @@ class EncuestaController extends Controller
     public function buscarPorDomicilio(Request $request)
     {
 
+
         $domicilio = $request->input('domicilio');
-        
+
         // Buscar encuestas por domicilio
         $encuestas = encuestas::join('familias', 'encuestas.famId', '=', 'familias.famId')
             ->where('familias.domicilio', 'LIKE', '%' . $domicilio . '%')
@@ -34,7 +37,8 @@ class EncuestaController extends Controller
 
 
 
- 
+
+
     public function create($famId)
     {
 
@@ -44,13 +48,15 @@ class EncuestaController extends Controller
 
     }
 
+
 //BARRIOS-------------------------------------------------------------------
     public function getBarriosByCapId($capId)
+
     {
         $barrios = barrios::where('capId', $capId)->pluck('nombreBarrio', 'barrioId');
         return response()->json($barrios);
     }
-//--------------------------------------------------------------------------  
+//--------------------------------------------------------------------------
 
 public function store(Request $request)
 {
@@ -113,9 +119,10 @@ public function store(Request $request)
         $encuesta->accBas2 = $validatedData['accBas2'];
         $encuesta->accBas3 = $validatedData['accBas3'];
         $encuesta->accBas4 = $validatedData['accBas4'];
+
         $encuesta->famId = $famId;
         $encuesta->capId = $request->input('capId');
-        
+
         $encuesta->save();
 
         $familia = familias::find($famId);
@@ -128,6 +135,7 @@ public function store(Request $request)
         return redirect()->back()->with('error', 'Ocurrió un error al crear la encuesta: ' . $e->getMessage());
     }
 }
+
 
 
     /**
@@ -190,8 +198,10 @@ public function store(Request $request)
         $encuesta->accMental1 = $request->input('accMental1');
         $encuesta->accMental2 = $request->input('accMental2');
 
+
         $prSoysaArray = $request->input('prSoysa', []);
         $encuesta->prSoysa = implode(',', array_map('trim', $prSoysaArray));
+
 
         $encuesta->alimantacion1 = $request->input('alimantacion1');
 
@@ -228,8 +238,10 @@ public function store(Request $request)
      */
     public function destroy($encuestaId)
     {
+
         $encuesta = encuestas::findOrFail($encuestaId);
         $encuesta->delete();
+
 
         return redirect()->route('encuesta.index')->with('success', 'Encuesta eliminada con éxito');
     }

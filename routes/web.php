@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {return view('home');})->name('home');
+
 Route::get('/nueva-encuesta/{famId}', [EncuestaController::class, 'create'])->name('encuesta.create');
 Route::post('/guardar-encuesta', [EncuestaController::class, 'store'])->name('encuesta.store');
 
@@ -35,6 +36,7 @@ Route::get('/encuestas/{encuestaId}/editar', [EncuestaController::class, 'edit']
 Route::put('/encuestas/{encuestaId}', [EncuestaController::class, 'update'])->name('encuesta.update');
 
 
+
 Route::get('/buscar-encuestas', [EncuestaController::class, 'buscarPorDomicilio'])->name('buscarEncuestas');
 
 //BARRIOS-------------------------------------------------------------------------------------------------
@@ -50,4 +52,6 @@ Route::post('usuario/reAsignar',[UserController::class, 'asignar'])->name('usuar
 Route::delete('usuario/{id}', [UserController::class, 'destroy'])->name('usuario.destroy');
 
 Route::get('usuario/editar/{id}', [UserController::class, 'edit'])->name('usuario.edit');
+
 Route::put('usuario/editar/{id}', [UserController::class, 'update'])->name('usuario.update');
+
