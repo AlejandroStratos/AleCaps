@@ -33,12 +33,7 @@ class InteranteController extends Controller
         $famId = $request->input('famId');
         $campos = $request->all();
 
-
-
-
         try {
-
-
                 $nuevoIntegrante = new integrantes();
                 $nuevoIntegrante->famId = $famId;
                 $nuevoIntegrante->apellido = $request->apellido;
@@ -52,13 +47,14 @@ class InteranteController extends Controller
                 $nuevoIntegrante->ocupacion = $request->ocupacion;
                 $nuevoIntegrante->progSocial = $request->progSocial;
                 $nuevoIntegrante->obraSocial = $request->obraSocial;
-                //verifica que se enviaron enfermedades,sino guarda sin problemas de salud
+                //verifica que se enviaron enfermedades,sino guarda sin enfermedades crónicas
                 if(isset($enfermedades)){
                     $nuevoIntegrante->enfermedadesCronicas = implode(',', $enfermedades);
                 }else{
-                    $nuevoIntegrante->enfermedadesCronicas="Sin enfermedades cronicas";
+                    $nuevoIntegrante->enfermedadesCronicas="Sin enfermedades crónicas";
                 };
-
+                $nuevoIntegrante->numCertificado = $request->input('certificado');
+                //$nuevoIntegrante->numCertificado = $request->numCertificado;
                 $nuevoIntegrante->ultimoControl = $request->ultimoControl;
                 $nuevoIntegrante->save();
 
@@ -89,6 +85,7 @@ class InteranteController extends Controller
 
 public function update(Request $request, $famId)
 {
+
     // Obtener la familia y sus integrantes
     $familia = familias::find($famId);
     if (!$familia) {
@@ -110,19 +107,17 @@ public function update(Request $request, $famId)
             'progSocial' => $request->input('integrantes')['progSocial'][$integrante->intId],
             'obraSocial' => $request->input('integrantes')['obraSocial'][$integrante->intId],
             'enfermedadesCronicas' => isset($request->input('integrantes')['enfermedadesCronicas'][$integrante->intId]) ? implode(',', $request->input('integrantes')['enfermedadesCronicas'][$integrante->intId]) : '',
-
+            'discapacidad' => isset($request->input('integrantes')['discapacidad'][$integrante->intId]) ? true : false,
+            'numCertificado' => $request->input('integrantes')['numCertificado'][$integrante->intId],
             //'enfermedadesCronicas' => implode(',', $request->input('integrantes')['enfermedadesCronicas'][$integrante->intId]),
             'ultimoControl' => $request->input('integrantes')['ultimoControl'][$integrante->intId],
-            // Ajusta los otros campos que deseas actualizar
         ]);
     }
 
     return redirect()->route('encuesta.create', ['famId' => $famId])->with('success', 'Integrantes actualizados correctamente');
 }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
 

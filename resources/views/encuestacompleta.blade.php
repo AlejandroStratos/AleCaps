@@ -202,6 +202,7 @@
                         <th>Obra Social</th>
                         <th>Enfermedades Cronicas</th>
                         <th>Ultimo Control</th>
+                        <th>Número de Certificado Único de Discapacidad</th>
                         <!-- Agrega aquí los encabezados para los demás campos -->
                     </tr>
                 </thead>
@@ -221,7 +222,7 @@
                             <td>{{ $integrante->obraSocial }}</td>
                             <td>{{ $integrante->enfermedadesCronicas }}</td>
                             <td>{{ $integrante->ultimoControl }}</td>
-                            <!-- Agrega aquí las celdas para los demás campos -->
+                            <td>{{ $integrante->numCertificado }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -230,7 +231,6 @@
     @else
         <p>Encuesta no encontrada.</p>
     @endif
->>>>>>> master
 </div>
 
 @endsection

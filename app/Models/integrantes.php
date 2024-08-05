@@ -27,6 +27,7 @@ class integrantes extends Model
             'obraSocial',
             'enfermedadesCronicas',
             'ultimoControl',
+            'numCertificado',
 
         ];
 

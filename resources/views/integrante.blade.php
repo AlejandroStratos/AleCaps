@@ -264,13 +264,25 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="enfermedadesCronicas[]" value="con discapacidad"> Discapacidad ¿tiene certificado único de discapacidad?<br>
+                                            <input class="form-check-input" type="checkbox" id="discapacidad" name="enfermedadesCronicas[]" value="con discapacidad"> Discapacidad ¿tiene certificado único de discapacidad?<br>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div id="certificadoSection" style="display: none;">
+                        <div class="form-group">
+                            <label for="certificado">Número de Certificado Único de Discapacidad</label>
+                            <input type="text" class="form-control" id="certificado" name="certificado">
+                        </div>
+                    </div>
+                    <!--<div id="certificadoSection" style="display: none;">
+                        <div class="form-group">
+                            <label for="certificado">Número de Certificado Único de Discapacidad</label>
+                            <input type="text" class="form-control" id="certificado" name="certificado">
+                        </div>
+                    </div>-->
 
                     <!-- Botones de enviar -->
                     <div class="row mb-3">
@@ -285,6 +297,22 @@
                 </div>
             </form>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const discapacidadCheckbox = document.getElementById('discapacidad');
+                const certificadoSection = document.getElementById('certificadoSection');
+
+                // Añadimos un evento para mostrar/ocultar el campo del certificado
+                discapacidadCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        certificadoSection.style.display = 'block';
+                    } else {
+                        certificadoSection.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+
 
         @if (@isset($integrantes))
             <div class="card">
@@ -311,6 +339,8 @@
                                                 <th>Obra Social</th>
                                                 <th>Enfermedades Cronicas</th>
                                                 <th>Ultimo Control</th>
+                                                <th>Número de Certificado Único de Discapacidad</th>
+
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -330,6 +360,7 @@
                                                 <td>{{$integrante->obraSocial}}</td>
                                                 <td>{{ $integrante->enfermedadesCronicas}}</td>
                                                 <td>{{$integrante->ultimoControl}}</td>
+                                                <th>{{$integrante->numCertificado}}</th>
                                                 <td><form action="{{ route('integrante.destroy', $integrante->intId) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
