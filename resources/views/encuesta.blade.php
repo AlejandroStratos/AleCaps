@@ -345,11 +345,11 @@
                 <label for="alimentacion2">¿De qué tipo? (se puede responder más de una)</label>
                 <div class="checkbox-container">
                     <input type="checkbox" id="comida_elaborada" name="alimentacion2[]" value="Comida elaborada/vianda">
-                    <label for="comida_elaborada">Comida elaborada/vianda</label>
+                    <label for="comida_elaborada">Comida elaborada, vianda</label>
                 </div>
                 <div class="checkbox-container">
                     <input type="checkbox" id="bolson_alimentos" name="alimentacion2[]" value="Bolsón de alimentos">
-                    <label for="bolson_alimentos">Bolsón de alimentos</label>
+                    <label for="bolson_alimentos">Bolson de alimentos</label>
                 </div>
                 <div class="checkbox-container">
                     <input type="checkbox" id="dinero" name="alimentacion2[]" value="Dinero">

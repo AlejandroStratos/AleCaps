@@ -20,7 +20,9 @@ Route::get('/nueva-familia', [FamiliaController::class, 'create'])->name('famili
 Route::post('/guardar-familia', [FamiliaController::class, 'store'])->name('familia.store');
 
 Route::get('/ver-encuestas', [EncuestaController::class, 'index'])->name('encuesta.index');
-Route::delete('/encuestas/{encuestaId}', [EncuestaController::class, 'destroy'])->name('encuesta.destroy');
+Route::delete('/encuesta/{encuestaId}', [EncuestaController::class, 'destroy'])->name('encuesta.destroy');
+
+
 
 Route::get('/encuestas/{encuestaId}', [EncuestaController::class, 'show'])->name('encuesta.show');
 
@@ -50,5 +52,6 @@ Route::post('usuario/reAsignar',[UserController::class, 'asignar'])->name('usuar
 Route::delete('usuario/{id}', [UserController::class, 'destroy'])->name('usuario.destroy');
 
 Route::get('usuario/editar/{id}', [UserController::class, 'edit'])->name('usuario.edit');
+
 Route::put('usuario/editar/{id}', [UserController::class, 'update'])->name('usuario.update');
 

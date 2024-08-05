@@ -79,22 +79,44 @@ class InteranteController extends Controller
 
 
 
+// Método edit: Recibe famId y lista los integrantes de esa familia.
+public function edit($famId)
+{
+    $familia = familias::find($famId);
+    if (!$familia) {
+        return redirect()->route('home')->with('error', 'Familia no encontrada.');
+    }
+
+    $integrantes = $familia->integrantes;
 
 
+    $encuesta = $familia->encuesta;
 
 
+    // Convertir las enfermedades crónicas en arrays
+    foreach ($integrantes as $integrante) {
+        $integrante->enfermedadesCronicas = explode(',', $integrante->enfermedadesCronicas);
+    }
+
+    return view('editintegrantes', [
+        'integrantes' => $integrantes,
+        'famId' => $famId,
+        'encuestaId' => $encuesta->encuestaId
+    ]);
+}
+
+// Método update: Recibe famId y actualiza los integrantes de la familia.
 public function update(Request $request, $famId)
 {
 
-    // Obtener la familia y sus integrantes
     $familia = familias::find($famId);
     if (!$familia) {
         return redirect()->back()->with('error', 'Familia no encontrada');
     }
 
-    // Lógica para actualizar los integrantes
     foreach ($familia->integrantes as $integrante) {
         $integrante->update([
+
             'apellido' => $request->input('integrantes')['apellido'][$integrante->intId],
             'nombre' => $request->input('integrantes')['nombre'][$integrante->intId],
             'fechaNac' => $request->input('integrantes')['fechaNac'][$integrante->intId],
@@ -115,7 +137,7 @@ public function update(Request $request, $famId)
     }
 
     return redirect()->route('encuesta.create', ['famId' => $famId])->with('success', 'Integrantes actualizados correctamente');
-}
+
 
 
     public function destroy(string $id)
