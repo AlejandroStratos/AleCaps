@@ -137,7 +137,7 @@ public function update(Request $request, $famId)
     }
 
     return redirect()->route('encuesta.create', ['famId' => $famId])->with('success', 'Integrantes actualizados correctamente');
-
+}
 
 
     public function destroy(string $id)

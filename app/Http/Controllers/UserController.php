@@ -118,7 +118,7 @@ class UserController extends Controller
     {
         $usuario = User::find($usuarioId);
         $usuario->delete();
-        return redirect('/usuario')->with('success', 'El usuario se eliminó correctamente');
+        return redirect('/usuario')->with('error', 'El usuario se eliminó correctamente');
    
 
     }

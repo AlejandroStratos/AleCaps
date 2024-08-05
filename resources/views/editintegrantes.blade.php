@@ -263,33 +263,11 @@
                 </div>
                                
                       <hr>
-                  @endforeach
+
+                      @endforeach
               </div>
               <div class="card-footer text-center">
                   <button type="submit" class="btn btn-custom">Actualizar Integrantes</button>
-
-
-                <label>Ultimo Control</label>
-                <input type="date" class="form-control" name="integrantes[ultimoControl][{{ $integrante->intId }}]" value="{{ $integrante->ultimoControl }}" required>
-            </div>
-
-
-
-            <h2>----------------------------------------------------</h2>
-            <br>
-
-        @endforeach
-
-
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-            <a href="{{ route('encuesta.edit', ['encuestaId' => $familia->encuesta->encuestaId]) }}" class="btn btn-secondary">Editar encuesta</a>
-        </div>
-
-    </form>
-</div>
-
-@endsection
 
                   {{-- BOTON EDITAR ENCUESTA --}}
                   <a href="{{ route('encuesta.edit', $encuestaId) }}" class="btn btn-secondary">Editar encuesta</a>
@@ -298,5 +276,4 @@
       </div>
   </div>
   @endsection
-  
 
