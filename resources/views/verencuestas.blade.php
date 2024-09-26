@@ -64,6 +64,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Domicilio</th>
+                        <th>Caps</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -72,6 +73,7 @@
                         <tr>
                             <td>{{ $encuesta->encuestaId }}</td>
                             <td>{{ $encuesta->familia->domicilio }}</td>
+                            <td>{{ $encuesta->capId }}</td>
                             <td>
                                 <div class="btn-group btn-group-custom" role="group" aria-label="Acciones">
                                     <a href="{{ route('encuesta.show', $encuesta->encuestaId) }}" class="btn btn-primary mr-2">Ver Encuesta Completa</a>
@@ -94,5 +96,3 @@
 </div>
 
 @endsection
-
-

@@ -4,23 +4,97 @@ namespace App\Http\Controllers;
 
 use App\Models\encuestas;
 use App\Models\familias;
+
 use App\Models\barrios;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Exports\EncuestasExportsCollection;
+use App\Exports\EncuestasExportsView;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 
 class EncuestaController extends Controller
 {
 
-     public function index()
+    public function index()
     {
         $encuestas = encuestas::with(['familia', 'barrio'])->get();
         return view('verencuestas', compact('encuestas'));
     }
+    public function collection()
+    {   
+        // Verifica si el usuario autenticado tiene el rol de 'Administrador'
+        if (auth()->user()->rol !== 'Administrador') {
+            return redirect()->route('home')->with('error', 'No tienes acceso a esta vista');
+        }
+        
+        return Excel::download(new EncuestasExportsCollection, 'encuestas.xlsx'); 
+        
+    }
+
+
+    // EXCEL
+    // EXCEL
+    // EXCEL
+    public function view(Request $request)
+    {
+        // Verifica si el usuario autenticado tiene el rol de 'Administrador'
+        if (auth()->user()->rol !== 'Administrador') {
+            return redirect()->route('home')->with('error', 'No tienes acceso a esta vista');
+        }
+
+        // Validar las fechas, pero hacerlas opcionales
+        $request->validate([
+            'fecha_inicio' => 'nullable|date',
+            'fecha_fin' => 'nullable|date|after_or_equal:fecha_inicio',
+            'cap_id' => 'nullable|integer|between:1,13', // Validar entre 1 y 13
+        ]);
+
+        // Obtener las fechas del formulario
+        $fechaInicio = $request->input('fecha_inicio');
+        $fechaFin = $request->input('fecha_fin');
+        $capId = $request->input('cap_id');
+
+        // Filtrar encuestas solo si se proporcionan fechas
+        $encuestas = Encuestas::with(['familia', 'integrantes']);
+
+        if ($fechaInicio && $fechaFin) {
+            // Filtrar por rango de fechas si se proporcionan
+            $encuestas = $encuestas->whereBetween('created_at', [$fechaInicio, $fechaFin]);
+        }
+
+        // Aplicar filtro por capId si se proporciona, y evitar filtrar si es "Todos"
+        if (!empty($capId)) {
+            $encuestas = $encuestas->where('capId', $capId);
+
+            // Verificar si no existe ninguna encuesta con ese capId
+            if (!$encuestas->exists()) {
+                return redirect()->back()->with('error', 'El capId seleccionado no tiene encuestas.');
+            }
+        }
+
+        // Obtener las encuestas
+        $encuestas = $encuestas->get();
+
+        // Exportar el archivo Excel con los datos filtrados (o todos si no hay fecha)
+        return Excel::download(new EncuestasExportsView($encuestas), 'encuestas.xlsx');
+    }
+
+
+//--------------------------------
+
+    //--------------------------
+
+    //--------------------------
 
     public function buscarPorDomicilio(Request $request)
     {
 
+
         $domicilio = $request->input('domicilio');
-        
+
         // Buscar encuestas por domicilio
         $encuestas = encuestas::join('familias', 'encuestas.famId', '=', 'familias.famId')
             ->where('familias.domicilio', 'LIKE', '%' . $domicilio . '%')
@@ -33,7 +107,8 @@ class EncuestaController extends Controller
 
 
 
- 
+
+
     public function create($famId)
     {
 
@@ -43,65 +118,95 @@ class EncuestaController extends Controller
 
     }
 
+
 //BARRIOS-------------------------------------------------------------------
     public function getBarriosByCapId($capId)
+
     {
         $barrios = barrios::where('capId', $capId)->pluck('nombreBarrio', 'barrioId');
         return response()->json($barrios);
     }
-//--------------------------------------------------------------------------  
+//--------------------------------------------------------------------------
 
-    public function store(Request $request)
-    {
+public function store(Request $request)
+{
+    // Validación de los datos
+    $request->validate([
+        'prSoysa' => 'required|array|size:3',
+        'alimentacion2' => 'required|array|min:1',
+    ]);
 
-        $request->validate([
-            'prSoysa' => 'required|array|size:3',
-            'alimentacion2' => 'required|array|min:1',
-        ]);
+    try {
+        // Inicializar variables de validación
+        $validatedData = $request->all();
+
+        // Concatenar opciones adicionales a los campos principales
+        if ($request->filled('accSalud3_otro')) {
+            $validatedData['accSalud3_otro'] = $request->accSalud3_otro;
+        }
+        if ($request->filled('accSalud4_otro')) {
+            $validatedData['accSalud4_otro'] = $request->accSalud4_otro;
+        }
+        if ($request->filled('accSalud9_otro')) {
+            $validatedData['accSalud9_otro'] = $request->accSalud9_otro;
+        }
+        if ($request->filled('vivienda2_otro')) {
+            $validatedData['vivienda2_otro'] = $request->vivienda2_otro;
+        }
 
         $famId = $request->input('famId');
 
         $encuesta = new encuestas();
-        $encuesta->accSalud1 = $request->accSalud1;
-        $encuesta->accSalud2 = $request->accSalud2;
-        $encuesta->accSalud3 = $request->accSalud3;
-        $encuesta->accSalud4 = $request->accSalud4;
-        $encuesta->accSalud5 = $request->accSalud5;
-        $encuesta->accSalud6 = $request->accSalud6;
-        $encuesta->accSalud7 = $request->accSalud7;
-        $encuesta->accSalud8 = $request->accSalud8;
-        $encuesta->accSalud9 = $request->accSalud9;
-        $encuesta->accMental1 = $request->accMental1;
-        $encuesta->accMental2 = $request->accMental2;
+        $encuesta->accSalud1 = $validatedData['accSalud1'];
+        $encuesta->accSalud2 = $validatedData['accSalud2'];
+        $encuesta->accSalud3 = $validatedData['accSalud3'];
+        $encuesta->accSalud3_otro = $validatedData['accSalud3_otro'] ?? null;
+        $encuesta->accSalud4 = $validatedData['accSalud4'];
+        $encuesta->accSalud4_otro = $validatedData['accSalud4_otro'] ?? null;
+        $encuesta->accSalud5 = $validatedData['accSalud5'];
+        $encuesta->accSalud6 = $validatedData['accSalud6'];
+        $encuesta->accSalud7 = $validatedData['accSalud7'];
+        $encuesta->accSalud8 = $validatedData['accSalud8'];
+        $encuesta->accSalud9 = $validatedData['accSalud9'];
+        $encuesta->accSalud9_otro = $validatedData['accSalud9_otro'] ?? null;
+        $encuesta->accMental1 = $validatedData['accMental1'];
+        $encuesta->accMental2 = $validatedData['accMental2'];
         $encuesta->prSoysa = implode(', ', $request->prSoysa); // Guardar como string separado por comas
-        $encuesta->alimantacion1 = $request->alimantacion1;
+        $encuesta->alimantacion1 = $validatedData['alimantacion1'];
         $encuesta->alimentacion2 = implode(', ', $request->alimentacion2); // Guardar como string separado por comas
-        $encuesta->alimentacion3 = $request->alimentacion3;
-        $encuesta->alimentacion4 = $request->alimentacion4;
-        $encuesta->partSocial = $request->partSocial;
-        $encuesta->vivienda1 = $request->vivienda1;
-        $encuesta->vivienda2 = $request->vivienda2;
-        $encuesta->vivienda3 = $request->vivienda3;
-        $encuesta->vivienda4 = $request->vivienda4;
-        $encuesta->vivienda5 = $request->vivienda5;
-        $encuesta->vivienda6 = $request->vivienda6;
-        $encuesta->vivienda7 = $request->vivienda7;
-        $encuesta->accBas1 = $request->accBas1;
-        $encuesta->accBas2 = $request->accBas2;
-        $encuesta->accBas3 = $request->accBas3;
-        $encuesta->accBas4 = $request->accBas4;
+        $encuesta->alimentacion3 = $validatedData['alimentacion3'];
+        $encuesta->alimentacion4 = $validatedData['alimentacion4'];
+        $encuesta->partSocial = $validatedData['partSocial'];
+        $encuesta->vivienda1 = $validatedData['vivienda1'];
+        $encuesta->vivienda2 = $validatedData['vivienda2'];
+        $encuesta->vivienda2_otro = $validatedData['vivienda2_otro'] ?? null;
+        $encuesta->vivienda3 = $validatedData['vivienda3'];
+        $encuesta->vivienda4 = $validatedData['vivienda4'];
+        $encuesta->vivienda5 = $validatedData['vivienda5'];
+        $encuesta->vivienda6 = $validatedData['vivienda6'];
+        $encuesta->vivienda7 = $validatedData['vivienda7'];
+        $encuesta->accBas1 = $validatedData['accBas1'];
+        $encuesta->accBas2 = $validatedData['accBas2'];
+        $encuesta->accBas3 = $validatedData['accBas3'];
+        $encuesta->accBas4 = $validatedData['accBas4'];
 
         $encuesta->famId = $famId;
-        $encuesta->capId = $request->capId;
+        $encuesta->capId = $request->input('capId');
 
         $encuesta->save();
 
-        $familia = familias::find($request->input('famId'));
+        $familia = familias::find($famId);
         $familia->barrioId = $request->input('barrioId');
         $familia->save();
 
         return redirect()->route('home')->with('success', 'Encuesta creada correctamente');
+    } catch (\Exception $e) {
+        // Manejo de errores
+        return redirect()->back()->with('error', 'Ocurrió un error al crear la encuesta: ' . $e->getMessage());
     }
+}
+
+
 
     /**
      * Display the specified resource.
@@ -109,9 +214,15 @@ class EncuestaController extends Controller
     public function show($encuestaId)
     {
         $encuesta = encuestas::find($encuestaId);
+        $edad = DB::table('integrantes')->selectRaw('*,TIMESTAMPDIFF(YEAR,fechaNac, CURDATE()) as edad')->join('familias', 'familias.famId', 'integrantes.famId')
+            ->where('familias.famId', '=', $encuesta->famId)
+            ->get();
+        DB::table('integrantes')
+            ->join('familias', 'familias.famId', '=', 'integrantes.famId')
+            ->where('familias.famId', '=', $encuesta->famId)
+            ->update(['edad' => DB::raw('TIMESTAMPDIFF(YEAR, fechaNac, CURDATE())')]);
 
-        return view('encuestacompleta', ['encuesta' => $encuesta]);
-
+        return view('encuestacompleta', ['encuesta' => $encuesta, 'edad' => $edad]);
     }
 
     /**
@@ -120,7 +231,19 @@ class EncuestaController extends Controller
     public function edit($encuestaId)
     {
         $encuesta = encuestas::find($encuestaId);
-        return view('editencuesta', ['encuesta' => $encuesta]);
+
+
+        // Convertir las prSoysa en arrays
+        $encuesta->prSoysa = $encuesta->prSoysa ? array_map('trim', explode(',', $encuesta->prSoysa)) : [];
+
+        $encuesta->alimentacion2 = $encuesta->alimentacion2 ? array_map('trim', explode(',', $encuesta->alimentacion2)) : [];
+
+
+
+        $barrios = [];
+
+    return view('editencuesta', compact('encuesta', 'barrios'));
+
     }
 
     /**
@@ -133,22 +256,35 @@ class EncuestaController extends Controller
         $encuesta->accSalud1 = $request->input('accSalud1');
         $encuesta->accSalud2 = $request->input('accSalud2');
         $encuesta->accSalud3 = $request->input('accSalud3');
+        $encuesta->accSalud3_otro = $request->input('accSalud3_otro');
         $encuesta->accSalud4 = $request->input('accSalud4');
+        $encuesta->accSalud4_otro = $request->input('accSalud4_otro');
         $encuesta->accSalud5 = $request->input('accSalud5');
         $encuesta->accSalud6 = $request->input('accSalud6');
         $encuesta->accSalud7 = $request->input('accSalud7');
         $encuesta->accSalud8 = $request->input('accSalud8');
         $encuesta->accSalud9 = $request->input('accSalud9');
+        $encuesta->accSalud9_otro = $request->input('accSalud9_otro');
         $encuesta->accMental1 = $request->input('accMental1');
         $encuesta->accMental2 = $request->input('accMental2');
-        $encuesta->prSoysa = $request->input('prSoysa');
+
+
+        $prSoysaArray = $request->input('prSoysa', []);
+        $encuesta->prSoysa = implode(',', array_map('trim', $prSoysaArray));
+
+
         $encuesta->alimantacion1 = $request->input('alimantacion1');
-        $encuesta->alimentacion2 = $request->input('alimentacion2');
+
+        $alimentacionArray = $request->input('alimentacion2', []);
+        $encuesta->alimentacion2 = implode(',', array_map('trim', $alimentacionArray));
+
+
         $encuesta->alimentacion3 = $request->input('alimentacion3');
         $encuesta->alimentacion4 = $request->input('alimentacion4');
         $encuesta->partSocial = $request->input('partSocial');
         $encuesta->vivienda1 = $request->input('vivienda1');
         $encuesta->vivienda2 = $request->input('vivienda2');
+        $encuesta->vivienda2_otro = $request->input('vivienda2_otro');
         $encuesta->vivienda3 = $request->input('vivienda3');
         $encuesta->vivienda4 = $request->input('vivienda4');
         $encuesta->vivienda5 = $request->input('vivienda5');
@@ -172,17 +308,14 @@ class EncuestaController extends Controller
      */
     public function destroy($encuestaId)
     {
-        // Encuentra la encuesta por su ID
-        $encuesta = encuestas::find($encuestaId);
-        
-        if ($encuesta) {
-            // Elimina la encuesta, y Eloquent se encargará de eliminar las relaciones en cascada
-            $encuesta->delete();
 
-            // Redirige a la página de listado de encuestas
-            return redirect()->route('encuesta.index')->with('success', 'Encuesta eliminada exitosamente.');
-        }
+        $encuesta = encuestas::findOrFail($encuestaId);
+        $encuesta->delete();
 
-        return redirect()->route('encuesta.index')->with('error', 'No se encontró la encuesta.');
+
+        return redirect()->route('encuesta.index')->with('success', 'Encuesta eliminada con éxito');
     }
+
+
+
 }

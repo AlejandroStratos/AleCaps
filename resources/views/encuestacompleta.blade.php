@@ -68,10 +68,22 @@
                     <th>Ante algún problema de Salud ¿A dónde concurren?</th>
                     <td>{{ $encuesta->accSalud3 }}</td>
                 </tr>
+                @if($encuesta->accSalud3_otro)
+                <tr>
+                    <th>Nombre del lugar:</th>
+                    <td>{{ $encuesta->accSalud3_otro }}</td>
+                </tr>
+            @endif            
                 <tr>
                     <th>¿Cómo los consiguen?</th>
                     <td>{{ $encuesta->accSalud4 }}</td>
                 </tr>
+                @if($encuesta->accSalud4_otro)
+                <tr>
+                    <th>¿De qué otra forma los consiguen?</th>
+                    <td>{{ $encuesta->accSalud4_otro }}</td>
+                </tr>
+                @endif
                 <tr>
                     <th>¿Cuál es el tiempo de espera de los turnos?</th>
                     <td>{{ $encuesta->accSalud5 }}</td>
@@ -92,6 +104,12 @@
                     <th>¿Toma la medicación acorde a la indicación médica?</th>
                     <td>{{ $encuesta->accSalud9 }}</td>
                 </tr>
+                @if($encuesta->accSalud9_otro)
+                <tr>
+                    <th>¿Cómo la toma?</th>
+                    <td>{{ $encuesta->accSalud9_otro }}</td>
+                </tr>
+                @endif
                 <tr>
                     <th>¿Alguien en el grupo familiar recibe tratamiento en Salud Mental (Psicológico y/o Psiquiátrico)?</th>
                     <td>{{ $encuesta->accMental1 }}</td>
@@ -132,6 +150,12 @@
                     <th>Materiales que predominan en la vivienda</th>
                     <td>{{ $encuesta->vivienda2 }}</td>
                 </tr>
+                @if($encuesta->vivienda2_otro)
+                <tr>
+                    <th>Especificar:</th>
+                    <td>{{ $encuesta->vivienda2_otro }}</td>
+                </tr>
+                @endif
                 <tr>
                     <th>Materiales predominantes en el piso</th>
                     <td>{{ $encuesta->vivienda3 }}</td>
@@ -201,11 +225,12 @@
                         <th>Obra Social</th>
                         <th>Enfermedades Cronicas</th>
                         <th>Ultimo Control</th>
+                        <th>Edad</th>
                         <!-- Agrega aquí los encabezados para los demás campos -->
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($encuesta->integrantes as $integrante)
+                    @foreach($edad as $integrante)
                         <tr>
                             <td>{{ $integrante->apellido }}</td>
                             <td>{{ $integrante->nombre }}</td>
@@ -220,6 +245,7 @@
                             <td>{{ $integrante->obraSocial }}</td>
                             <td>{{ $integrante->enfermedadesCronicas }}</td>
                             <td>{{ $integrante->ultimoControl }}</td>
+                            <td>{{ $integrante->edad }}</td>
                             <!-- Agrega aquí las celdas para los demás campos -->
                         </tr>
                     @endforeach
