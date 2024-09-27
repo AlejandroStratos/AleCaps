@@ -19,6 +19,7 @@
                 <th>Salud Mental</th>
                 <th>Necesidad no obtenida</th>
                 <th>Problemas sociales en el barrio</th>
+                <th>Otras problematicas</th>
                 <th>Asistencia alimentaria</th>
                 <th>Tipo de asistencia</th>
                 <th>Huerta en casa</th>
@@ -38,6 +39,10 @@
                 <th>Para calefaccionarse utiliza</th>
                 <th>CAPS</th>
                 <th>Barrio</th>
+                <th>Usuario</th>
+
+                <th></th>
+
 
                 <!-- Integrantes -->
                 <th>Apellido Integrante</th>
@@ -46,12 +51,18 @@
                 <th>Estado DNI</th>
                 <th>Genero</th>
                 <th>Nacionalidad</th>
+                <th>Especificar otra nacionalidad</th>
                 <th>Vinculo</th>
+                <th>Especificar otro vínculo</th>
+                <th>Gestante</th>
+                <th>Meses de gestación</th>
                 <th>Nivel Educativo</th>
                 <th>Ocupacion</th>
                 <th>Programa Social</th>
+                <th>Especificar otro programa social</th>
                 <th>Obra Social</th>
                 <th>Enfermedades Cronicas</th>
+                <th>Número de Certificado Único de Discapacidad</th>
                 <th>Ultimo Control</th>
                 <th>Edad</th>
             </tr>
@@ -76,6 +87,7 @@
                     <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->accMental1 }}</td>
                     <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->accMental2 }}</td>
                     <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->prSoysa }}</td>
+                    <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->prSoysa_otro }}</td>
                     <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->alimantacion1 }}</td>
                     <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->alimentacion2 }}</td>
                     <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->alimentacion3 }}</td>
@@ -95,6 +107,10 @@
                     <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->accBas4 }}</td>
                     <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->capId }}</td>
                     <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->familia && $encuesta->familia->barrio ? $encuesta->familia->barrio->nombreBarrio : 'No asignado' }}</td>
+                    <td rowspan="{{ $encuesta->integrantes->count() }}">{{ $encuesta->user ? $encuesta->user->nombreusuario : 'No asignado'  }} </td>
+
+                    <td rowspan="{{ $encuesta->integrantes->count() }}"></td>
+
 
                     <!-- La primera fila muestra los datos del primer integrante -->
                     <td>{{ $encuesta->integrantes->first()->apellido }}</td>
@@ -103,12 +119,18 @@
                     <td>{{ $encuesta->integrantes->first()->estadoDni }}</td>
                     <td>{{ $encuesta->integrantes->first()->genero }}</td>
                     <td>{{ $encuesta->integrantes->first()->nacionalidad }}</td>
+                    <td>{{ $encuesta->integrantes->first()->nacionalidad_otro }}</td>
                     <td>{{ $encuesta->integrantes->first()->vinculo }}</td>
+                    <td>{{ $encuesta->integrantes->first()->vinculo_otro }}</td>
+                    <td>{{ $encuesta->integrantes->first()->gestante }}</td>
+                    <td>{{ $encuesta->integrantes->first()->gestacionMeses }}</td>
                     <td>{{ $encuesta->integrantes->first()->nivelEduc }}</td>
                     <td>{{ $encuesta->integrantes->first()->ocupacion }}</td>
                     <td>{{ $encuesta->integrantes->first()->progSocial }}</td>
+                    <td>{{ $encuesta->integrantes->first()->progSocial_otro }}</td>
                     <td>{{ $encuesta->integrantes->first()->obraSocial }}</td>
                     <td>{{ $encuesta->integrantes->first()->enfermedadesCronicas }}</td>
+                    <td>{{ $encuesta->integrantes->first()->numCertificado }}</td>
                     <td>{{ $encuesta->integrantes->first()->ultimoControl }}</td>
                     <td>{{ $encuesta->integrantes->first()->edad }}</td>
                 </tr>
@@ -122,12 +144,18 @@
                     <td>{{ $integrante->estadoDni }}</td>
                     <td>{{ $integrante->genero }}</td>
                     <td>{{ $integrante->nacionalidad }}</td>
+                    <td>{{ $integrante->nacionalidad_otro }}</td>
                     <td>{{ $integrante->vinculo }}</td>
+                    <td>{{ $integrante->vinculo_otro }}</td>
+                    <td>{{ $integrante->gestante }}</td>
+                    <td>{{ $integrante->gestacionMeses }}</td>
                     <td>{{ $integrante->nivelEduc }}</td>
                     <td>{{ $integrante->ocupacion }}</td>
                     <td>{{ $integrante->progSocial }}</td>
+                    <td>{{ $integrante->progSocial_otro }}</td>
                     <td>{{ $integrante->obraSocial }}</td>
                     <td>{{ $integrante->enfermedadesCronicas }}</td>
+                    <td>{{ $integrante->numCertificado }}</td>
                     <td>{{ $integrante->ultimoControl }}</td>
                     <td>{{ $integrante->edad }}</td>
                 </tr>

@@ -20,6 +20,21 @@
         .checkbox-container label {
             font-size: 18px; /* Aumenta el tamaño del texto */
         }
+
+        .subtitle {
+        font-size: 24px;
+        margin: 10px 0;
+        font-weight: bold;
+        text-align: left;
+        }
+
+        hr {
+            border: 0;
+            height: 2px;
+            background-color: #000408;
+            margin: 10px 0;
+        }
+
         </style>
 
 @endsection
@@ -32,6 +47,9 @@
                 <form action="{{ route('encuesta.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="famId" value="{{ $famId }}">
+
+                    <h2 class="subtitle">Acceso a la salud</h2>
+                    <hr>
 
                     <!-- Agrega tus preguntas y selectores aquí -->
                     <div class="form-group">
@@ -186,6 +204,7 @@
             <input type="text" name="accSalud9_otro" id="accSalud9_otro" class="form-control">
         </div>
 
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var accSalud9Select = document.getElementById('accSalud9');
@@ -201,6 +220,9 @@
                 });
             });
         </script>
+
+        <h2 class="subtitle">Acceso a servicios en salud mental</h2>
+        <hr>
 
         <div class="form-group">
         <label for="accMental1">¿Alguien en el grupo familiar recibe tratamiento en Salud Mental (Psicológico y/o Psiquiátrico)?</label>
@@ -219,6 +241,9 @@
                 <option value="No">No</option>
         </select>
         </div>
+
+        <h2 class="subtitle">Problemas sociales y de salud</h2>
+        <hr>
 
 
         <div class="form-group">
@@ -260,8 +285,35 @@
                         <div class="checkbox-container">
                                 <label><input type="checkbox" name="prSoysa[]" value="Otros"> Otros</label><br>
                         </div>
+                        <!-- Campo de texto oculto -->
+                        <div id="prSoysa_otro" style="display:none;">
+                            <label for="prSoysa_otro">Por favor especifique:</label>
+                            <input type="text" id="prSoysa_otro" name="prSoysa_otro">
+                        </div>
                 </div>
             </div>
+
+{{--             -------------SCRIPT PARA CAMPO OTROS------------------------------ --}}
+
+            <script>
+                // Capturamos el checkbox "Otros" y el div de campo de texto
+                const otrosCheckbox = document.querySelector('input[value="Otros"]');
+                const otrosTextInput = document.getElementById('prSoysa_otro');
+            
+                // Detectar cambio en el estado del checkbox
+                otrosCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Mostrar el campo de texto si se selecciona "Otros"
+                        otrosTextInput.style.display = 'block';
+                    } else {
+                        // Ocultar el campo de texto si se deselecciona "Otros"
+                        otrosTextInput.style.display = 'none';
+                    }
+                });
+            </script>
+
+{{--             ----------------------------------------------------------------------- --}}
+            
 
 {{--             -------------SCRIPT PARA QUE TENGA SI O SI MARCADAS 3 OPCIONES------------------------------ --}}
             <script>
@@ -280,13 +332,16 @@
             
                         if (checkedCount !== minChecked) {
                             e.preventDefault();
-                            alert(`Debes seleccionar exactamente ${minChecked} opciones en la pregunta "Problemas sociales y salud".`);
+                            alert(Debes seleccionar exactamente ${minChecked} opciones en la pregunta "Problemas sociales y salud".);
                         }
                     });
                 });
             </script>
 
-{{--             -------------SCRIPT PARA QUE TENGA SI O SI MARCADAS 3 OPCIONES------------------------------ --}}
+{{--             ----------------------------------------------------------------------------------------------- --}}
+
+        <h2 class="subtitle">Alimentación</h2>
+        <hr>
             
 
         <div class="form-group">
@@ -298,7 +353,7 @@
         </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="alimentacion_tipo" style="display:none;">
                 <label for="alimentacion2">¿De qué tipo? (se puede responder más de una)</label>
                 <div class="checkbox-container">
                     <input type="checkbox" id="comida_elaborada" name="alimentacion2[]" value="Comida elaborada/vianda">
@@ -314,31 +369,53 @@
                 </div>
         </div>
 
+        <script>
+            // Capturamos el select de asistencia alimentaria y el div que queremos mostrar
+            const alimentacionSelect = document.getElementById('alimantacion1');
+            const alimentacionTipoDiv = document.getElementById('alimentacion_tipo');
+        
+            // Detectamos cambios en el select
+            alimentacionSelect.addEventListener('change', function() {
+                if (this.value === 'Si') {
+                    // Mostrar el div si se selecciona "Si"
+                    alimentacionTipoDiv.style.display = 'block';
+                } else {
+                    // Ocultar el div si se selecciona "No" o ninguna opción
+                    alimentacionTipoDiv.style.display = 'none';
+                }
+            });
+        </script>
+
 {{--             -------------SCRIPT PARA QUE TENGA SI O SI MARCADA 1 OPCION------------------------------ --}}
 <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('form');
-            const checkboxes = document.querySelectorAll('input[name="alimentacion2[]"]');
-            const minChecked = 1; // Mínimo de opciones a seleccionar
-            
-            form.addEventListener('submit', function (e) {
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        const checkboxes = document.querySelectorAll('input[name="alimentacion2[]"]');
+        const alimentacionSelect = document.getElementById('alimantacion1');
+        const minChecked = 1; // Mínimo de opciones a seleccionar
+
+        form.addEventListener('submit', function (e) {
+            // Verificar si la opción seleccionada es "Si"
+            if (alimentacionSelect.value === 'Si') {
                 let checkedCount = 0;
                 checkboxes.forEach(checkbox => {
                     if (checkbox.checked) {
                         checkedCount++;
                     }
                 });
-        
+
                 if (checkedCount < minChecked) {
                     e.preventDefault();
-                    alert(`Debes seleccionar al menos ${minChecked} opción en la pregunta "¿De qué tipo?".`);
+                    alert(Debes seleccionar al menos ${minChecked} opción en la pregunta "¿De qué tipo?".);
                 }
-            });
+            }
         });
+    });
 </script>
+
         
 
-{{--             -------------SCRIPT PARA QUE TENGA SI O SI MARCADA 1 OPCION------------------------------ --}}
+{{--             -------------------------------------------------------------------------------------------- --}}
 
         <div class="form-group">
         <label for="alimentacion3">¿Tiene huerta en su casa?</label>
@@ -358,6 +435,9 @@
         </select>
         </div>
 
+        <h2 class="subtitle">Participación social</h2>
+        <hr>
+
         <div class="form-group">
         <label for="partSocial">¿Participa en alguna institución/organización?</label>
         <select name="partSocial" id="partSocial" class="form-control" required>
@@ -366,6 +446,9 @@
                 <option value="No">No</option>
         </select>
         </div>
+
+        <h2 class="subtitle">Vivienda</h2>
+        <hr>
 
         <div class="form-group">
         <label for="vivienda1">Carácter de la vivienda/lote</label>
@@ -462,8 +545,11 @@
                 <option value="Sólo a pozo ciego">Sólo a pozo ciego</option>
                 <option value="A hoyo, excavación en la tierra, etc.">A hoyo, excavación en la tierra, etc.</option>
 
-                            </select>
-                        </div>
+        </select>
+        </div>
+
+        <h2 class="subtitle">Acceso a servicios básicos</h2>
+        <hr>
 
         <div class="form-group">
         <label for="accBas1">Tiene agua...</label>
@@ -473,8 +559,8 @@
                 <option value="fuera de la vivienda pero dentro del terreno">fuera de la vivienda pero dentro del terreno</option>
                 <option value="fuera del terreno">fuera del terreno</option>
 
-                            </select>
-                        </div>
+        </select>
+        </div>
 
         <div class="form-group">
         <label for="accBas2">Para cocinar utiliza…</label>
@@ -506,6 +592,9 @@
                 <option value="leña">leña</option>
         </select>
         </div>
+
+        <h2 class="subtitle">CAPS al que pertenece</h2>
+        <hr>
 
                     <div class="form-group">
                         <label for="capId">CAP ID</label>

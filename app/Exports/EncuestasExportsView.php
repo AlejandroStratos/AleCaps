@@ -9,10 +9,10 @@ class EncuestasExportsView implements FromView
 {
     protected $encuestas;
 
-    public function __construct( $encuestas)
+    public function __construct($encuestas)
     {
         $this->encuestas = $encuestas;
-    } 
+    }
 
     public function view(): View
     {

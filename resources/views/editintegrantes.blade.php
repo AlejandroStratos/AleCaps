@@ -1,4 +1,4 @@
-  @extends('master')
+@extends('master')
 
   @section('head')
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -109,6 +109,10 @@
                                     <option value="Otro" {{ $integrante->nacionalidad == 'Otro' ? 'selected' : '' }}>Otro</option>
                                 </select>
                             </div>
+                            <div class="form-group" id="nacionalidad_otro_div_{{ $integrante->intId }}" style="display:none;">
+                                <label for="nacionalidad_otro_{{ $integrante->intId }}" class="form-label">Especificar otra nacionalidad</label>
+                                <input type="text" class="form-control" id="nacionalidad_otro_{{ $integrante->intId }}" name="integrantes[{{ $integrante->intId }}][nacionalidad_otro]" placeholder="Ingrese la nacionalidad" value="{{ $integrante->nacionalidad_otro }}">
+                            </div>
                           </div>
                       </div>
                       <div class="row mb-3">
@@ -125,6 +129,12 @@
                                     <option value="Otros" {{ $integrante->progSocial == 'Otros' ? 'selected' : '' }}>Otros</option>
                                 </select>
                             </div>
+
+                            <div class="form-group" id="progSocial_otro_div_{{ $integrante->intId }}" style="display:none;">
+                                <label for="progSocial_otro_{{ $integrante->intId }}" class="form-label">Especificar otro programa social</label>
+                                <input type="text" class="form-control" id="progSocial_otro_{{ $integrante->intId }}" name="integrantes[{{ $integrante->intId }}][progSocial_otro]" placeholder="Ingrese un programa social" value="{{ $integrante->progSocial_otro }}">
+                            </div>
+
                           </div>
                           <div class="col-md-4">
                             <!-- Select Ocupación -->
@@ -183,7 +193,17 @@
                                 <option value="Otro" {{ $integrante->vinculo == 'Otro' ? 'selected' : '' }}>Otro</option>
                             </select>
                         </div>
-                    </div> 
+                    </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-group" id="vinculo_otro_div_{{ $integrante->intId }}" style="display: none;">
+                            <label for="vinculo_otro_{{ $integrante->intId }}" class="form-label">Especificar otro vínculo</label>
+                            <input type="text" class="form-control" id="vinculo_otro_{{ $integrante->intId }}" name="integrantes[{{ $integrante->intId }}][vinculo_otro]" placeholder="Ingrese el vínculo" value="{{ $integrante->vinculo_otro }}">
+                        </div>
+                    </div>
+                </div>
+
                     <div class="col">
                         <div class="form-group">
                             <label for="nivelEduc_{{ $integrante->intId }}" class="form-label">Nivel Educativo</label>
@@ -207,6 +227,40 @@
                         </div>
                     </div>
                 </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="gestante_{{ $integrante->intId }}" class="form-label">Gestante</label>
+                        <select class="form-control" id="gestante_{{ $integrante->intId }}" name="integrantes[{{ $integrante->intId }}][gestante]" required>
+                            <option value="">Seleccionar</option>
+                            <option value="no" {{ $integrante->gestante == 'no' ? 'selected' : '' }}>No</option>
+                            <option value="si" {{ $integrante->gestante == 'si' ? 'selected' : '' }}>Sí</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="form-group" id="gestacionMeses_div_{{ $integrante->intId }}" style="display: none;">
+                        <label for="gestacionMeses_{{ $integrante->intId }}" class="form-label">Meses de gestación</label>
+                        <select class="form-control" id="gestacionMeses_{{ $integrante->intId }}" name="integrantes[{{ $integrante->intId }}][gestacionMeses]">
+                            <option value="">Seleccionar</option>
+                            <option value="menos de un mes" {{ $integrante->gestacionMeses == 'menos de un mes' ? 'selected' : '' }}>Menos de un mes</option>
+                            <option value="1 mes" {{ $integrante->gestacionMeses == '1 mes' ? 'selected' : '' }}>1 mes</option>
+                            <option value="2 meses" {{ $integrante->gestacionMeses == '2 meses' ? 'selected' : '' }}>2 meses</option>
+                            <option value="3 meses" {{ $integrante->gestacionMeses == '3 meses' ? 'selected' : '' }}>3 meses</option>
+                            <option value="4 meses" {{ $integrante->gestacionMeses == '4 meses' ? 'selected' : '' }}>4 meses</option>
+                            <option value="5 meses" {{ $integrante->gestacionMeses == '5 meses' ? 'selected' : '' }}>5 meses</option>
+                            <option value="6 meses" {{ $integrante->gestacionMeses == '6 meses' ? 'selected' : '' }}>6 meses</option>
+                            <option value="7 meses" {{ $integrante->gestacionMeses == '7 meses' ? 'selected' : '' }}>7 meses</option>
+                            <option value="8 meses" {{ $integrante->gestacionMeses == '8 meses' ? 'selected' : '' }}>8 meses</option>
+                            <option value="9 meses" {{ $integrante->gestacionMeses == '9 meses' ? 'selected' : '' }}>9 meses</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+                
                 
                 <div class="row mb-3">
                     <div class="col">
@@ -254,17 +308,29 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="integrantes[{{ $integrante->intId }}][enfermedadesCronicas][]" value="con discapacidad" {{ in_array('con discapacidad', $integrante->enfermedadesCronicas ?? []) ? 'checked' : '' }}> Discapacidad ¿tiene certificado único de discapacidad?<br>
+                                        <input class="form-check-input" type="checkbox" id="discapacidad_{{ $integrante->intId }}" name="integrantes[{{ $integrante->intId }}][enfermedadesCronicas][]" value="con discapacidad" {{ in_array('con discapacidad', $integrante->enfermedadesCronicas ?? []) ? 'checked' : '' }}> Discapacidad ¿tiene certificado único de discapacidad?<br>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row mb-3" id="certificadoSection_{{ $integrante->intId }}" style="{{ in_array('con discapacidad', is_array($integrante->enfermedadesCronicas) ? $integrante->enfermedadesCronicas : []) ? 'display: block;' : 'display: none;' }}">
+                    <div class="form-group">
+                        <label for="certificado_{{ $integrante->intId }}">Número de Certificado Único de Discapacidad</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="certificado_{{ $integrante->intId }}" 
+                            name="integrantes[{{ $integrante->intId }}][certificado]" 
+                            value="{{ old('integrantes.'.$integrante->intId.'.certificado', $integrante->numCertificado) }}" {{-- Aquí está el cambio --}}
+                        >
+                    </div>
+                </div>
                                
                       <hr>
-
-                      @endforeach
+                  @endforeach
               </div>
               <div class="card-footer text-center">
                   <button type="submit" class="btn btn-custom">Actualizar Integrantes</button>
@@ -275,5 +341,127 @@
           </form>
       </div>
   </div>
-  @endsection
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectNacionalidad = document.getElementById('nacionalidad_{{ $integrante->intId }}');
+        var otroDiv = document.getElementById('nacionalidad_otro_div_{{ $integrante->intId }}');
+        var otroInput = document.getElementById('nacionalidad_otro_{{ $integrante->intId }}');
+
+        // Mostrar/ocultar al cargar la página
+        if (selectNacionalidad.value === 'Otro') {
+            otroDiv.style.display = 'block';
+        } else {
+            otroDiv.style.display = 'none';
+        }
+
+        // Listener para cambios en el select
+        selectNacionalidad.addEventListener('change', function () {
+            if (this.value === 'Otro') {
+                otroDiv.style.display = 'block';
+            } else {
+                otroDiv.style.display = 'none';
+                otroInput.value = ''; // Limpiar el campo si se selecciona algo diferente
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectProgSocial = document.getElementById('progSocial_{{ $integrante->intId }}');
+        var otroDiv = document.getElementById('progSocial_otro_div_{{ $integrante->intId }}');
+        var otroInput = document.getElementById('progSocial_otro_{{ $integrante->intId }}');
+
+        // Mostrar/ocultar al cargar la página
+        if (selectProgSocial.value === 'Otros') {
+            otroDiv.style.display = 'block';
+        } else {
+            otroDiv.style.display = 'none';
+        }
+
+        // Listener para cambios en el select
+        selectProgSocial.addEventListener('change', function () {
+            if (this.value === 'Otros') {
+                otroDiv.style.display = 'block';
+            } else {
+                otroDiv.style.display = 'none';
+                otroInput.value = ''; // Limpiar el campo si se selecciona algo diferente
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectVinculo = document.getElementById('vinculo_{{ $integrante->intId }}');
+        var otroDivVinculo = document.getElementById('vinculo_otro_div_{{ $integrante->intId }}');
+        var otroInputVinculo = document.getElementById('vinculo_otro_{{ $integrante->intId }}');
+
+        // Mostrar/ocultar al cargar la página
+        if (selectVinculo.value === 'Otro') {
+            otroDivVinculo.style.display = 'block';
+        } else {
+            otroDivVinculo.style.display = 'none';
+        }
+
+        // Listener para cambios en el select
+        selectVinculo.addEventListener('change', function () {
+            if (this.value === 'Otro') {
+                otroDivVinculo.style.display = 'block';
+            } else {
+                otroDivVinculo.style.display = 'none';
+                otroInputVinculo.value = ''; // Limpiar el campo si se selecciona algo diferente
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var gestanteSelect = document.getElementById('gestante_{{ $integrante->intId }}');
+        var mesesGestacionDiv = document.getElementById('gestacionMeses_div_{{ $integrante->intId }}');
+
+        // Mostrar/ocultar al cargar la página
+        if (gestanteSelect.value === 'si') {
+            mesesGestacionDiv.style.display = 'block';
+        } else {
+            mesesGestacionDiv.style.display = 'none';
+        }
+
+        // Listener para cambios en el select de gestante
+        gestanteSelect.addEventListener('change', function () {
+            if (this.value === 'si') {
+                mesesGestacionDiv.style.display = 'block';
+            } else {
+                mesesGestacionDiv.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const discapacidadCheckbox = document.getElementById('discapacidad_{{ $integrante->intId }}');
+        const certificadoSection = document.getElementById('certificadoSection_{{ $integrante->intId }}');
+
+        // Mostrar/ocultar al cargar la página
+        if (discapacidadCheckbox.checked) {
+            certificadoSection.style.display = 'block';
+        } else {
+            certificadoSection.style.display = 'none';
+        }
+
+        // Listener para cambios en el checkbox de discapacidad
+        discapacidadCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                certificadoSection.style.display = 'block';
+            } else {
+                certificadoSection.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+
+  @endsection

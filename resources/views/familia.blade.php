@@ -78,13 +78,3 @@
         </div>
     </div>
 @endsection
-
-
-
-
-
-
-
-
-
-

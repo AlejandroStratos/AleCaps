@@ -24,7 +24,7 @@
         }
 
         body {
-            background-color: #a5edfd;
+            background-color: rgb(108, 199, 219);
             display: flex;
             flex-direction: column;
             min-height: 100vh; /* Asegura que el cuerpo tenga al menos el 100% de la altura de la pantalla */

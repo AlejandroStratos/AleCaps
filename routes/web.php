@@ -7,13 +7,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
- Route::middleware(['auth'])->group(function () {  
-
+Route::middleware(['auth'])->group(function () {
+    
     // Página de inicio protegida
     Route::get('/', function () {return view('home');})->name('home');
 
     // Excel
-    Route::get('/ver-encuestas/collection', [EncuestaController::class, 'collection'])->name('encuesta.export.collection');
     Route::get('/ver-encuestas/view', [EncuestaController::class, 'view'])->name('encuesta.export.view');
 
     // Rutas de Encuestas
@@ -51,9 +50,9 @@ use Illuminate\Support\Facades\Route;
     Route::delete('usuario/{id}', [UserController::class, 'destroy'])->name('usuario.destroy');
     Route::get('usuario/editar/{id}', [UserController::class, 'edit'])->name('usuario.edit');
     Route::put('usuario/editar/{id}', [UserController::class, 'update'])->name('usuario.update');
- }); 
+});
 
 // Rutas de Autenticación (sin protección)
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout'); 
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

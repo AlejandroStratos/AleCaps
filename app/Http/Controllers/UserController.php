@@ -20,9 +20,9 @@ class UserController extends Controller
         // Verifica si el usuario autenticado tiene el rol de 'Administrador'
         if (auth()->user()->rol !== 'Administrador') {
         return redirect()->route('home')->with('error', 'No tienes acceso a esta vista');
-        } 
+        }
 
-
+        
         $usuario = Db::table('users')
 
         ->select('email','userId','nombreusuario','nombre','apellido','password','capId','rol')->paginate(5);
@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         try{
 
-
+        
         $usuario = new User();
         $usuario->nombreusuario=$request->nombreusuario;
         $usuario->nombre=$request->nombre;
@@ -63,7 +63,7 @@ class UserController extends Controller
         }catch(\Exception $e){
             return redirect()->back()->with('error', 'Error: asegurese que el nombre del usuario sea unico');
         }
-
+        
     }
 
     /**
@@ -125,8 +125,8 @@ class UserController extends Controller
         $usuario = User::find($usuarioId);
         $usuario->delete();
         return redirect('/usuario')->with('success', 'El usuario se eliminó correctamente');
-
+   
 
     }
-
+    
 }

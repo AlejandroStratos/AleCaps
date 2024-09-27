@@ -4,40 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\encuestas;
 use App\Models\familias;
-
 use App\Models\barrios;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exports\EncuestasExportsCollection;
 use App\Exports\EncuestasExportsView;
+use Illuminate\Support\Facades\Auth;
+
 use Maatwebsite\Excel\Facades\Excel;
-
-
 
 class EncuestaController extends Controller
 {
 
-    public function index()
+     public function index()
     {
         $encuestas = encuestas::with(['familia', 'barrio'])->get();
         return view('verencuestas', compact('encuestas'));
     }
-    public function collection()
-    {   
-        // Verifica si el usuario autenticado tiene el rol de 'Administrador'
-        if (auth()->user()->rol !== 'Administrador') {
-            return redirect()->route('home')->with('error', 'No tienes acceso a esta vista');
-        }
-        
-        return Excel::download(new EncuestasExportsCollection, 'encuestas.xlsx'); 
-        
-    }
 
-
-    // EXCEL
-    // EXCEL
-    // EXCEL
+// EXCEL
     public function view(Request $request)
     {
         // Verifica si el usuario autenticado tiene el rol de 'Administrador'
@@ -58,7 +43,7 @@ class EncuestaController extends Controller
         $capId = $request->input('cap_id');
 
         // Filtrar encuestas solo si se proporcionan fechas
-        $encuestas = Encuestas::with(['familia', 'integrantes']);
+        $encuestas = Encuestas::with(['familia', 'integrantes', 'user']);
 
         if ($fechaInicio && $fechaFin) {
             // Filtrar por rango de fechas si se proporcionan
@@ -85,16 +70,11 @@ class EncuestaController extends Controller
 
 //--------------------------------
 
-    //--------------------------
-
-    //--------------------------
-
     public function buscarPorDomicilio(Request $request)
     {
 
-
         $domicilio = $request->input('domicilio');
-
+        
         // Buscar encuestas por domicilio
         $encuestas = encuestas::join('familias', 'encuestas.famId', '=', 'familias.famId')
             ->where('familias.domicilio', 'LIKE', '%' . $domicilio . '%')
@@ -107,8 +87,7 @@ class EncuestaController extends Controller
 
 
 
-
-
+ 
     public function create($famId)
     {
 
@@ -118,23 +97,30 @@ class EncuestaController extends Controller
 
     }
 
-
 //BARRIOS-------------------------------------------------------------------
     public function getBarriosByCapId($capId)
-
     {
         $barrios = barrios::where('capId', $capId)->pluck('nombreBarrio', 'barrioId');
         return response()->json($barrios);
     }
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------  
 
 public function store(Request $request)
 {
     // Validación de los datos
     $request->validate([
         'prSoysa' => 'required|array|size:3',
-        'alimentacion2' => 'required|array|min:1',
+        'alimantacion1' => 'required|string', // Validar que se seleccione "Si" o "No" en alimentación
     ]);
+
+    // Validación condicional: sólo validar 'alimentacion2' si 'alimantacion1' es 'Si'
+    if ($request->input('alimantacion1') == 'Si') {
+        $request->validate([
+            'alimentacion2' => 'required|array|min:1',
+        ], [
+            'alimentacion2.required' => 'Debes seleccionar al menos una opción en la asistencia alimentaria si elegiste "Sí".',
+        ]);
+    }
 
     try {
         // Inicializar variables de validación
@@ -172,8 +158,15 @@ public function store(Request $request)
         $encuesta->accMental1 = $validatedData['accMental1'];
         $encuesta->accMental2 = $validatedData['accMental2'];
         $encuesta->prSoysa = implode(', ', $request->prSoysa); // Guardar como string separado por comas
+        $encuesta->prSoysa_otro = $validatedData['prSoysa_otro'] ?? null;
         $encuesta->alimantacion1 = $validatedData['alimantacion1'];
-        $encuesta->alimentacion2 = implode(', ', $request->alimentacion2); // Guardar como string separado por comas
+
+        if ($request->input('alimantacion1') == 'Si') {
+            $encuesta->alimentacion2 = implode(', ', $request->alimentacion2); // Guardar como string separado por comas
+        } else {
+            $encuesta->alimentacion2 = null; // Si es "No", no guardar opciones
+        }
+
         $encuesta->alimentacion3 = $validatedData['alimentacion3'];
         $encuesta->alimentacion4 = $validatedData['alimentacion4'];
         $encuesta->partSocial = $validatedData['partSocial'];
@@ -189,10 +182,11 @@ public function store(Request $request)
         $encuesta->accBas2 = $validatedData['accBas2'];
         $encuesta->accBas3 = $validatedData['accBas3'];
         $encuesta->accBas4 = $validatedData['accBas4'];
-
         $encuesta->famId = $famId;
         $encuesta->capId = $request->input('capId');
 
+        $encuesta->userId = Auth::id();
+        
         $encuesta->save();
 
         $familia = familias::find($famId);
@@ -207,23 +201,33 @@ public function store(Request $request)
 }
 
 
-
     /**
      * Display the specified resource.
      */
     public function show($encuestaId)
     {
-        $encuesta = encuestas::find($encuestaId);
-        $edad = DB::table('integrantes')->selectRaw('*,TIMESTAMPDIFF(YEAR,fechaNac, CURDATE()) as edad')->join('familias', 'familias.famId', 'integrantes.famId')
+
+        $encuesta = encuestas::with('user')->find($encuestaId);
+    
+        // Cálculo de la edad de los integrantes relacionados a la encuesta
+        $edad = DB::table('integrantes')
+            ->selectRaw('*,TIMESTAMPDIFF(YEAR,fechaNac, CURDATE()) as edad')
+            ->join('familias', 'familias.famId', 'integrantes.famId')
             ->where('familias.famId', '=', $encuesta->famId)
             ->get();
+    
         DB::table('integrantes')
             ->join('familias', 'familias.famId', '=', 'integrantes.famId')
             ->where('familias.famId', '=', $encuesta->famId)
             ->update(['edad' => DB::raw('TIMESTAMPDIFF(YEAR, fechaNac, CURDATE())')]);
-
-        return view('encuestacompleta', ['encuesta' => $encuesta, 'edad' => $edad]);
+    
+        // Retornar la vista con la encuesta, la edad y el nombre de usuario
+        return view('encuestacompleta', [
+            'encuesta' => $encuesta,
+            'edad' => $edad,
+        ]);
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -252,6 +256,17 @@ public function store(Request $request)
     public function update(Request $request, $encuestaId)
     {
         $encuesta = encuestas::find($encuestaId);
+
+        // Validación de los campos
+        $request->validate([
+            'alimantacion1' => 'required|string',
+            'alimentacion2' => $request->input('alimantacion1') == 'Si' ? 'required|array|min:1' : 'nullable',
+            'prSoysa' => 'required|array|size:3', // Validar que se seleccionen exactamente 3 opciones
+        ], [
+            'alimentacion2.required' => 'Debes seleccionar al menos una opción en la asistencia alimentaria si elegiste "Sí".',
+            'prSoysa.size' => 'Debes seleccionar exactamente 3 opciones en la pregunta "Problemas sociales y salud".',
+        ]);
+
         // Actualiza los valores de la encuesta con los datos del formulario
         $encuesta->accSalud1 = $request->input('accSalud1');
         $encuesta->accSalud2 = $request->input('accSalud2');
@@ -268,16 +283,24 @@ public function store(Request $request)
         $encuesta->accMental1 = $request->input('accMental1');
         $encuesta->accMental2 = $request->input('accMental2');
 
-
         $prSoysaArray = $request->input('prSoysa', []);
         $encuesta->prSoysa = implode(',', array_map('trim', $prSoysaArray));
 
+        if (in_array('Otros', $prSoysaArray)) {
+            $encuesta->prSoysa_otro = $request->input('prSoysa_otro', null);
+        } else {
+            $encuesta->prSoysa_otro = null; // Si no se selecciona "Otros", se deja como null
+        }
 
         $encuesta->alimantacion1 = $request->input('alimantacion1');
 
-        $alimentacionArray = $request->input('alimentacion2', []);
-        $encuesta->alimentacion2 = implode(',', array_map('trim', $alimentacionArray));
-
+        // Manejo condicional del campo alimentacion2 según alimantacion1
+        if ($request->input('alimantacion1') == 'Si') {
+            $alimentacionArray = $request->input('alimentacion2', []);
+            $encuesta->alimentacion2 = implode(',', array_map('trim', $alimentacionArray));
+        } else {
+            $encuesta->alimentacion2 = null; // Si es "No", se deja como null
+        }
 
         $encuesta->alimentacion3 = $request->input('alimentacion3');
         $encuesta->alimentacion4 = $request->input('alimentacion4');
@@ -308,14 +331,12 @@ public function store(Request $request)
      */
     public function destroy($encuestaId)
     {
-
         $encuesta = encuestas::findOrFail($encuestaId);
         $encuesta->delete();
-
 
         return redirect()->route('encuesta.index')->with('success', 'Encuesta eliminada con éxito');
     }
 
 
-
+    
 }

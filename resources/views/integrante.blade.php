@@ -87,6 +87,7 @@
                                     <option value="Documentación extranjera">Documentación extranjera</option>
                                 </select>
                             </div>
+
                         </div>
                         <div class="col-md-4">
                             <!-- Select Género -->
@@ -123,7 +124,19 @@
 
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <!-- Select Programa Social -->
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group" id="nacionalidad_otro_div" style="display:none;">
+                                <label for="nacionalidad_otro" class="form-label">Especificar otra nacionalidad</label>
+                                <input type="text" class="form-control" id="nacionalidad_otro" name="nacionalidad_otro" placeholder="Ingrese la nacionalidad">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="progSocial" class="form-label">Programa social</label>
                                 <select class="form-control" id="progSocial" name="progSocial" required>
@@ -133,6 +146,17 @@
                                     <option value="Becas progresar">Becas progresar</option>
                                     <option value="Acompañar">Acompañar</option>
                                     <option value="Otros">Otros</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Select Obra Social -->
+                            <div class="form-group">
+                                <label for="obraSocial" class="form-label">Obra social</label>
+                                <select class="form-control" id="obraSocial" name="obraSocial" required>
+                                    <option value="">Seleccionar</option>
+                                    <option value="Si">Si</option>
+                                    <option value="No">No</option>
                                 </select>
                             </div>
                         </div>
@@ -153,70 +177,124 @@
                                 </select>
                             </div>
                         </div>
+
+
+                    </div>
+
+                    <div class="row mb-3">
                         <div class="col-md-4">
-                            <!-- Select Obra Social -->
+                            <div class="form-group" id="progSocial_otro_div" style="display:none;">
+                                <label for="progSocial_otro" class="form-label">Especificar otro programa social</label>
+                                <input type="text" class="form-control" id="progSocial_otro" name="progSocial_otro" placeholder="Ingrese un programa social" >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="obraSocial" class="form-label">Obra social</label>
-                                <select class="form-control" id="obraSocial" name="obraSocial" required>
-                                    <option value="">Seleccionar</option>
-                                    <option value="Si">Si</option>
-                                    <option value="No">No</option>
-                                </select>
+                                    <label>Último control</label>
+                                    <input type="date" name="ultimoControl" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                                 <div class="form-group">
-                                        <label>Último control</label>
-                                        <input type="date" name="ultimoControl" class="form-control" required>
-                                </div>
-                        </div>
-                        <div class="col">
-                                <div class="form-group">
-                                        <label>Vínculo</label>
-                                        <select class="form-control" name="vinculo" required>
-                                                <option value="">Seleccionar</option>
-                                                <option value="Esposo/a">Esposo/a</option>
-                                                <option value="Concubino/a">Concubino/a</option>
-                                                <option value="Hijo/a">Hijo/a</option>
-                                                <option value="Padre">Padre</option>
-                                                <option value="Madre">Madre</option>
-                                                <option value="Abuelo/a">Abuelo/a</option>
-                                                <option value="Nieto/a">Nieto/a</option>
-                                                <option value="Tío/a">Tío/a</option>
-                                                <option value="Sobrino/a">Sobrino/a</option>
-                                                <option value="Suegro/a">Suegro/a</option>
-                                                <option value="Cuñado/a">Cuñado/a</option>
-                                                <option value="Unión civil">Unión civil</option>
-                                                <option value="Unión de hecho">Unión de hecho</option>
-                                                <option value="Otro">Otro</option>
+                                    <label>Vínculo</label>
+                                    <select class="form-control" id="vinculo" name="vinculo" required>
+                                            <option value="">Seleccionar</option>
+                                            <option value="Esposo/a">Esposo/a</option>
+                                            <option value="Concubino/a">Concubino/a</option>
+                                            <option value="Hijo/a">Hijo/a</option>
+                                            <option value="Padre">Padre</option>
+                                            <option value="Madre">Madre</option>
+                                            <option value="Abuelo/a">Abuelo/a</option>
+                                            <option value="Nieto/a">Nieto/a</option>
+                                            <option value="Tío/a">Tío/a</option>
+                                            <option value="Sobrino/a">Sobrino/a</option>
+                                            <option value="Suegro/a">Suegro/a</option>
+                                            <option value="Cuñado/a">Cuñado/a</option>
+                                            <option value="Unión civil">Unión civil</option>
+                                            <option value="Unión de hecho">Unión de hecho</option>
+                                            <option value="Otro">Otro</option>
                                         </select>
                                 </div>
                         </div>
-                        <div class="col">
+                        <div class="col-md-4">
+                            <div class="col">
                                 <div class="form-group">
-                                        <label>Nivel Educativo</label>
-                                        <select class="form-control" name="nivelEduc" required>
-                                                <option value="">Seleccionar</option>
-                                                <option value="Ninguno por edad">Ninguno por edad</option>
-                                                <option value="Primaria incompleta">Primaria incompleta</option>
-                                                <option value="Primaria completa">Primaria completa</option>
-                                                <option value="Secundaria incompleta">Secundaria incompleta</option>
-                                                <option value="Secundaria completa">Secundaria completa</option>
-                                                <option value="Terciario completo">Terciario completo</option>
-                                                <option value="Universitario completo">Universitario completo</option>
-                                                <option value="Analfabeto: no lee ni escribe">Analfabeto: no lee ni escribe</option>
-                                                <option value="No sabe/no contesta">No sabe/no contesta</option>
-                                                <option value="Cursando primaria"> Cursando primaria</option>
-                                                <option value="Cursando secundaria">Cursando secundaria</option>
-                                                <option value="Cursando terciaria">Cursando terciaria</option>
-                                                <option value="Cursando universidad">Cursando universidad</option>
-                                                <option value="Cursando inicial">Cursando inicial</option>
-                                        </select>
-
+                                    <label>Nivel Educativo</label>
+                                    <select class="form-control" name="nivelEduc" required>
+                                            <option value="">Seleccionar</option>
+                                            <option value="Ninguno por edad">Ninguno por edad</option>
+                                            <option value="Primaria incompleta">Primaria incompleta</option>
+                                            <option value="Primaria completa">Primaria completa</option>
+                                            <option value="Secundaria incompleta">Secundaria incompleta</option>
+                                            <option value="Secundaria completa">Secundaria completa</option>
+                                            <option value="Terciario completo">Terciario completo</option>
+                                            <option value="Universitario completo">Universitario completo</option>
+                                            <option value="Analfabeto: no lee ni escribe">Analfabeto: no lee ni escribe</option>
+                                            <option value="No sabe/no contesta">No sabe/no contesta</option>
+                                            <option value="Cursando primaria"> Cursando primaria</option>
+                                            <option value="Cursando secundaria">Cursando secundaria</option>                                                <option value="Cursando terciaria">Cursando terciaria</option>
+                                            <option value="Cursando universidad">Cursando universidad</option>
+                                            <option value="Cursando inicial">Cursando inicial</option>
+                                    </select>
                                 </div>
+                            </div>
                         </div>
                     </div>
 
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group" id="vinculo_otro_div" style="display:none;">
+                                <label for="vinculo_otro" class="form-label">Especificar otro vínculo</label>
+                                <input type="text" class="form-control" id="vinculo_otro" name="vinculo_otro" placeholder="Ingrese el vínculo" >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="gestante" class="form-label">Gestante</label>
+                                    <select class="form-control" id="gestante" name="gestante" required>
+                                        <option value="">Seleccionar</option>
+                                        <option value="no">No</option>
+                                        <option value="si">Sí</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group" id="mesesGestacion" style="display: none;">
+                                <label for="gestacionMeses" class="form-label">Meses de gestación</label>
+                                <select class="form-control" id="gestacionMeses" name="gestacionMeses">
+                                    <option value="">Seleccionar</option>
+                                    <option value="menos de un mes">Menos de un mes</option>
+                                    <option value="1 mes">1 mes</option>
+                                    <option value="2 meses">2 meses</option>
+                                    <option value="3 meses">3 meses</option>
+                                    <option value="4 meses">4 meses</option>
+                                    <option value="5 meses">5 meses</option>
+                                    <option value="6 meses">6 meses</option>
+                                    <option value="7 meses">7 meses</option>
+                                    <option value="8 meses">8 meses</option>
+                                    <option value="9 meses">9 meses</option>
+                                </select>
+                                </div>
+                            </div>
+
+
+                    </div>
                     <div class="row mb-3">
                         <div class="col">
                             <!-- Checkboxes Enfermedades Crónicas -->
@@ -270,18 +348,15 @@
                             </div>
                         </div>
                     </div>
-                    <div id="certificadoSection" style="display: none;">
-                        <div class="form-group">
-                            <label for="certificado">Número de Certificado Único de Discapacidad</label>
-                            <input type="text" class="form-control" id="certificado" name="certificado">
+                    <div class="row mb-3">
+                        <div id="certificadoSection" style="display: none;">
+                            <div class="form-group">
+                                <label for="certificado">Número de Certificado Único de Discapacidad</label>
+                                <input type="text" class="form-control" id="certificado" name="certificado" >
+                            </div>
                         </div>
                     </div>
-                    <!--<div id="certificadoSection" style="display: none;">
-                        <div class="form-group">
-                            <label for="certificado">Número de Certificado Único de Discapacidad</label>
-                            <input type="text" class="form-control" id="certificado" name="certificado">
-                        </div>
-                    </div>-->
+
 
                     <!-- Botones de enviar -->
                     <div class="row mb-3">
@@ -296,21 +371,72 @@
                 </div>
             </form>
         </div>
+
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const discapacidadCheckbox = document.getElementById('discapacidad');
-                const certificadoSection = document.getElementById('certificadoSection');
+                var gestanteSelect = document.getElementById('gestante');
+                var gestanteTextbox = document.getElementById('mesesGestacion');
 
-                // Añadimos un evento para mostrar/ocultar el campo del certificado
-                discapacidadCheckbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        certificadoSection.style.display = 'block';
+                gestanteSelect.addEventListener('change', function() {
+                    var selectedOption = this.value;
+                    if (selectedOption === 'si') {
+                        gestanteTextbox.style.display = 'block';
                     } else {
-                        certificadoSection.style.display = 'none';
+                        gestanteTextbox.style.display = 'none';
                     }
                 });
             });
         </script>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const discapacidadCheckbox = document.getElementById('discapacidad');
+        const certificadoSection = document.getElementById('certificadoSection');
+
+        discapacidadCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                certificadoSection.style.display = 'block';
+            } else {
+                certificadoSection.style.display = 'none';
+            }
+        });
+
+        // Función para mostrar/ocultar y limpiar el campo de texto adicional
+        function handleOtherField(selectId, otherDivId, otherInputId, otherValue) {
+            const select = document.getElementById(selectId);
+            const otherDiv = document.getElementById(otherDivId);
+            const otherInput = document.getElementById(otherInputId);
+
+            select.addEventListener('change', function() {
+                if (this.value === otherValue) {
+                    otherDiv.style.display = 'block';
+                } else {
+                    otherDiv.style.display = 'none';
+                    otherInput.value = '';  // Limpiar el campo de texto cuando se oculta
+                }
+            });
+        }
+
+        // Nacionalidad
+        handleOtherField('nacionalidad', 'nacionalidad_otro_div', 'nacionalidad_otro', 'Otro');
+
+        // Programa Social
+        handleOtherField('progSocial', 'progSocial_otro_div', 'progSocial_otro', 'Otros');
+
+        // Vínculo
+        handleOtherField('vinculo', 'vinculo_otro_div', 'vinculo_otro', 'Otro');
+
+    });
+
+    document.querySelector('form').addEventListener('submit', function (event) {
+        // Aquí no es necesario realizar validaciones adicionales porque
+        // los campos de texto ya se limpian cuando se ocultan
+    });
+</script>
+
+
+
 
 
         @if (@isset($integrantes))
@@ -331,10 +457,15 @@
                                                 <th>Estado DNI</th>
                                                 <th>Genero</th>
                                                 <th>Nacionalidad</th>
+                                                <th>Especificar otra nacionalidad</th>
                                                 <th>Vinculo</th>
+                                                <th>Especificar otro vinculo</th>
                                                 <th>Nivel Educacional</th>
+                                                <th>Gestante</th>
+                                                <th>Meses de Gestacion</th>
                                                 <th>Ocupacion</th>
                                                 <th>Programa social</th>
+                                                <th>Especificar otro programa</th>
                                                 <th>Obra Social</th>
                                                 <th>Enfermedades Cronicas</th>
                                                 <th>Ultimo Control</th>
@@ -352,10 +483,15 @@
                                                 <td>{{ $integrante->estadoDni }}</td>
                                                 <td>{{ $integrante->genero }}</td>
                                                 <td>{{ $integrante->nacionalidad }}</td>
+                                                <td>{{ $integrante->nacionalidad_otro }}</td>
                                                 <td>{{ $integrante->vinculo }}</td>
+                                                <td>{{ $integrante->vinculo_otro }}</td>
                                                 <td>{{ $integrante->nivelEduc }}</td>
+                                                <td>{{ $integrante->gestante }}</td>
+                                                <td>{{ $integrante->gestacionMeses }}</td>
                                                 <td>{{ $integrante->ocupacion }}</td>
                                                 <td>{{ $integrante->progSocial }}</td>
+                                                <td>{{ $integrante->progSocial_otro }}</td>
                                                 <td>{{$integrante->obraSocial}}</td>
                                                 <td>{{ $integrante->enfermedadesCronicas}}</td>
                                                 <td>{{$integrante->ultimoControl}}</td>

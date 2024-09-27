@@ -2,6 +2,24 @@
 
 @section('head')
 
+<style>
+
+.subtitle {
+    font-size: 24px;
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: left;
+    }
+
+    hr {
+        border: 0;
+        height: 2px;
+        background-color: #000408;
+        margin: 10px 0;
+    }
+
+</style>
+
 @endsection
 
 @section('body')
@@ -16,6 +34,9 @@
                 <!-- Aquí debes agregar los campos y selectores con los valores actuales de la encuesta -->
 
                 <!-- Por ejemplo, para accSalud1 sería algo comoo -->
+
+                <h2 class="subtitle">Acceso a la salud</h2>
+                <hr>
 
                 <div class="form-group">
                     <label for="accSalud1">¿Cómo considera que es el acceso a la atención en salud suyo y/o de su familia?</label>
@@ -207,6 +228,9 @@
                     });
                 </script>
 
+                <h2 class="subtitle">Acceso a servicios en salud mental</h2>
+                <hr>
+
                 <div class="form-group">
                     <label for="accMental1">¿Alguien en el grupo familiar recibe tratamiento en Salud Mental (Psicológico y/o Psiquiátrico)?</label>
                     <select name="accMental1" id="accMental1" class="form-control" required>
@@ -225,6 +249,9 @@
                         <option value="No" {{ $encuesta->accMental2 === 'No' ? 'selected' : '' }}>No</option>
                     </select>
                 </div>
+
+                <h2 class="subtitle">Problemas sociales y de salud</h2>
+                <hr>
                 
 
                 <div class="form-group">
@@ -238,18 +265,43 @@
                             </label><br>
                         </div>
                         @endforeach
+
+                                <!-- Campo de texto oculto para la opción "Otros" -->
+                        <div id="prSoysa_otro" style="display: none;">
+                            <label for="prSoysa_otro">Por favor especifique:</label>
+                            <input type="text" id="prSoysa_otro_input" name="prSoysa_otro" value="{{ $encuesta->prSoysa_otro ?? '' }}">
+                        </div>
                     </div>
                 </div>
                 
                 
-                {{-- Script para asegurar que se seleccionen exactamente 3 opciones --}}
+                {{-- Script para asegurar que se seleccionen exactamente 3 opciones y mostrar el campo "Otros" --}}
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         const checkboxes = document.querySelectorAll('input[name="prSoysa[]"]');
+                        const otrosCheckbox = document.querySelector('input[value="Otros"]');
+                        const otrosTextInput = document.getElementById('prSoysa_otro');
+                        const otrosTextInputField = document.getElementById('prSoysa_otro_input');
                         const minChecked = 3;
                         const maxChecked = 3;
                         const submitButton = document.querySelector('button[type="submit"]');
-                
+                        
+                        // Mostrar o esconder el campo de texto cuando se selecciona "Otros"
+                        otrosCheckbox.addEventListener('change', function () {
+                            if (this.checked) {
+                                otrosTextInput.style.display = 'block';
+                            } else {
+                                otrosTextInput.style.display = 'none';
+                                otrosTextInputField.value = '';  // Limpiar el campo de texto si se deselecciona "Otros"
+                            }
+                        });
+
+                        // Mantener el estado de visualización del campo "Otros" al cargar la página (si ya está seleccionado)
+                        if (otrosCheckbox.checked) {
+                            otrosTextInput.style.display = 'block';
+                        }
+
+                        // Controlar la cantidad de checkboxes seleccionados
                         checkboxes.forEach(checkbox => {
                             checkbox.addEventListener('change', function () {
                                 let checkedCount = 0;
@@ -258,15 +310,15 @@
                                         checkedCount++;
                                     }
                                 });
-                
+
                                 if (checkedCount > maxChecked) {
                                     this.checked = false;
-                                    alert(`Solo puedes seleccionar hasta ${maxChecked} opciones.`);
+                                    alert(Solo puedes seleccionar hasta ${maxChecked} opciones.);
                                 }
                             });
                         });
-                
-                        // Añadir evento al botón de envío
+
+                        // Validar al enviar el formulario que se seleccionen exactamente 3 opciones
                         submitButton.addEventListener('click', function (event) {
                             let checkedCount = 0;
                             checkboxes.forEach(cb => {
@@ -274,17 +326,18 @@
                                     checkedCount++;
                                 }
                             });
-                
-                            if (checkedCount < minChecked) {
+
+                            if (checkedCount !== minChecked) {
                                 event.preventDefault(); // Prevenir el envío del formulario
-                                alert(`Debes seleccionar al menos ${minChecked} opciones en la pregunta de problemas sociales y de salud.`);
+                                alert(Debes seleccionar exactamente ${minChecked} opciones en la pregunta de problemas sociales y de salud.);
                             }
                         });
                     });
-                </script>                
-                {{-- Script para asegurar que se seleccionen exactamente 3 opciones --}}
+                </script>             
+                {{-----------------------------------------------------------------------------------------}}
                 
-                
+                <h2 class="subtitle">Alimentación</h2>
+                <hr>
 
                 <div class="form-group">
                     <label for="alimantacion1">¿Recibe asistencia alimentaria?</label>
@@ -296,7 +349,7 @@
                 </div>
                 
 
-                <div class="form-group">
+                <div class="form-group" id="alimentacion_tipo" style="{{ $encuesta->alimantacion1 == 'Si' ? 'display:block;' : 'display:none;' }}">
                     <label for="alimentacion2">¿De qué tipo? (se puede responder más de una)</label>
                     <div>
                         @foreach(['Comida elaborada/vianda', 'Bolsón de alimentos', 'Dinero'] as $opcion)
@@ -308,27 +361,40 @@
                         </div>
                         @endforeach
                     </div>
-                </div>
+                </div>                          
                 
-                
-                {{-- Script para validar que al menos una opción esté marcada --}}
+                {{-- Script para mostrar/ocultar la sección y validar la selección --}}
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
+                        const alimentacionSelect = document.getElementById('alimantacion1');
+                        const alimentacionTipoDiv = document.getElementById('alimentacion_tipo');
                         const form = document.querySelector('form');
                         const checkboxes = document.querySelectorAll('input[name="alimentacion2[]"]');
                         const minChecked = 1; // Mínimo de opciones a seleccionar
-                        
+
+                        // Mostrar/ocultar la sección de tipo de asistencia alimentaria según el valor seleccionado
+                        alimentacionSelect.addEventListener('change', function() {
+                            if (this.value === 'Si') {
+                                alimentacionTipoDiv.style.display = 'block';
+                            } else {
+                                alimentacionTipoDiv.style.display = 'none';
+                            }
+                        });
+
+                        // Validación del formulario al enviar
                         form.addEventListener('submit', function (e) {
-                            let checkedCount = 0;
-                            checkboxes.forEach(checkbox => {
-                                if (checkbox.checked) {
-                                    checkedCount++;
+                            if (alimentacionSelect.value === 'Si') {
+                                let checkedCount = 0;
+                                checkboxes.forEach(checkbox => {
+                                    if (checkbox.checked) {
+                                        checkedCount++;
+                                    }
+                                });
+
+                                if (checkedCount < minChecked) {
+                                    e.preventDefault();
+                                    alert(Debes seleccionar al menos ${minChecked} opción en la pregunta "¿De qué tipo?".);
                                 }
-                            });
-                    
-                            if (checkedCount < minChecked) {
-                                e.preventDefault();
-                                alert(`Debes seleccionar al menos ${minChecked} opción en la pregunta "¿De qué tipo?".`);
                             }
                         });
                     });
@@ -354,6 +420,8 @@
                     </select>
                 </div>
                 
+                <h2 class="subtitle">Participación social</h2>
+                <hr>
 
                 <div class="form-group">
                     <label for="partSocial">¿Participa en alguna institución/organización?</label>
@@ -363,6 +431,9 @@
                         <option value="No" {{ $encuesta->partSocial === 'No' ? 'selected' : '' }}>No</option>
                     </select>
                 </div>
+
+                <h2 class="subtitle">Vivienda</h2>
+                <hr>
                 
                 
                 <div class="form-group">
@@ -470,6 +541,9 @@
                     </select>
                 </div>
                 
+                <h2 class="subtitle">Acceso a servicios básicos</h2>
+                <hr>
+
                 <div class="form-group">
                     <label for="accBas1">Tiene agua...</label>
                     <select name="accBas1" id="accBas1" class="form-control">
@@ -511,6 +585,9 @@
                         <option value="leña" {{ $encuesta->accBas4 === 'leña' ? 'selected' : '' }}>leña</option>
                     </select>
                 </div>
+
+                <h2 class="subtitle">CAPS al que pertenece</h2>
+                <hr>
 
                 <div class="form-group">
                     <label for="capId">CAP ID</label>
